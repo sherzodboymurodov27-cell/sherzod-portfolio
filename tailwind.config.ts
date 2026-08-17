@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#0D0F12",
-        surface: "#15181C",
-        ink: "#F1F0EC",
-        muted: "#8B8F96",
-        line: "#272A2F",
+        paper: "#0B0D10",
+        surface: "#14171B",
+        ink: "#F2F1ED",
+        muted: "#858A93",
+        line: "#242830",
         accent: "#6870E0",
-        "accent-soft": "#1C2038",
+        "accent-soft": "#191C2D",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
