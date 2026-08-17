@@ -12,23 +12,28 @@
 
 html {
   scroll-behavior: smooth;
+  background: #0b0d10;
 }
 
 body {
-  background-color: #0d0f12;
-  color: #f1f0ec;
+  margin: 0;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(104,112,224,0.08), transparent 60%),
+    #0b0d10;
+  color: #f2f1ed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
+::selection {
+  background: rgba(104,112,224,0.28);
+  color: #fff;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -37,12 +42,12 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #6870e0;
+  outline: 2px solid #7b83f0;
   outline-offset: 3px;
 }
 
 .spine > * + * {
-  border-left: 1px solid #272a2f;
+  border-left: 1px solid #242830;
 }
 
 .reveal {
@@ -50,19 +55,13 @@ body {
   transform: translateY(16px);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
-
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 .tick {
   position: absolute;
@@ -77,22 +76,23 @@ body {
   background: #6870e0;
 }
 .tick::before {
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  transform: translateX(-50%);
-  opacity: 0.55;
+  left: 50%; top: 0; width: 1px; height: 100%;
+  transform: translateX(-50%); opacity: 0.5;
 }
 .tick::after {
-  top: 50%;
-  left: 0;
-  height: 1px;
-  width: 100%;
-  transform: translateY(-50%);
-  opacity: 0.55;
+  top: 50%; left: 0; height: 1px; width: 100%;
+  transform: translateY(-50%); opacity: 0.5;
 }
 .tick-tl { top: 0; left: 0; transform: translate(-50%, -50%); }
 .tick-tr { top: 0; right: 0; transform: translate(50%, -50%); }
 .tick-bl { bottom: 0; left: 0; transform: translate(-50%, 50%); }
 .tick-br { bottom: 0; right: 0; transform: translate(50%, 50%); }
+
+/* Portfolio image treatment */
+.project-image {
+  background: #14171b;
+}
+
+.project-image img {
+  display: block;
+}

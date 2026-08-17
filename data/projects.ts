@@ -30,31 +30,10 @@ export const projects: Project[] = [
     cover: "/images/projects/zamin-maktabi-smm-2026/01.webp",
     coverAlt: "Zamin Maktabi SMM — Open Doors Day",
     blocks: [
-      {
-        type: "full",
-        image: "/images/projects/zamin-maktabi-smm-2026/01.webp",
-        alt: "Zamin Maktabi — Open Doors Day announcement",
-      },
-      {
-        type: "full",
-        image: "/images/projects/zamin-maktabi-smm-2026/02.webp",
-        alt: "Zamin Maktabi — Primary school teacher recruitment visual",
-      },
-      {
-        type: "full",
-        image: "/images/projects/zamin-maktabi-smm-2026/03.webp",
-        alt: "Zamin Maktabi — 8K achievement announcement",
-      },
-      {
-        type: "full",
-        image: "/images/projects/zamin-maktabi-smm-2026/04.webp",
-        alt: "Zamin Maktabi — Open Doors Day keyhole concept",
-      },
-      {
-        type: "full",
-        image: "/images/projects/zamin-maktabi-smm-2026/05.webp",
-        alt: "Zamin Maktabi — Russian-language classes admission announcement",
-      },
+      { type: "full", image: "/images/projects/zamin-maktabi-smm-2026/02.webp", alt: "Zamin Maktabi — Open Doors Day visual" },
+      { type: "full", image: "/images/projects/zamin-maktabi-smm-2026/03.webp", alt: "Zamin Maktabi — teacher recruitment visual" },
+      { type: "full", image: "/images/projects/zamin-maktabi-smm-2026/04.webp", alt: "Zamin Maktabi — 8K achievement visual" },
+      { type: "full", image: "/images/projects/zamin-maktabi-smm-2026/05.webp", alt: "Zamin Maktabi — Open Doors Day keyhole concept" },
     ],
   },
 ];
