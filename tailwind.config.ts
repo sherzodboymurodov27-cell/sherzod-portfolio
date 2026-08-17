@@ -9,16 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // "Soft Digital Editorial" — warm off-white paper, near-black ink,
-        // a soft neutral surface, and one cool indigo accent used sparingly
-        // for focus states, hover details and the registration-mark motif.
-        paper: "#FAF9F5",
-        surface: "#F1EFE9",
-        ink: "#16150F",
-        muted: "#7C7A70",
-        line: "#E6E2D8",
-        accent: "#4C56C9",
-        "accent-soft": "#EEF0FB",
+        paper: "#0D0F12",
+        surface: "#15181C",
+        ink: "#F1F0EC",
+        muted: "#8B8F96",
+        line: "#272A2F",
+        accent: "#6870E0",
+        "accent-soft": "#1C2038",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
