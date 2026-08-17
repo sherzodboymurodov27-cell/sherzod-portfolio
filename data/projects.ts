@@ -17,6 +17,23 @@ export interface Project {
   blocks: ProjectBlock[];
 }
 
+const placeholderProject = (index: number, category = "Brand Identity"): Project => ({
+  slug: `project-0${index}`,
+  title: `Project ${String(index).padStart(2, "0")}`,
+  category,
+  year: "2026",
+  role: "Graphic Designer",
+  description: "Selected project — visual identity, campaign and communication design.",
+  cover: `/images/projects/project-0${index}/cover.webp`,
+  coverAlt: `Project ${String(index).padStart(2, "0")} cover`,
+  blocks: [
+    { type: "full", image: `/images/projects/project-0${index}/01.webp`, alt: `Project ${String(index).padStart(2, "0")} visual 01` },
+    { type: "full", image: `/images/projects/project-0${index}/02.webp`, alt: `Project ${String(index).padStart(2, "0")} visual 02` },
+    { type: "full", image: `/images/projects/project-0${index}/03.webp`, alt: `Project ${String(index).padStart(2, "0")} visual 03` },
+    { type: "full", image: `/images/projects/project-0${index}/04.webp`, alt: `Project ${String(index).padStart(2, "0")} visual 04` },
+  ],
+});
+
 export const projects: Project[] = [
   {
     slug: "zamin-maktabi-smm-2026",
@@ -36,6 +53,12 @@ export const projects: Project[] = [
       { type: "full", image: "/images/projects/zamin-maktabi-smm-2026/05.webp", alt: "Zamin Maktabi — Open Doors Day keyhole concept" },
     ],
   },
+  placeholderProject(1),
+  placeholderProject(2, "Packaging"),
+  placeholderProject(3, "Digital Design"),
+  placeholderProject(4, "Brand Identity"),
+  placeholderProject(5, "Print Design"),
+  placeholderProject(6, "Art Direction"),
 ];
 
 export function getProject(slug: string): Project | undefined {
