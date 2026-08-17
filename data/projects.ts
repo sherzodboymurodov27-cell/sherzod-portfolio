@@ -1,7 +1,3 @@
-// ─────────────────────────────────────────────────────────────
-// PROJECT DATA — single source of truth for portfolio projects.
-// ─────────────────────────────────────────────────────────────
-
 export type ProjectBlock =
   | { type: "full"; image: string; alt: string }
   | { type: "split"; images: [string, string]; alt: [string, string] }
@@ -23,114 +19,42 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "project-01",
-    title: "Zamin Maktabi — Social Media",
+    slug: "zamin-maktabi-smm-2026",
+    title: "Zamin Maktabi — SMM 2026",
     category: "Social Media",
     year: "2026",
     role: "Graphic Designer",
     gridSpan: 2,
     description:
-      "A selection of social media campaigns and promotional visuals created for Zamin Maktabi, combining bold typography, vivid blue tones and conceptual photography to communicate school news, admissions and events.",
-    cover: "/images/projects/project-01/cover.webp",
-    coverAlt: "Zamin Maktabi social media campaign — 8000 subscribers",
+      "A social media design series created for Zamin Maktabi, combining bold editorial typography, blue-led visual direction and AI-assisted photographic compositions for admissions and school communication campaigns.",
+    cover: "/images/projects/zamin-maktabi-smm-2026/01.webp",
+    coverAlt: "Zamin Maktabi SMM — Open Doors Day",
     blocks: [
-      { type: "full", image: "/images/projects/project-01/cover.webp", alt: "Zamin Maktabi — 8000 subscribers campaign visual" },
-      { type: "text", heading: "Social Media Campaign", body: "A curated selection of campaign visuals developed for school communication, admissions and promotional announcements." },
       {
-        type: "split",
-        images: ["/images/projects/project-01/01.webp", "/images/projects/project-01/02.webp"],
-        alt: ["Zamin Maktabi — Open Doors Day visual", "Zamin Maktabi — event campaign visual"],
+        type: "full",
+        image: "/images/projects/zamin-maktabi-smm-2026/01.webp",
+        alt: "Zamin Maktabi — Open Doors Day announcement",
       },
       {
-        type: "split",
-        images: ["/images/projects/project-01/03.webp", "/images/projects/project-01/04.webp"],
-        alt: ["Zamin Maktabi — admission campaign visual", "Zamin Maktabi — teacher recruitment visual"],
+        type: "full",
+        image: "/images/projects/zamin-maktabi-smm-2026/02.webp",
+        alt: "Zamin Maktabi — Primary school teacher recruitment visual",
       },
-      { type: "single", image: "/images/projects/project-01/05.webp", alt: "Zamin Maktabi — Open Doors Day campaign visual" },
-    ],
-  },
-  {
-    slug: "project-02",
-    title: "Project 02",
-    category: "Social Media",
-    year: "2026",
-    role: "Graphic Designer",
-    gridSpan: 1,
-    description: "Additional portfolio project — to be replaced with a selected body of work.",
-    cover: "/images/projects/project-02/cover.webp",
-    coverAlt: "Project 02 placeholder",
-    blocks: [
-      { type: "full", image: "/images/projects/project-02/01.webp", alt: "Project 02 visual" },
-      { type: "single", image: "/images/projects/project-02/02.webp", alt: "Project 02 detail" },
-    ],
-  },
-  {
-    slug: "project-03",
-    title: "Project 03",
-    category: "Advertising",
-    year: "2025",
-    role: "Graphic Designer",
-    gridSpan: 1,
-    description: "Selected visual design work — to be replaced with a final project narrative.",
-    cover: "/images/projects/project-03/cover.webp",
-    coverAlt: "Project 03 placeholder",
-    blocks: [
-      { type: "full", image: "/images/projects/project-03/01.webp", alt: "Project 03 visual" },
       {
-        type: "split",
-        images: ["/images/projects/project-03/02.webp", "/images/projects/project-03/03.webp"],
-        alt: ["Project 03 detail one", "Project 03 detail two"],
+        type: "full",
+        image: "/images/projects/zamin-maktabi-smm-2026/03.webp",
+        alt: "Zamin Maktabi — 8K achievement announcement",
       },
-    ],
-  },
-  {
-    slug: "project-04",
-    title: "Project 04",
-    category: "Digital Design",
-    year: "2025",
-    role: "Graphic Designer",
-    gridSpan: 2,
-    description: "Selected digital design work — to be replaced with a final project narrative.",
-    cover: "/images/projects/project-04/cover.webp",
-    coverAlt: "Project 04 placeholder",
-    blocks: [
-      { type: "full", image: "/images/projects/project-04/01.webp", alt: "Project 04 visual" },
-      { type: "text", heading: "Details", body: "Project details and deliverables to be added." },
-      { type: "single", image: "/images/projects/project-04/02.webp", alt: "Project 04 detail" },
-    ],
-  },
-  {
-    slug: "project-05",
-    title: "Project 05",
-    category: "Brand Identity",
-    year: "2025",
-    role: "Graphic Designer",
-    gridSpan: 1,
-    description: "Selected branding work — to be replaced with a final project narrative.",
-    cover: "/images/projects/project-05/cover.webp",
-    coverAlt: "Project 05 placeholder",
-    blocks: [
-      { type: "full", image: "/images/projects/project-05/01.webp", alt: "Project 05 visual" },
       {
-        type: "split",
-        images: ["/images/projects/project-05/02.webp", "/images/projects/project-05/03.webp"],
-        alt: ["Project 05 detail one", "Project 05 detail two"],
+        type: "full",
+        image: "/images/projects/zamin-maktabi-smm-2026/04.webp",
+        alt: "Zamin Maktabi — Open Doors Day keyhole concept",
       },
-    ],
-  },
-  {
-    slug: "project-06",
-    title: "Project 06",
-    category: "Art Direction",
-    year: "2024",
-    role: "Art Director",
-    gridSpan: 1,
-    description: "Selected art direction work — to be replaced with a final project narrative.",
-    cover: "/images/projects/project-06/cover.webp",
-    coverAlt: "Project 06 placeholder",
-    blocks: [
-      { type: "full", image: "/images/projects/project-06/01.webp", alt: "Project 06 visual" },
-      { type: "single", image: "/images/projects/project-06/02.webp", alt: "Project 06 detail" },
+      {
+        type: "full",
+        image: "/images/projects/zamin-maktabi-smm-2026/05.webp",
+        alt: "Zamin Maktabi — Russian-language classes admission announcement",
+      },
     ],
   },
 ];
