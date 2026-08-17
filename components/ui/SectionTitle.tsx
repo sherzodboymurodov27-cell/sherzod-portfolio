@@ -7,7 +7,7 @@ export function SectionTitle({ eyebrow, title }: { eyebrow?: string; title: stri
         </span>
       )}
       <span className="h-px flex-1 bg-line hidden sm:block" aria-hidden="true" />
-      <h2 className="text-h2 font-medium tracking-tight">{title}</h2>
+      <h2 className="text-h2 font-light tracking-tight">{title}</h2>
     </div>
   );
 }

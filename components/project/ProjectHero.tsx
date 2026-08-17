@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Project } from "@/data/projects";
+import { TickMarks } from "@/components/ui/TickMarks";
 
 export function ProjectHero({ project }: { project: Project }) {
   return (
@@ -17,6 +18,7 @@ export function ProjectHero({ project }: { project: Project }) {
       </div>
 
       <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-surface">
+        <TickMarks corners={["tl", "tr", "bl", "br"]} />
         <Image
           src={project.cover}
           alt={project.coverAlt}

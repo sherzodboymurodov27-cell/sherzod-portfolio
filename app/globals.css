@@ -15,8 +15,8 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #101010;
+  background-color: #faf9f5;
+  color: #16150f;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -38,19 +38,19 @@ body {
 
 /* visible, deliberate focus state — no outline suppression anywhere */
 :focus-visible {
-  outline: 2px solid #2b3a55;
+  outline: 2px solid #4c56c9;
   outline-offset: 3px;
 }
 
 /* the spine motif: a thin vertical divider reused across meta rows, nav, and grids */
 .spine > * + * {
-  border-left: 1px solid #dedddb;
+  border-left: 1px solid #e6e2d8;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
@@ -65,3 +65,40 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* registration-mark ticks — the signature detail. A nod to print-production
+   crop/registration marks (fitting a designer who works in print & packaging),
+   used sparingly at a few key frame corners rather than as decoration. */
+.tick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+.tick::before,
+.tick::after {
+  content: "";
+  position: absolute;
+  background: #4c56c9;
+}
+.tick::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+  opacity: 0.55;
+}
+.tick::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+.tick-tl { top: 0; left: 0; transform: translate(-50%, -50%); }
+.tick-tr { top: 0; right: 0; transform: translate(50%, -50%); }
+.tick-bl { bottom: 0; left: 0; transform: translate(-50%, 50%); }
+.tick-br { bottom: 0; right: 0; transform: translate(50%, 50%); }
+

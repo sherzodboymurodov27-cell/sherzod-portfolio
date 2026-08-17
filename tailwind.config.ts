@@ -9,20 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#FFFFFF",
-        surface: "#F4F4F3",
-        ink: "#101010",
-        muted: "#6B6B68",
-        line: "#DEDDD9",
-        accent: "#2B3A55",
+        // "Soft Digital Editorial" — warm off-white paper, near-black ink,
+        // a soft neutral surface, and one cool indigo accent used sparingly
+        // for focus states, hover details and the registration-mark motif.
+        paper: "#FAF9F5",
+        surface: "#F1EFE9",
+        ink: "#16150F",
+        muted: "#7C7A70",
+        line: "#E6E2D8",
+        accent: "#4C56C9",
+        "accent-soft": "#EEF0FB",
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        display: ["clamp(3.2rem, 9vw, 9rem)", { lineHeight: "0.94", letterSpacing: "-0.02em" }],
-        h1: ["clamp(2.2rem, 5vw, 4rem)", { lineHeight: "1.02", letterSpacing: "-0.015em" }],
-        h2: ["clamp(1.6rem, 3vw, 2.4rem)", { lineHeight: "1.08", letterSpacing: "-0.01em" }],
+        display: ["clamp(3.4rem, 10vw, 10rem)", { lineHeight: "0.92", letterSpacing: "-0.025em" }],
+        h1: ["clamp(2.3rem, 5.4vw, 4.2rem)", { lineHeight: "1.02", letterSpacing: "-0.015em" }],
+        h2: ["clamp(1.6rem, 3vw, 2.5rem)", { lineHeight: "1.08", letterSpacing: "-0.01em" }],
       },
       maxWidth: {
         grid: "1440px",

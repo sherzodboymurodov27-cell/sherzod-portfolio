@@ -28,7 +28,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
     <article>
       <ProjectHero project={project} />
 
-      <div className="max-w-grid mx-auto px-5 md:px-10 py-16 md:py-24">
+      <div className="py-16 md:py-24">
         <ProjectVisuals blocks={project.blocks} />
       </div>
 

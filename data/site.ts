@@ -8,24 +8,33 @@ export const site = {
   // that needs an absolute URL (Open Graph, canonical) reads from here.
   url: "https://sherzod-portfolio.pages.dev",
 
-  name: "Sherzod",
+  name: "Sherzod Boymurodov",
   role: "Graphic Designer",
-  tagline: ["Brand Identity", "Visual Communication", "Art Direction"],
+  tagline: ["Digital Design", "Branding", "Packaging", "Social Media", "Print"],
   location: "Tashkent, Uzbekistan",
 
   seo: {
-    title: "Sherzod — Graphic Designer",
+    title: "Sherzod Boymurodov — Graphic Designer",
     description:
-      "Portfolio of Sherzod, a graphic designer focused on brand identity, visual communication and art direction.",
+      "Portfolio of Sherzod Boymurodov, a graphic designer working across digital design, branding, packaging, social media and print.",
   },
 
   about: {
     heading: "About",
+    since: "2022",
     body: [
-      "Graphic designer focused on visual identity, advertising and digital communication.",
-      "Working across brand systems, art direction and campaign design for clients and institutions who need their ideas to hold up in print, on screen and in the room.",
+      "Designing since 2022, I work across digital design, branding, packaging, social media and print — creating clear and purposeful visual solutions for different brands and communication needs.",
     ],
   },
+
+  skills: [
+    "Digital Design",
+    "Branding",
+    "Packaging",
+    "Social Media",
+    "Logo Design",
+    "Print Design",
+  ],
 
   services: [
     {
@@ -47,16 +56,25 @@ export const site = {
   ],
 
   contact: {
-    heading: ["Have a project", "in mind?"],
+    heading: ["Let's work together."],
     cta: "Let's talk.",
-    email: "hello@example.com",
   },
 
   socials: [
-    { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-    { label: "Telegram", value: "@sherzod", href: "https://t.me/sherzod" },
-    { label: "LinkedIn", value: "in/sherzod", href: "https://linkedin.com/in/sherzod" },
-    { label: "Behance", value: "sherzod", href: "https://behance.net/sherzod" },
-    { label: "Instagram", value: "@sherzod", href: "https://instagram.com/sherzod" },
+    {
+      label: "Instagram",
+      value: "@_sherzod_boymurodov",
+      href: "https://www.instagram.com/_sherzod_boymurodov/",
+    },
+    {
+      label: "Telegram",
+      value: "@SherzodBoymurodov_dsgn",
+      href: "https://t.me/SherzodBoymurodov_dsgn",
+    },
+    {
+      label: "Behance",
+      value: "behance.net/f4d90533",
+      href: "https://www.behance.net/f4d90533",
+    },
   ],
 };

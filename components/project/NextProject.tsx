@@ -6,7 +6,7 @@ export function NextProject({ project }: { project: Project }) {
   return (
     <Link href={`/work/${project.slug}`} className="group block border-t border-line">
       <div className="max-w-grid mx-auto px-5 md:px-10 py-16 md:py-24">
-        <p className="text-xs tracking-[0.18em] uppercase text-muted font-semibold mb-8">
+        <p className="text-xs tracking-[0.2em] uppercase text-muted font-semibold mb-8">
           Next Project
         </p>
 
@@ -22,10 +22,10 @@ export function NextProject({ project }: { project: Project }) {
           </div>
 
           <div className="flex items-baseline gap-4">
-            <h2 className="text-h2 font-medium tracking-tight">{project.title}</h2>
+            <h2 className="text-h2 font-light tracking-tight">{project.title}</h2>
             <span
               aria-hidden="true"
-              className="text-2xl transition-transform duration-300 ease-editorial group-hover:translate-x-2"
+              className="text-2xl text-accent transition-transform duration-300 ease-editorial group-hover:translate-x-2"
             >
               →
             </span>
