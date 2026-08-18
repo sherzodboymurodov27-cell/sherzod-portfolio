@@ -13,35 +13,17 @@ const logos = Array.from({ length: 16 }, (_, index) => {
 function LogoCard({ id, src }: { id: number; src: string }) {
   const logoStyle = {
     width:
-      id === 1 ? "48%" :
-      id === 3 ? "82%" :
-      id === 8 ? "54%" :
-      id === 9 ? "90%" :
-      id === 10 ? "68%" :
-      id === 13 ? "68%" :
-      id === 15 ? "62%" :
-      id === 16 ? "58%" :
+      id === 8 ? "48%" :
+      id === 15 ? "52%" :
+      id === 16 ? "68%" :
       "62%",
     height:
-      id === 1 ? "58%" :
-      id === 3 ? "72%" :
-      id === 8 ? "60%" :
-      id === 9 ? "72%" :
-      id === 10 ? "72%" :
-      id === 13 ? "68%" :
-      id === 15 ? "62%" :
-      id === 16 ? "58%" :
+      id === 8 ? "55%" :
+      id === 15 ? "58%" :
+      id === 16 ? "68%" :
       "62%",
     marginTop:
-      id === 3 ? "-8px" :
-      id === 9 ? "-4px" :
-      id === 13 ? "-20px" :
-      id === 15 ? "-2px" :
-      id === 16 ? "-8px" :
-      undefined,
-    transform:
-      id === 3 ? "scale(1.08)" :
-      id === 9 ? "scale(1.12)" :
+      id === 16 ? "-16px" :
       undefined,
   };
 
