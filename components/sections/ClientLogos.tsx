@@ -29,9 +29,9 @@ export function ClientLogos() {
   return (
     <section className="client-logos-section" aria-label="Companies I have worked with">
       <div className="client-logos-heading">
-        <span>TRUSTED BY</span>
+        <span>SELECTED COLLABORATIONS</span>
         <span className="client-logos-heading-line" />
-        <span>SELECTED CLIENTS · 16</span>
+        <span>COMPANIES, TEAMS & BRANDS I’VE WORKED WITH · 16</span>
       </div>
 
       <div className="client-marquee client-marquee-top">
