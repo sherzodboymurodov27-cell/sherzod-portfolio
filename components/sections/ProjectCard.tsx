@@ -1,34 +1,24 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
-
-const RATIO = {
-  portrait: "aspect-[4/5]",
-  square: "aspect-[4/3]",
-  wide: "aspect-[5/4]",
-} as const;
 
 export function ProjectCard({
   project,
   priority = false,
   featured = false,
-  ratio = "portrait",
 }: {
   project: Project;
   priority?: boolean;
   featured?: boolean;
-  ratio?: keyof typeof RATIO;
+  ratio?: "portrait" | "square" | "wide";
 }) {
   return (
     <Link href={`/work/${project.slug}`} className="group block">
-      <div className={`relative overflow-hidden rounded-[2px] bg-surface project-image ${RATIO[featured ? "wide" : ratio]}`}>
-        <Image
+      <div className="overflow-hidden rounded-3xl glass-panel p-2 md:p-3">
+        <img
           src={project.cover}
           alt={project.coverAlt}
-          fill
-          priority={priority}
-          sizes="(min-width: 1024px) 75vw, 100vw"
-          className="object-cover transition-[transform,filter] duration-700 ease-editorial group-hover:scale-[1.02] group-hover:contrast-[1.03]"
+          loading={priority ? "eager" : "lazy"}
+          className="block w-full h-auto rounded-[1.25rem] transition-[transform,filter] duration-700 ease-editorial group-hover:scale-[1.012] group-hover:contrast-[1.03]"
         />
       </div>
 
