@@ -26,8 +26,8 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 px-3 md:px-6 pt-3 md:pt-5 transition-all duration-300 ease-editorial ${open ? "" : ""}`}>
-      <div className={`max-w-[1320px] mx-auto rounded-2xl border border-white/15 px-4 md:px-7 flex items-center justify-between transition-all duration-300 ease-editorial ${scrolled || open ? "h-14 md:h-16 bg-[#102344]/55 backdrop-blur-2xl shadow-[0_18px_50px_rgba(0,0,0,0.2)]" : "h-14 md:h-16 bg-white/[0.06] backdrop-blur-xl"}`}>
+    <header className="fixed top-0 inset-x-0 z-50 px-3 md:px-6 pt-3 md:pt-5 transition-all duration-300 ease-editorial">
+      <div className={`max-w-[1320px] mx-auto rounded-2xl border border-white/15 px-4 md:px-7 flex items-center justify-between transition-all duration-300 ease-editorial ${scrolled || open ? "h-14 md:h-16 bg-[#140A24]/60 backdrop-blur-2xl shadow-[0_18px_50px_rgba(0,0,0,0.2)]" : "h-14 md:h-16 bg-white/[0.06] backdrop-blur-xl"}`}>
         <Link href="/" className="text-xs md:text-sm font-semibold tracking-[0.08em] uppercase text-ink">
           {site.name}
         </Link>
@@ -61,7 +61,7 @@ export function Navbar() {
       </div>
 
       {open && (
-        <nav className="md:hidden max-w-[1320px] mx-auto mt-2 rounded-2xl border border-white/15 bg-[#102344]/75 backdrop-blur-2xl px-5 py-6 flex flex-col gap-5">
+        <nav className="md:hidden max-w-[1320px] mx-auto mt-2 rounded-2xl border border-white/15 bg-[#140A24]/75 backdrop-blur-2xl px-5 py-6 flex flex-col gap-5">
           {LINKS.map((link) => (
             <Link
               key={link.href}
