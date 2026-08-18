@@ -76,5 +76,10 @@ export const site = {
       value: "behance.net/f4d90533",
       href: "https://www.behance.net/f4d90533",
     },
+    {
+      label: "Phone",
+      value: "+998 94 420 04 55",
+      href: "tel:+998944200455",
+    },
   ],
 };
