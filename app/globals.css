@@ -14,14 +14,13 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E"),
     radial-gradient(760px 620px at 16% 8%, rgba(112, 18, 255, 0.42), transparent 64%),
     radial-gradient(820px 640px at 44% 52%, rgba(74, 10, 150, 0.24), transparent 68%),
     radial-gradient(900px 700px at 88% 16%, rgba(75, 20, 170, 0.30), transparent 62%),
     radial-gradient(700px 560px at 24% 100%, rgba(128, 20, 255, 0.22), transparent 66%),
     linear-gradient(145deg, #05050A 0%, #0B0714 42%, #10081B 72%, #06060A 100%);
-  background-size: 180px 180px, 145% 145%, 135% 135%, 140% 140%, 125% 125%, 100% 100%;
-  background-position: 0 0, 0% 0%, 42% 48%, 100% 0%, 18% 100%, 0 0;
+  background-size: 145% 145%, 135% 135%, 140% 140%, 125% 125%, 100% 100%;
+  background-position: 0% 0%, 42% 48%, 100% 0%, 18% 100%, 0 0;
   background-attachment: fixed;
   animation: ambient-background 20s ease-in-out infinite alternate;
   color: #F7F2FF;
@@ -43,10 +42,10 @@ body::before {
 }
 
 @keyframes ambient-background {
-  0% { background-position: 0 0, 0% 0%, 42% 48%, 100% 0%, 18% 100%, 0 0; }
-  35% { background-position: 18px 12px, 14% 10%, 54% 42%, 86% 18%, 28% 88%, 0 0; }
-  70% { background-position: -10px 22px, 8% 22%, 38% 58%, 92% 8%, 14% 76%, 0 0; }
-  100% { background-position: 12px -8px, 22% 8%, 58% 50%, 72% 24%, 30% 92%, 0 0; }
+  0% { background-position: 0% 0%, 42% 48%, 100% 0%, 18% 100%, 0 0; }
+  35% { background-position: 14% 10%, 54% 42%, 86% 18%, 28% 88%, 0 0; }
+  70% { background-position: 8% 22%, 38% 58%, 92% 8%, 14% 76%, 0 0; }
+  100% { background-position: 22% 8%, 58% 50%, 72% 24%, 30% 92%, 0 0; }
 }
 
 @keyframes ambient-overlay {
