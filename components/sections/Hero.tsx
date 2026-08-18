@@ -7,29 +7,31 @@ export function Hero() {
   const lastName = rest.join(" ");
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-between px-5 md:px-10 pt-28 pb-10 md:pb-14 overflow-hidden">
+    <section className="relative min-h-[100svh] flex flex-col px-5 md:px-10 pt-28 pb-10 md:pb-14 overflow-hidden">
       <div className="hero-orb hero-orb-one" aria-hidden="true" />
       <div className="hero-orb hero-orb-two" aria-hidden="true" />
       <TickMarks corners={["tl", "tr"]} />
 
-      <div className="max-w-grid mx-auto w-full relative z-10">
-        <div className="md:flex md:items-end md:justify-between md:gap-10">
-          <div>
-            <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted mb-7">{site.role}</p>
-            <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1">
-              <span className="block">{firstName}</span>
-              <span className="block">{lastName}</span>
-            </h1>
-          </div>
+      <div className="flex-1 flex items-center">
+        <div className="max-w-grid mx-auto w-full relative z-10">
+          <div className="md:flex md:items-end md:justify-between md:gap-10">
+            <div>
+              <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted mb-7">{site.role}</p>
+              <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1">
+                <span className="block">{firstName}</span>
+                <span className="block">{lastName}</span>
+              </h1>
+            </div>
 
-          <ol className="hero-enter hero-enter-delay-3 mt-8 md:mt-0 shrink-0 text-sm md:text-base text-muted tracking-tight">
-            {site.tagline.map((item, i) => (
-              <li key={item} className="flex items-baseline gap-3 py-0.5">
-                <span className="text-[10px] text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ol>
+            <ol className="hero-enter hero-enter-delay-3 mt-8 md:mt-0 shrink-0 text-sm md:text-base text-muted tracking-tight">
+              {site.tagline.map((item, i) => (
+                <li key={item} className="flex items-baseline gap-3 py-0.5">
+                  <span className="text-[10px] text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </div>
 
