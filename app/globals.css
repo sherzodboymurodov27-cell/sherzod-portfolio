@@ -267,10 +267,6 @@ body::before {
   animation-duration: 48s;
 }
 
-.client-marquee:hover .client-marquee-track {
-  animation-play-state: paused;
-}
-
 .client-logo-card {
   flex: 0 0 clamp(300px, 27.5vw, 440px);
   width: clamp(300px, 27.5vw, 440px);
