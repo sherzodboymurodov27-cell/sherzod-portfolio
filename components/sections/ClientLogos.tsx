@@ -1,6 +1,6 @@
 "use client";
 
-const logos = Array.from({ length: 16 }, (_, index) => {
+const logos = Array.from({ length: 15 }, (_, index) => {
   const id = index + 1;
   const extension = id <= 13 ? "svg" : "png";
 
@@ -15,16 +15,12 @@ function LogoCard({ id, src }: { id: number; src: string }) {
     width:
       id === 8 ? "48%" :
       id === 15 ? "52%" :
-      id === 16 ? "68%" :
       "62%",
     height:
       id === 8 ? "55%" :
       id === 15 ? "58%" :
-      id === 16 ? "68%" :
       "62%",
-    marginTop:
-      id === 16 ? "-16px" :
-      undefined,
+    marginTop: undefined,
   };
 
   return (
@@ -46,14 +42,14 @@ function LogoCard({ id, src }: { id: number; src: string }) {
 
 export function ClientLogos() {
   const firstRow = logos.slice(0, 8);
-  const secondRow = logos.slice(8, 16);
+  const secondRow = logos.slice(8, 15);
 
   return (
     <section className="client-logos-section" aria-label="Companies I have worked with">
       <div className="client-logos-heading">
         <span>SELECTED COLLABORATIONS</span>
         <span className="client-logos-heading-line" />
-        <span>COMPANIES, TEAMS & BRANDS I’VE WORKED WITH · 16</span>
+        <span>COMPANIES, TEAMS & BRANDS I’VE WORKED WITH · 15</span>
       </div>
 
       <div className="client-marquee client-marquee-top">
