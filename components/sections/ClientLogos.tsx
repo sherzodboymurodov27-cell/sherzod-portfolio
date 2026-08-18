@@ -1,47 +1,53 @@
 "use client";
 
-const logos = Array.from({ length: 16 }, (_, index) => {
-  const id = index + 1;
-  const extension = id <= 13 ? "svg" : "png";
+type LogoSpec = {
+  id: number;
+  name: string;
+  extension: "svg" | "png";
+  width: string;
+  height: string;
+  y?: string;
+};
 
-  return {
-    id,
-    src: `/images/clients/${String(id).padStart(2, "0")}.${extension}`,
-  };
-});
+// Optical sizing is calibrated against the supplied 4×4 reference sheet.
+// The card size remains identical; only the visual logo bounds vary so brands
+// with different source viewBox ratios appear equally weighted.
+const logoSpecs: LogoSpec[] = [
+  { id: 1, name: "Essi", extension: "svg", width: "58%", height: "62%" },
+  { id: 2, name: "Red Fox Branding", extension: "svg", width: "50%", height: "64%", y: "-1%" },
+  { id: 3, name: "PDP School", extension: "svg", width: "66%", height: "62%" },
+  { id: 4, name: "PDP EcoSystem", extension: "svg", width: "68%", height: "64%" },
+  { id: 5, name: "PDP University", extension: "svg", width: "70%", height: "66%" },
+  { id: 6, name: "TIFT University", extension: "svg", width: "60%", height: "64%" },
+  { id: 7, name: "Thermo Tech", extension: "svg", width: "58%", height: "72%" },
+  { id: 8, name: "Dastirxan", extension: "svg", width: "58%", height: "70%", y: "2%" },
+  { id: 9, name: "PDP Junior", extension: "svg", width: "62%", height: "68%" },
+  { id: 10, name: "PDP Elevator", extension: "svg", width: "63%", height: "66%" },
+  { id: 11, name: "RBC PRO", extension: "svg", width: "58%", height: "62%" },
+  { id: 12, name: "PDP Online", extension: "svg", width: "66%", height: "64%" },
+  { id: 13, name: "PDP Academy", extension: "svg", width: "62%", height: "66%" },
+  { id: 14, name: "Gorizont Modern School", extension: "png", width: "62%", height: "72%", y: "1%" },
+  { id: 15, name: "PDP Unicorn 4.0", extension: "png", width: "70%", height: "66%" },
+  { id: 16, name: "Zamin Maktabi", extension: "png", width: "58%", height: "70%" },
+];
 
-function LogoCard({ id, src }: { id: number; src: string }) {
+const logos = logoSpecs.map((logo) => ({
+  ...logo,
+  src: `/images/clients/${String(logo.id).padStart(2, "0")}.${logo.extension}`,
+}));
+
+function LogoCard({ logo }: { logo: (typeof logos)[number] }) {
   const logoStyle = {
-    width:
-      id === 1 ? "48%" :
-      id === 3 ? "82%" :
-      id === 9 ? "90%" :
-      id === 10 ? "68%" :
-      id === 13 ? "68%" :
-      "62%",
-    height:
-      id === 1 ? "58%" :
-      id === 3 ? "72%" :
-      id === 9 ? "72%" :
-      id === 10 ? "72%" :
-      id === 13 ? "68%" :
-      "62%",
-    marginTop:
-      id === 3 ? "-8px" :
-      id === 9 ? "-4px" :
-      id === 13 ? "-20px" :
-      undefined,
-    transform:
-      id === 3 ? "scale(1.08)" :
-      id === 9 ? "scale(1.12)" :
-      undefined,
+    width: logo.width,
+    height: logo.height,
+    transform: logo.y ? `translateY(${logo.y})` : undefined,
   };
 
   return (
-    <div className="client-logo-card glass-panel" aria-label={`Client logo ${id}`}>
+    <div className="client-logo-card glass-panel" aria-label={logo.name}>
       <img
-        src={src}
-        alt={`Client ${id}`}
+        src={logo.src}
+        alt={logo.name}
         className="client-logo-image"
         style={logoStyle}
         onError={(event) => {
@@ -49,7 +55,7 @@ function LogoCard({ id, src }: { id: number; src: string }) {
           event.currentTarget.nextElementSibling?.classList.remove("is-hidden");
         }}
       />
-      <span className="client-logo-placeholder is-hidden">LOGO {String(id).padStart(2, "0")}</span>
+      <span className="client-logo-placeholder is-hidden">{logo.name}</span>
     </div>
   );
 }
@@ -69,7 +75,7 @@ export function ClientLogos() {
       <div className="client-marquee client-marquee-top">
         <div className="client-marquee-track">
           {[...firstRow, ...firstRow].map((logo, index) => (
-            <LogoCard key={`top-${logo.id}-${index}`} id={logo.id} src={logo.src} />
+            <LogoCard key={`top-${logo.id}-${index}`} logo={logo} />
           ))}
         </div>
       </div>
@@ -77,7 +83,7 @@ export function ClientLogos() {
       <div className="client-marquee client-marquee-bottom">
         <div className="client-marquee-track">
           {[...secondRow, ...secondRow].map((logo, index) => (
-            <LogoCard key={`bottom-${logo.id}-${index}`} id={logo.id} src={logo.src} />
+            <LogoCard key={`bottom-${logo.id}-${index}`} logo={logo} />
           ))}
         </div>
       </div>
