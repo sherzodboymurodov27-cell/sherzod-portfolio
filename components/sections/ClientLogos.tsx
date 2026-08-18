@@ -11,12 +11,19 @@ const logos = Array.from({ length: 16 }, (_, index) => {
 });
 
 function LogoCard({ id, src }: { id: number; src: string }) {
+  const logoStyle = {
+    width: id === 10 ? "78%" : id === 13 ? "68%" : "62%",
+    height: id === 10 ? "68%" : "62%",
+    marginTop: id === 9 ? "-4px" : id === 10 ? "-5px" : id === 13 ? "-20px" : undefined,
+  };
+
   return (
     <div className="client-logo-card glass-panel" aria-label={`Client logo ${id}`}>
       <img
         src={src}
         alt={`Client ${id}`}
         className="client-logo-image"
+        style={logoStyle}
         onError={(event) => {
           event.currentTarget.style.display = "none";
           event.currentTarget.nextElementSibling?.classList.remove("is-hidden");
