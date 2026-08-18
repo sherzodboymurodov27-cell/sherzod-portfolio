@@ -1,3 +1,5 @@
+"use client";
+
 const logos = Array.from({ length: 16 }, (_, index) => ({
   id: index + 1,
   src: `/images/clients/logo-${String(index + 1).padStart(2, "0")}.svg`,
