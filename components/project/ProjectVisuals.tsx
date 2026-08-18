@@ -3,7 +3,7 @@ import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 
 export function ProjectVisuals({ blocks }: { blocks: ProjectBlock[] }) {
   return (
-    <div className="flex flex-col gap-16 md:gap-28">
+    <div className="flex flex-col gap-14 md:gap-24">
       {blocks.map((block, i) => (
         <RevealOnScroll key={i}>
           <Block block={block} />
@@ -13,8 +13,7 @@ export function ProjectVisuals({ blocks }: { blocks: ProjectBlock[] }) {
   );
 }
 
-// Project artwork must keep its original aspect ratio.
-// Do not force 16:9, 4:5, or any other ratio: the source files are the authority.
+// Artwork always respects the source file's native aspect ratio.
 function Contained({ children }: { children: React.ReactNode }) {
   return <div className="max-w-grid mx-auto px-5 md:px-10">{children}</div>;
 }
@@ -34,17 +33,30 @@ function Block({ block }: { block: ProjectBlock }) {
   switch (block.type) {
     case "full":
       return (
-        <div className="w-full overflow-hidden bg-surface">
+        <div className="w-full overflow-hidden glass-panel">
           <ProjectImage src={block.image} alt={block.alt} />
         </div>
+      );
+
+    case "gallery":
+      return (
+        <Contained>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {block.images.map((img, i) => (
+              <div key={img} className="overflow-hidden glass-panel gallery-item">
+                <ProjectImage src={img} alt={block.alt[i] ?? "Project visual"} />
+              </div>
+            ))}
+          </div>
+        </Contained>
       );
 
     case "split":
       return (
         <Contained>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
             {block.images.map((img, i) => (
-              <div key={img} className="overflow-hidden bg-surface">
+              <div key={img} className="overflow-hidden glass-panel">
                 <ProjectImage src={img} alt={block.alt[i]} />
               </div>
             ))}
@@ -55,7 +67,7 @@ function Block({ block }: { block: ProjectBlock }) {
     case "single":
       return (
         <Contained>
-          <div className="w-full max-w-2xl mx-auto overflow-hidden bg-surface">
+          <div className="w-full max-w-3xl mx-auto overflow-hidden glass-panel">
             <ProjectImage src={block.image} alt={block.alt} />
           </div>
         </Contained>
@@ -64,7 +76,7 @@ function Block({ block }: { block: ProjectBlock }) {
     case "text":
       return (
         <Contained>
-          <div className="max-w-2xl">
+          <div className="glass-panel p-6 md:p-10 max-w-3xl">
             {block.heading && (
               <p className="text-xs tracking-[0.18em] uppercase text-muted font-semibold mb-4">
                 {block.heading}
