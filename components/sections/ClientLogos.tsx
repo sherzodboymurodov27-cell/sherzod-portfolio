@@ -12,9 +12,10 @@ const logos = Array.from({ length: 16 }, (_, index) => {
 
 function LogoCard({ id, src }: { id: number; src: string }) {
   const logoStyle = {
-    width: id === 10 ? "78%" : id === 13 ? "68%" : "62%",
-    height: id === 10 ? "68%" : "62%",
-    marginTop: id === 9 ? "-4px" : id === 10 ? "-5px" : id === 13 ? "-20px" : undefined,
+    width: id === 3 ? "82%" : id === 9 ? "72%" : id === 10 ? "100%" : id === 13 ? "68%" : "62%",
+    height: id === 3 ? "72%" : id === 9 ? "70%" : id === 10 ? "95%" : "62%",
+    marginTop: id === 3 ? "-8px" : id === 9 ? "-12px" : id === 10 ? "-30px" : id === 13 ? "-20px" : undefined,
+    transform: id === 3 ? "scale(1.08)" : id === 9 ? "scale(1.08)" : id === 10 ? "scale(1.18)" : undefined,
   };
 
   return (
