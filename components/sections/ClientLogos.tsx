@@ -1,9 +1,14 @@
 "use client";
 
-const logos = Array.from({ length: 16 }, (_, index) => ({
-  id: index + 1,
-  src: `/images/clients/logo-${String(index + 1).padStart(2, "0")}.svg`,
-}));
+const logos = Array.from({ length: 16 }, (_, index) => {
+  const id = index + 1;
+  const extension = id <= 13 ? "svg" : "png";
+
+  return {
+    id,
+    src: `/images/clients/${String(id).padStart(2, "0")}.${extension}`,
+  };
+});
 
 function LogoCard({ id, src }: { id: number; src: string }) {
   return (
