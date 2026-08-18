@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Project } from "@/data/projects";
 import { TickMarks } from "@/components/ui/TickMarks";
 
@@ -24,14 +23,11 @@ export function ProjectHero({ project }: { project: Project }) {
       <div className="max-w-grid mx-auto px-5 md:px-10">
         <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-3xl glass-panel p-2 md:p-3">
           <TickMarks corners={["tl", "tr", "bl", "br"]} />
-          <Image
+          <img
             src={project.cover}
             alt={project.coverAlt}
-            width={2048}
-            height={2560}
-            priority
-            sizes="(min-width: 1024px) 80vw, 100vw"
             className="block w-full h-auto rounded-[1.25rem]"
+            fetchPriority="high"
           />
         </div>
       </div>
