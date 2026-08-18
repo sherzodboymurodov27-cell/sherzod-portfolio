@@ -5,7 +5,7 @@ export function ProjectHero({ project }: { project: Project }) {
   return (
     <div className="pt-28 md:pt-36">
       <div className="max-w-grid mx-auto px-5 md:px-10">
-        <div className="flex items-end justify-between gap-8 glass-panel px-5 py-6 md:px-8 md:py-8">
+        <div className="project-title-glass flex items-end justify-between gap-8 px-5 py-6 md:px-8 md:py-8">
           <div>
             <p className="text-[10px] uppercase tracking-[0.18em] text-muted mb-4">Project</p>
             <h1 className="text-h1 font-extralight tracking-tight max-w-4xl">{project.title}</h1>
