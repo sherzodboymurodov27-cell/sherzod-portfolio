@@ -1,6 +1,7 @@
 export type ProjectBlock =
   | { type: "full"; image: string; alt: string }
   | { type: "split"; images: [string, string]; alt: [string, string] }
+  | { type: "gallery"; images: string[]; alt: string[] }
   | { type: "single"; image: string; alt: string }
   | { type: "text"; heading?: string; body: string };
 
@@ -30,11 +31,23 @@ export const projects: Project[] = [
     cover: "/images/projects/project-01/cover.webp",
     coverAlt: "Zamin Maktabi social media campaign cover",
     blocks: [
-      { type: "full", image: "/images/projects/project-01/01.webp", alt: "Zamin Maktabi — Open Doors Day visual" },
-      { type: "full", image: "/images/projects/project-01/02.webp", alt: "Zamin Maktabi — event campaign visual" },
-      { type: "full", image: "/images/projects/project-01/03.webp", alt: "Zamin Maktabi — admission campaign visual" },
-      { type: "full", image: "/images/projects/project-01/04.webp", alt: "Zamin Maktabi — teacher recruitment visual" },
-      { type: "full", image: "/images/projects/project-01/05.webp", alt: "Zamin Maktabi — Open Doors Day campaign visual" },
+      {
+        type: "gallery",
+        images: [
+          "/images/projects/project-01/01.webp",
+          "/images/projects/project-01/02.webp",
+          "/images/projects/project-01/03.webp",
+          "/images/projects/project-01/04.webp",
+          "/images/projects/project-01/05.webp",
+        ],
+        alt: [
+          "Zamin Maktabi — Open Doors Day visual",
+          "Zamin Maktabi — event campaign visual",
+          "Zamin Maktabi — admission campaign visual",
+          "Zamin Maktabi — teacher recruitment visual",
+          "Zamin Maktabi — Open Doors Day campaign visual",
+        ],
+      },
     ],
   },
   {
