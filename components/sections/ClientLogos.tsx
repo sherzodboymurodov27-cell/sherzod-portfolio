@@ -1,6 +1,6 @@
 "use client";
 
-const logoIds = [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15];
+const logoIds = [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15];
 
 const logos = logoIds.map((id) => {
   const extension = id <= 13 ? "svg" : "png";
@@ -44,8 +44,8 @@ function LogoCard({ id, src }: { id: number; src: string }) {
 }
 
 export function ClientLogos() {
-  const firstRow = logos.slice(0, 8);
-  const secondRow = logos.slice(8, 14);
+  const firstRow = logos.slice(0, 7);
+  const secondRow = logos.slice(7, 14);
 
   return (
     <section className="client-logos-section" aria-label="Companies I have worked with">
