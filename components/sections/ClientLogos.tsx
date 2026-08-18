@@ -20,7 +20,9 @@ function LogoCard({ id, src }: { id: number; src: string }) {
       id === 8 ? "55%" :
       id === 15 ? "58%" :
       "62%",
-    marginTop: undefined,
+    marginTop:
+      id === 2 ? "-7px" :
+      undefined,
   };
 
   return (
