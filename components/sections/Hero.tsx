@@ -13,15 +13,14 @@ export function Hero() {
       <TickMarks corners={["tl", "tr"]} />
 
       <div className="max-w-grid mx-auto w-full relative z-10">
-        <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted">{site.role}</p>
-      </div>
-
-      <div className="max-w-grid mx-auto w-full relative z-10">
         <div className="md:flex md:items-end md:justify-between md:gap-10">
-          <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1">
-            <span className="block">{firstName}</span>
-            <span className="block">{lastName}</span>
-          </h1>
+          <div>
+            <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted mb-7">{site.role}</p>
+            <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1">
+              <span className="block">{firstName}</span>
+              <span className="block">{lastName}</span>
+            </h1>
+          </div>
 
           <ol className="hero-enter hero-enter-delay-3 mt-8 md:mt-0 shrink-0 text-sm md:text-base text-muted tracking-tight">
             {site.tagline.map((item, i) => (
