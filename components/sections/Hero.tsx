@@ -18,10 +18,10 @@ export function Hero() {
             <div>
               <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted mb-7">{site.role}</p>
               <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1 [&_.mesh-text-hover]:h-full [&_.mesh-text-hover]:w-full [&_.mesh-text-hover_canvas]:block [&_.mesh-text-hover_canvas]:h-full [&_.mesh-text-hover_canvas]:w-full" aria-label={site.name}>
-                <span className="grid hero-name-line h-[clamp(3.1rem,9.2vw,9.2rem)]">
+                <span className="grid hero-name-line" style={{ height: "clamp(6.4rem, 10vw, 10rem)" }}>
                   <MeshTextHover text={firstName} />
                 </span>
-                <span className="grid hero-name-line h-[clamp(3.1rem,9.2vw,9.2rem)]">
+                <span className="grid hero-name-line" style={{ height: "clamp(6.4rem, 10vw, 10rem)" }}>
                   <MeshTextHover text={lastName} />
                 </span>
               </h1>
