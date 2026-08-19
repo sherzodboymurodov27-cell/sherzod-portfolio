@@ -10,6 +10,7 @@ void main() { gl_Position = vec4(aPosition, 0.0, 1.0); }
 const FRAG = `
 precision highp float;
 #define MAXLINES 12
+#define MAXTRAIL 18
 uniform vec2 uResolution;
 uniform float uTime;
 uniform float uLineWidth;
@@ -22,6 +23,10 @@ uniform vec3 uTint;
 uniform vec2 uPointer;
 uniform float uHover;
 uniform float uReach;
+uniform vec2 uTrail[MAXTRAIL];
+uniform float uTrailLife[MAXTRAIL];
+uniform int uTrailCount;
+
 float channel(vec2 uv, float r, float t, float jf) {
   float sum = 0.0;
   float band = mod(uv.x + uv.y, uBands);
@@ -33,6 +38,15 @@ float channel(vec2 uv, float r, float t, float jf) {
   }
   return sum;
 }
+
+float segmentGlow(vec2 p, vec2 a, vec2 b, float width) {
+  vec2 ab = b - a;
+  float denom = max(dot(ab, ab), 0.00001);
+  float h = clamp(dot(p - a, ab) / denom, 0.0, 1.0);
+  float d = length(p - mix(a, b, h));
+  return exp(-d * d / max(width * width, 0.00001));
+}
+
 void main() {
   vec2 s = (gl_FragCoord.xy * 2.0 - uResolution) / min(uResolution.x, uResolution.y);
   s *= uScale;
@@ -40,10 +54,22 @@ void main() {
   float reach = max(uReach, 1e-3);
   float r = length(uv);
   float t = uTime * 0.05;
+
   vec3 color = vec3(channel(uv, r, t, 0.0), channel(uv, r, t, 1.0), channel(uv, r, t, 2.0));
+
+  float trail = 0.0;
+  for (int i = 0; i < MAXTRAIL - 1; i++) {
+    if (i < uTrailCount - 1) {
+      float life = uTrailLife[i];
+      trail += segmentGlow(s, uTrail[i], uTrail[i + 1], 0.075 + life * 0.025) * life * (1.0 - float(i) / float(MAXTRAIL));
+    }
+  }
+
   float dp = length(s - uPointer) / reach;
   float glow = uHover * exp(-dp * dp);
-  vec3 c = min(color * uIntensity * (1.0 + glow) * uTint, vec3(1.0));
+  color += trail * vec3(0.72, 0.86, 1.0) * 0.34;
+
+  vec3 c = min(color * uIntensity * (1.0 + glow * 0.8) * uTint, vec3(1.0));
   gl_FragColor = vec4(c, clamp(max(max(c.r, c.g), c.b), 0.0, 1.0));
 }
 `
@@ -53,6 +79,7 @@ const BASE_RATE = 3
 const LINE_COUNT = 5
 const FOLLOW_RATE = 8
 const HOVER_REACH_PX = 260
+const MAXTRAIL = 18
 
 interface ShaderBackgroundProps {
   background?: string
@@ -90,15 +117,39 @@ export function ShaderBackground({ background = "#020202", tint = "#ffffff", spe
   const live = React.useRef({ speed, brightness, thickness, chromatic, bandGap, zoom, tint, hover })
   live.current = { speed, brightness, thickness, chromatic, bandGap, zoom, tint, hover }
   const ptr = React.useRef({ tx: 0, ty: 0, x: 0, y: 0, inside: 0, ease: 0 })
+  const trail = React.useRef<Array<{ x: number; y: number; life: number }>>([])
 
-  const toUv = (e: React.PointerEvent) => {
-    const el = e.currentTarget as HTMLElement
-    const w = el.clientWidth || 1
-    const h = el.clientHeight || 1
-    const m = Math.min(w, h)
-    const n = e.nativeEvent as PointerEvent
-    return { x: (n.offsetX * 2 - w) / m, y: (h - n.offsetY * 2) / m }
-  }
+  React.useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const canvas = canvasRef.current
+      if (!canvas) return
+      const rect = canvas.getBoundingClientRect()
+      const w = rect.width || 1
+      const h = rect.height || 1
+      const m = Math.min(w, h)
+      const x = ((e.clientX - rect.left) * 2 - w) / m
+      const y = (h - (e.clientY - rect.top) * 2) / m
+      const p = ptr.current
+      const dx = x - p.tx
+      const dy = y - p.ty
+      const moved = Math.hypot(dx, dy)
+      p.tx = x
+      p.ty = y
+      p.inside = 1
+      if (moved > 0.006) {
+        const t = trail.current
+        t.unshift({ x, y, life: 1 })
+        if (t.length > MAXTRAIL) t.length = MAXTRAIL
+      }
+    }
+    const onLeave = () => { ptr.current.inside = 0 }
+    window.addEventListener("pointermove", onMove, { passive: true })
+    window.addEventListener("blur", onLeave)
+    return () => {
+      window.removeEventListener("pointermove", onMove)
+      window.removeEventListener("blur", onLeave)
+    }
+  }, [])
 
   React.useEffect(() => {
     const canvas = canvasRef.current
@@ -124,7 +175,7 @@ export function ShaderBackground({ background = "#020202", tint = "#ffffff", spe
     gl.enableVertexAttribArray(aPosition)
     gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0)
     const u = {
-      resolution: gl.getUniformLocation(program, "uResolution"), time: gl.getUniformLocation(program, "uTime"), lineWidth: gl.getUniformLocation(program, "uLineWidth"), spread: gl.getUniformLocation(program, "uSpread"), bands: gl.getUniformLocation(program, "uBands"), scale: gl.getUniformLocation(program, "uScale"), intensity: gl.getUniformLocation(program, "uIntensity"), lineCount: gl.getUniformLocation(program, "uLineCount"), tint: gl.getUniformLocation(program, "uTint"), pointer: gl.getUniformLocation(program, "uPointer"), hover: gl.getUniformLocation(program, "uHover"), reach: gl.getUniformLocation(program, "uReach"),
+      resolution: gl.getUniformLocation(program, "uResolution"), time: gl.getUniformLocation(program, "uTime"), lineWidth: gl.getUniformLocation(program, "uLineWidth"), spread: gl.getUniformLocation(program, "uSpread"), bands: gl.getUniformLocation(program, "uBands"), scale: gl.getUniformLocation(program, "uScale"), intensity: gl.getUniformLocation(program, "uIntensity"), lineCount: gl.getUniformLocation(program, "uLineCount"), tint: gl.getUniformLocation(program, "uTint"), pointer: gl.getUniformLocation(program, "uPointer"), hover: gl.getUniformLocation(program, "uHover"), reach: gl.getUniformLocation(program, "uReach"), trail: gl.getUniformLocation(program, "uTrail[0]"), trailLife: gl.getUniformLocation(program, "uTrailLife[0]"), trailCount: gl.getUniformLocation(program, "uTrailCount"),
     }
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR)
@@ -160,6 +211,23 @@ export function ShaderBackground({ background = "#020202", tint = "#ffffff", spe
       p.x += (p.tx - p.x) * k
       p.y += (p.ty - p.y) * k
       p.ease += (p.inside - p.ease) * k
+
+      const tPoints = trail.current
+      for (let i = tPoints.length - 1; i >= 0; i--) {
+        tPoints[i].life -= dt * 0.9
+        if (tPoints[i].life <= 0) tPoints.splice(i, 1)
+      }
+      const points = new Float32Array(MAXTRAIL * 2)
+      const lives = new Float32Array(MAXTRAIL)
+      for (let i = 0; i < tPoints.length; i++) {
+        points[i * 2] = tPoints[i].x
+        points[i * 2 + 1] = tPoints[i].y
+        lives[i] = tPoints[i].life
+      }
+      gl.uniform2fv(u.trail, points)
+      gl.uniform1fv(u.trailLife, lives)
+      gl.uniform1i(u.trailCount, Math.min(tPoints.length, MAXTRAIL))
+
       const scale = l.zoom / 100
       const side = Math.max(1, Math.min(canvas.clientWidth || 1, canvas.clientHeight || 1))
       const reachUv = ((HOVER_REACH_PX * 2) / side) * scale
@@ -173,12 +241,7 @@ export function ShaderBackground({ background = "#020202", tint = "#ffffff", spe
   }, [])
 
   return (
-    <div
-      onPointerMove={(e) => { const { x, y } = toUv(e); const p = ptr.current; p.tx = x; p.ty = y; p.inside = 1 }}
-      onPointerLeave={() => { const p = ptr.current; p.tx = 0; p.ty = 0; p.inside = 0 }}
-      style={{ width: "100%", height: "100%", minWidth: 1200, minHeight: 800, position: "absolute", inset: 0, overflow: "hidden", background, zIndex: 0, pointerEvents: "auto", ...style }}
-      aria-hidden="true"
-    >
+    <div style={{ width: "100%", height: "100%", minWidth: 1200, minHeight: 800, position: "absolute", inset: 0, overflow: "hidden", background, zIndex: 0, pointerEvents: "none", ...style }} aria-hidden="true">
       <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block", pointerEvents: "none" }} />
     </div>
   )
