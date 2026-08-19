@@ -72,7 +72,7 @@ export function GyroRings() {
       camera.add(key);
       scene.add(camera);
 
-      const material = new THREE.MeshMatcapMaterial({ color: new THREE.Color("#d8ccff") });
+      const material = new THREE.MeshMatcapMaterial({ color: new THREE.Color("#D8D8D4") });
       const loader = new THREE.TextureLoader();
       loader.setCrossOrigin("anonymous");
       loader.load(
