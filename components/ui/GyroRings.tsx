@@ -89,7 +89,7 @@ export function GyroRings() {
 
       const rings: Array<{ pivot: any; axis: (typeof AXES)[number]; rate: number; mesh: any }> = [];
       const count = 5;
-      const tube = 0.055;
+      const tube = 0.07;
       const inner = 0.88;
       let parent: any = root;
 
