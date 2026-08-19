@@ -20,8 +20,16 @@ export function ThemeToggle() {
   };
 
   return (
-    <button type="button" onClick={toggle} aria-label={light ? "Switch to dark mode" : "Switch to light mode"} title={light ? "Dark mode" : "Light mode"} className="theme-toggle fixed right-5 top-5 md:right-10 md:top-7 z-[90]">
-      <span className="theme-toggle-track" aria-hidden="true"><span className="theme-toggle-icon">{light ? "☾" : "☼"}</span></span>
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
+      title={light ? "Dark mode" : "Light mode"}
+      className="theme-toggle"
+    >
+      <span className="theme-toggle-track" aria-hidden="true">
+        <span className="theme-toggle-icon">{light ? "☾" : "☼"}</span>
+      </span>
     </button>
   );
 }
