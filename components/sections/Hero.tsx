@@ -2,7 +2,6 @@ import { site } from "@/data/site";
 import { TickMarks } from "@/components/ui/TickMarks";
 import { MeshTextHover } from "@/components/ui/MeshTextHover";
 import { GyroRings } from "@/components/ui/GyroRings";
-import { ShaderBackground } from "@/components/ui/ShaderBackground";
 
 export function Hero() {
   const [firstName, ...rest] = site.name.split(" ");
@@ -10,23 +9,11 @@ export function Hero() {
 
   return (
     <section className="relative min-h-[100svh] flex flex-col px-5 md:px-10 pt-28 pb-10 md:pb-14 overflow-hidden">
-      <ShaderBackground
-        background="#020202"
-        tint="#ffffff"
-        speed={42}
-        brightness={42}
-        thickness={16}
-        chromatic={7}
-        bandGap={24}
-        zoom={250}
-        hover={70}
-      />
-
       <div className="hero-orb hero-orb-one" aria-hidden="true" />
       <div className="hero-orb hero-orb-two" aria-hidden="true" />
       <TickMarks corners={["tl", "tr"]} />
 
-      <div className="flex-1 flex items-center relative z-10">
+      <div className="flex-1 flex items-center">
         <div className="max-w-grid mx-auto w-full relative z-10">
           <div className="hero-main-grid">
             <div className="hero-copy">
