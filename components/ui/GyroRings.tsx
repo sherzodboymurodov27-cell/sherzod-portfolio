@@ -12,55 +12,78 @@ const RINGS = [
 
 export function GyroRings() {
   const ref = useRef<HTMLDivElement | null>(null);
-  const frame = useRef<number | null>(null);
+  const dragging = useRef(false);
+  const lastX = useRef(0);
+  const lastY = useRef(0);
+  const rotationX = useRef(0);
+  const rotationY = useRef(0);
 
   useEffect(() => {
     const container = ref.current;
     if (!container) return;
 
-    const reset = () => {
-      if (frame.current) cancelAnimationFrame(frame.current);
-      frame.current = requestAnimationFrame(() => {
-        container.style.setProperty("--gyro-x", "0deg");
-        container.style.setProperty("--gyro-y", "0deg");
-      });
+    const applyRotation = () => {
+      container.style.setProperty("--gyro-x", `${rotationX.current}deg`);
+      container.style.setProperty("--gyro-y", `${rotationY.current}deg`);
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      // Only the primary (left) mouse button starts the drag.
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+
+      dragging.current = true;
+      lastX.current = event.clientX;
+      lastY.current = event.clientY;
+      container.setPointerCapture?.(event.pointerId);
+      container.style.cursor = "grabbing";
+      event.preventDefault();
     };
 
     const onPointerMove = (event: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      const inside =
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom;
+      if (!dragging.current) return;
 
-      if (!inside) {
-        reset();
-        return;
-      }
+      const dx = event.clientX - lastX.current;
+      const dy = event.clientY - lastY.current;
+      lastX.current = event.clientX;
+      lastY.current = event.clientY;
 
-      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-
-      if (frame.current) cancelAnimationFrame(frame.current);
-      frame.current = requestAnimationFrame(() => {
-        container.style.setProperty("--gyro-x", `${y * 12}deg`);
-        container.style.setProperty("--gyro-y", `${x * 16}deg`);
-      });
+      // Horizontal drag rotates around Y; vertical drag rotates around X.
+      rotationY.current += dx * 0.45;
+      rotationX.current -= dy * 0.45;
+      applyRotation();
     };
 
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("blur", reset);
+    const stopDragging = (event?: PointerEvent) => {
+      if (!dragging.current) return;
+      dragging.current = false;
+      if (event) container.releasePointerCapture?.(event.pointerId);
+      container.style.cursor = "grab";
+    };
+
+    container.style.cursor = "grab";
+    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointerup", stopDragging);
+    container.addEventListener("pointercancel", stopDragging);
+    container.addEventListener("lostpointercapture", () => stopDragging());
 
     return () => {
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("blur", reset);
-      if (frame.current) cancelAnimationFrame(frame.current);
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", stopDragging);
+      container.removeEventListener("pointercancel", stopDragging);
+      container.style.cursor = "";
     };
   }, []);
 
   return (
-    <div ref={ref} className="gyro-rings" aria-label="Interactive abstract animation" role="img">
+    <div
+      ref={ref}
+      className="gyro-rings"
+      aria-label="Interactive abstract animation"
+      role="img"
+      style={{ touchAction: "none" }}
+    >
       <div className="gyro-rings-core" aria-hidden="true" />
       {RINGS.map((ring, index) => (
         <span
