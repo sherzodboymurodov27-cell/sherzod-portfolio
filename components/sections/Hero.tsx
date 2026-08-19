@@ -1,45 +1,7 @@
-import type { CSSProperties } from "react";
 import { site } from "@/data/site";
 import { TickMarks } from "@/components/ui/TickMarks";
+import { MeshTextHover } from "@/components/ui/MeshTextHover";
 
-const scatter = [
-  [-18, -26, -7],
-  [12, -34, 8],
-  [-24, 18, -10],
-  [28, 12, 9],
-  [-10, 34, -6],
-  [22, -18, 7],
-  [-26, -8, -8],
-  [16, 28, 10],
-  [-20, -30, -9],
-  [26, 20, 8],
-  [-14, 26, -7],
-  [20, -24, 9],
-];
-
-function AnimatedName({ text }: { text: string }) {
-  return (
-    <span className="block">
-      {Array.from(text).map((char, index) => {
-        const [x, y, rotate] = scatter[index % scatter.length];
-        const style = {
-          "--scatter-x": `${x}px`,
-          "--scatter-y": `${y}px`,
-          "--scatter-r": `${rotate}deg`,
-          transitionDelay: `${index * 14}ms`,
-        } as CSSProperties;
-
-        return (
-          <span key={`${char}-${index}`} className="hero-name-char" style={style}>
-            {char}
-          </span>
-        );
-      })}
-    </span>
-  );
-}
-
-// Editorial hero with restrained motion: staged typography entrance and slow ambient glass glows.
 export function Hero() {
   const [firstName, ...rest] = site.name.split(" ");
   const lastName = rest.join(" ");
@@ -56,8 +18,12 @@ export function Hero() {
             <div>
               <p className="hero-enter hero-enter-delay-1 text-xs tracking-[0.2em] uppercase text-muted mb-7">{site.role}</p>
               <h1 className="hero-enter hero-enter-delay-2 hero-name text-display font-extralight tracking-tight leading-[0.9] -ml-1" aria-label={site.name}>
-                <AnimatedName text={firstName} />
-                <AnimatedName text={lastName} />
+                <span className="block hero-name-line">
+                  <MeshTextHover text={firstName} />
+                </span>
+                <span className="block hero-name-line">
+                  <MeshTextHover text={lastName} />
+                </span>
               </h1>
             </div>
 
