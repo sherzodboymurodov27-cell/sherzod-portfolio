@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 function SocialIcon({ label }: { label: string }) {
   const common = {
-    width: 28,
-    height: 28,
+    width: 36,
+    height: 36,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
@@ -39,20 +39,32 @@ function SocialIcon({ label }: { label: string }) {
     );
   }
 
+  if (label === "Phone") {
+    return (
+      <svg {...common}>
+        <path d="M7.2 3.8 9.5 3c.65-.22 1.35.1 1.58.72l1.1 3.02c.2.55.03 1.17-.42 1.53l-1.58 1.25a14.1 14.1 0 0 0 4.3 4.3l1.25-1.58c.36-.45.98-.62 1.53-.42l3.02 1.1c.62.23.94.93.72 1.58l-.8 2.3c-.27.78-1 1.3-1.83 1.3C10.88 18.1 5.9 13.12 5.9 6.03c0-.83.52-1.56 1.3-1.83Z" />
+      </svg>
+    );
+  }
+
   return (
-    <svg {...common}>
-      <path d="M4 5h5.2c2.65 0 4.25 1.3 4.25 3.35 0 1.35-.72 2.3-1.85 2.8 1.5.45 2.35 1.55 2.35 3.15C13.95 14.9 12.2 17 9.1 17H4V5Z" />
-      <path d="M7 7.5v2.35h1.9c1 0 1.55-.4 1.55-1.18 0-.77-.55-1.17-1.55-1.17H7Zm0 4.65v2.35h2.1c1.08 0 1.68-.42 1.68-1.18 0-.77-.6-1.17-1.68-1.17H7Z" fill="currentColor" stroke="none" />
-      <path d="M16 10.4c.4-1.35 1.5-2.1 3.05-2.1 1.9 0 3.15 1.25 3.15 3.45v.6h-6.25" />
-      <path d="M15.95 12.35c.08 1.45.92 2.25 2.2 2.25.92 0 1.55-.35 1.9-1.05h2.05c-.45 1.65-1.85 2.65-3.98 2.65-2.68 0-4.28-1.5-4.28-4.05 0-2.5 1.65-4.1 4.2-4.1 2.58 0 4.16 1.65 4.16 4.3H15.95Z" fill="currentColor" stroke="none" />
-      <path d="M17.1 5.65h3.65" />
+    <svg {...common} viewBox="0 0 32 24">
+      <text
+        x="1"
+        y="19"
+        fill="currentColor"
+        stroke="none"
+        fontSize="18"
+        fontWeight="700"
+        fontFamily="Arial, Helvetica, sans-serif"
+      >
+        Bē
+      </text>
     </svg>
   );
 }
 
 export default function ContactPage() {
-  const socials = site.socials.filter((s) => s.label !== "Phone");
-
   return (
     <div className="relative min-h-[100svh] flex flex-col justify-center px-5 md:px-10 pt-24 pb-16 overflow-hidden">
       <TickMarks corners={["tl", "tr"]} />
@@ -67,20 +79,26 @@ export default function ContactPage() {
           ))}
         </h1>
 
-        <div className="grid gap-0 max-w-xl">
-          {socials.map((s) => (
+        <div className="grid gap-0 max-w-2xl">
+          {site.socials.map((s) => (
             <a
               key={s.label}
               href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-6 py-7 md:py-8 border-b border-line group"
+              target={s.label === "Phone" ? undefined : "_blank"}
+              rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
+              className="flex items-center gap-7 py-7 md:py-8 border-b border-line group"
             >
-              <span className="shrink-0 text-muted group-hover:text-accent transition-colors duration-300 ease-editorial">
+              <span className="shrink-0 text-accent transition-transform duration-300 ease-editorial group-hover:scale-105">
                 <SocialIcon label={s.label} />
               </span>
-              <span className="text-base md:text-lg uppercase tracking-[0.14em] text-muted group-hover:text-accent transition-colors duration-300 ease-editorial">
+              <span className="text-lg md:text-xl uppercase tracking-[0.14em] text-primary transition-colors duration-300 ease-editorial group-hover:text-accent">
                 {s.label}
+              </span>
+              <span
+                aria-hidden="true"
+                className="ml-auto text-2xl md:text-3xl font-light text-primary transition-all duration-300 ease-editorial group-hover:text-accent group-hover:translate-x-1"
+              >
+                →
               </span>
             </a>
           ))}
