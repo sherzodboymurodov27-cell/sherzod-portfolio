@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 function SocialIcon({ label }: { label: string }) {
   const common = {
-    width: 20,
-    height: 20,
+    width: 28,
+    height: 28,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
@@ -39,26 +39,20 @@ function SocialIcon({ label }: { label: string }) {
     );
   }
 
-  if (label === "Behance") {
-    return (
-      <svg {...common}>
-        <path d="M4 5h5.2c2.65 0 4.25 1.3 4.25 3.35 0 1.35-.72 2.3-1.85 2.8 1.5.45 2.35 1.55 2.35 3.15C13.95 14.9 12.2 17 9.1 17H4V5Z" />
-        <path d="M7 7.5v2.35h1.9c1 0 1.55-.4 1.55-1.18 0-.77-.55-1.17-1.55-1.17H7Zm0 4.65v2.35h2.1c1.08 0 1.68-.42 1.68-1.18 0-.77-.6-1.17-1.68-1.17H7Z" fill="currentColor" stroke="none" />
-        <path d="M16 10.4c.4-1.35 1.5-2.1 3.05-2.1 1.9 0 3.15 1.25 3.15 3.45v.6h-6.25" />
-        <path d="M15.95 12.35c.08 1.45.92 2.25 2.2 2.25.92 0 1.55-.35 1.9-1.05h2.05c-.45 1.65-1.85 2.65-3.98 2.65-2.68 0-4.28-1.5-4.28-4.05 0-2.5 1.65-4.1 4.2-4.1 2.58 0 4.16 1.65 4.16 4.3H15.95Z" fill="currentColor" stroke="none" />
-        <path d="M17.1 5.65h3.65" />
-      </svg>
-    );
-  }
-
   return (
     <svg {...common}>
-      <path d="M6.7 3.8 9 3.2c.55-.14 1.1.15 1.32.67l1.18 2.8c.2.47.06 1.02-.34 1.34L9.8 9.2c1.02 2.08 2.92 3.98 5 5l1.2-1.36c.32-.4.87-.54 1.34-.34l2.8 1.18c.52.22.81.77.67 1.32l-.6 2.3c-.14.55-.64.94-1.2.94C10.7 18.24 5.76 13.3 5.76 5c0-.56.39-1.06.94-1.2Z" />
+      <path d="M4 5h5.2c2.65 0 4.25 1.3 4.25 3.35 0 1.35-.72 2.3-1.85 2.8 1.5.45 2.35 1.55 2.35 3.15C13.95 14.9 12.2 17 9.1 17H4V5Z" />
+      <path d="M7 7.5v2.35h1.9c1 0 1.55-.4 1.55-1.18 0-.77-.55-1.17-1.55-1.17H7Zm0 4.65v2.35h2.1c1.08 0 1.68-.42 1.68-1.18 0-.77-.6-1.17-1.68-1.17H7Z" fill="currentColor" stroke="none" />
+      <path d="M16 10.4c.4-1.35 1.5-2.1 3.05-2.1 1.9 0 3.15 1.25 3.15 3.45v.6h-6.25" />
+      <path d="M15.95 12.35c.08 1.45.92 2.25 2.2 2.25.92 0 1.55-.35 1.9-1.05h2.05c-.45 1.65-1.85 2.65-3.98 2.65-2.68 0-4.28-1.5-4.28-4.05 0-2.5 1.65-4.1 4.2-4.1 2.58 0 4.16 1.65 4.16 4.3H15.95Z" fill="currentColor" stroke="none" />
+      <path d="M17.1 5.65h3.65" />
     </svg>
   );
 }
 
 export default function ContactPage() {
+  const socials = site.socials.filter((s) => s.label !== "Phone");
+
   return (
     <div className="relative min-h-[100svh] flex flex-col justify-center px-5 md:px-10 pt-24 pb-16 overflow-hidden">
       <TickMarks corners={["tl", "tr"]} />
@@ -73,23 +67,20 @@ export default function ContactPage() {
           ))}
         </h1>
 
-        <div className="grid gap-0 max-w-2xl">
-          {site.socials.map((s) => (
+        <div className="grid gap-0 max-w-xl">
+          {socials.map((s) => (
             <a
               key={s.label}
               href={s.href}
-              target={s.label === "Phone" ? undefined : "_blank"}
-              rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
-              className="flex items-center gap-5 py-5 md:py-6 border-b border-line group"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-6 py-7 md:py-8 border-b border-line group"
             >
               <span className="shrink-0 text-muted group-hover:text-accent transition-colors duration-300 ease-editorial">
                 <SocialIcon label={s.label} />
               </span>
-              <span className="text-xs uppercase tracking-[0.14em] text-muted group-hover:text-accent transition-colors duration-300 ease-editorial min-w-24">
+              <span className="text-base md:text-lg uppercase tracking-[0.14em] text-muted group-hover:text-accent transition-colors duration-300 ease-editorial">
                 {s.label}
-              </span>
-              <span className="ml-auto text-base md:text-xl tracking-tight text-right transition-transform duration-300 ease-editorial group-hover:-translate-y-0.5">
-                {s.value}
               </span>
             </a>
           ))}
