@@ -144,15 +144,7 @@ export function GyroRings() {
 
       ctx.clearRect(0, 0, width, height);
 
-      const scale = Math.min(width, height) * 0.28;
-      const centerGlow = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, scale * 1.25);
-      centerGlow.addColorStop(0, "rgba(150, 130, 255, 0.055)");
-      centerGlow.addColorStop(0.55, "rgba(120, 100, 255, 0.018)");
-      centerGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
-      ctx.fillStyle = centerGlow;
-      ctx.fillRect(0, 0, width, height);
-
-      for (const ring of RINGS) drawRing(ring, elapsed, scale);
+      for (const ring of RINGS) drawRing(ring, elapsed, Math.min(width, height) * 0.28);
 
       frame = requestAnimationFrame(tick);
     };
