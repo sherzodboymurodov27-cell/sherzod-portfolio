@@ -12,30 +12,50 @@ const RINGS = [
 
 export function GyroRings() {
   const ref = useRef<HTMLDivElement | null>(null);
+  const frame = useRef<number | null>(null);
 
   useEffect(() => {
     const container = ref.current;
     if (!container) return;
 
+    const reset = () => {
+      if (frame.current) cancelAnimationFrame(frame.current);
+      frame.current = requestAnimationFrame(() => {
+        container.style.setProperty("--gyro-x", "0deg");
+        container.style.setProperty("--gyro-y", "0deg");
+      });
+    };
+
     const onPointerMove = (event: PointerEvent) => {
       const rect = container.getBoundingClientRect();
+      const inside =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+
+      if (!inside) {
+        reset();
+        return;
+      }
+
       const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
       const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-      container.style.setProperty("--gyro-x", `${y * 12}deg`);
-      container.style.setProperty("--gyro-y", `${x * 16}deg`);
+
+      if (frame.current) cancelAnimationFrame(frame.current);
+      frame.current = requestAnimationFrame(() => {
+        container.style.setProperty("--gyro-x", `${y * 12}deg`);
+        container.style.setProperty("--gyro-y", `${x * 16}deg`);
+      });
     };
 
-    const reset = () => {
-      container.style.setProperty("--gyro-x", "0deg");
-      container.style.setProperty("--gyro-y", "0deg");
-    };
-
-    container.addEventListener("pointermove", onPointerMove);
-    container.addEventListener("pointerleave", reset);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("blur", reset);
 
     return () => {
-      container.removeEventListener("pointermove", onPointerMove);
-      container.removeEventListener("pointerleave", reset);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("blur", reset);
+      if (frame.current) cancelAnimationFrame(frame.current);
     };
   }, []);
 
