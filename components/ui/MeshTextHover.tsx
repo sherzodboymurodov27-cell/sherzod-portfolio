@@ -92,6 +92,16 @@ function renderText(
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.font = `300 ${fontSize}px ${fontFamily}, sans-serif`;
+
+  // Keep the complete word inside the actual canvas. The previous version
+  // used the browser's default 300px canvas width because the wrapper had no
+  // explicit dimensions, which clipped the last characters of the name.
+  const measured = ctx.measureText(text).width;
+  if (measured > width * 0.96) {
+    const fittedSize = fontSize * ((width * 0.96) / measured);
+    ctx.font = `300 ${fittedSize}px ${fontFamily}, sans-serif`;
+  }
+
   ctx.fillText(text, 0, height / 2);
   return canvas;
 }
@@ -122,6 +132,7 @@ export function MeshTextHover({ text }: { text: string }) {
     const vertCount = (GRID_W + 1) * (GRID_H + 1);
     const positions = new Float32Array(vertCount * 2);
     const uvs = new Float32Array(vertCount * 2);
+
     for (let y = 0; y <= GRID_H; y++) {
       for (let x = 0; x <= GRID_W; x++) {
         const i = y * (GRID_W + 1) + x;
@@ -137,6 +148,7 @@ export function MeshTextHover({ text }: { text: string }) {
     const indexCount = GRID_W * GRID_H * 6;
     const indices = new Uint32Array(indexCount);
     let index = 0;
+
     for (let y = 0; y < GRID_H; y++) {
       for (let x = 0; x < GRID_W; x++) {
         const a = y * (GRID_W + 1) + x;
@@ -169,6 +181,7 @@ export function MeshTextHover({ text }: { text: string }) {
     const dispBuf = gl.createBuffer();
     const idxBuf = gl.createBuffer();
     const tex = gl.createTexture();
+
     if (!vao || !posBuf || !uvBuf || !dispBuf || !idxBuf || !tex) return;
 
     gl.bindVertexArray(vao);
@@ -204,8 +217,11 @@ export function MeshTextHover({ text }: { text: string }) {
       const rect = wrapper.getBoundingClientRect();
       const width = Math.max(2, Math.round(rect.width * dpr));
       const height = Math.max(2, Math.round(rect.height * dpr));
-      const fontSize = Math.max(42, Math.min(160, rect.height * 1.04 * dpr));
-      const fontFamily = getComputedStyle(wrapper).fontFamily;
+
+      // The wrapper now has a real 1em height, so derive the glyph size from
+      // that box rather than from the browser's default 150px canvas height.
+      const fontSize = Math.max(42, height * 0.9);
+      const fontFamily = getComputedStyle(wrapper).fontFamily || "Manrope";
 
       try {
         if (document.fonts?.load) {
@@ -213,12 +229,28 @@ export function MeshTextHover({ text }: { text: string }) {
           await document.fonts.ready;
         }
       } catch {}
+
       if (cancelled) return;
 
-      const textCanvas = renderText(text, "#F7F2FF", fontFamily, fontSize, width, height);
+      const textCanvas = renderText(
+        text,
+        "#F7F2FF",
+        fontFamily,
+        fontSize,
+        width,
+        height,
+      );
+
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textCanvas);
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.RGBA,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        textCanvas,
+      );
       gl.viewport(0, 0, width, height);
     };
 
@@ -227,6 +259,7 @@ export function MeshTextHover({ text }: { text: string }) {
       const rect = wrapper.getBoundingClientRect();
       const width = Math.max(2, Math.round(rect.width * dpr));
       const height = Math.max(2, Math.round(rect.height * dpr));
+
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width;
         canvas.height = height;
@@ -239,21 +272,33 @@ export function MeshTextHover({ text }: { text: string }) {
     resize();
     rebuildTexture();
 
-    const cursor = { x: 99, y: 99, px: 99, py: 99, vx: 0, vy: 0, inside: false };
+    const cursor = {
+      x: 99,
+      y: 99,
+      px: 99,
+      py: 99,
+      vx: 0,
+      vy: 0,
+      inside: false,
+    };
+
     const onMove = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       const nx = (event.clientX - rect.left) / rect.width;
       const ny = (event.clientY - rect.top) / rect.height;
       const x = nx * 2 - 1;
       const y = 1 - ny * 2;
+
       if (!cursor.inside) {
         cursor.px = x;
         cursor.py = y;
         cursor.inside = true;
       }
+
       cursor.x = x;
       cursor.y = y;
     };
+
     const onLeave = () => {
       cursor.inside = false;
       cursor.x = 99;
@@ -266,13 +311,16 @@ export function MeshTextHover({ text }: { text: string }) {
     wrapper.addEventListener("pointerleave", onLeave);
 
     let raf = 0;
+
     const tick = () => {
       cursor.vx = cursor.x - cursor.px;
       cursor.vy = cursor.y - cursor.py;
+
       if (Math.hypot(cursor.vx, cursor.vy) > 0.3) {
         cursor.vx = 0;
         cursor.vy = 0;
       }
+
       cursor.px = cursor.x;
       cursor.py = cursor.y;
 
@@ -285,17 +333,22 @@ export function MeshTextHover({ text }: { text: string }) {
         const cx = cursor.x - (px + dx);
         const cy = cursor.y - (py + dy);
         const distance = Math.hypot(cx, cy);
-        const proximity = Math.max(0, 1 / (1 + distance / 0.055) - 0.1);
+        const proximity = Math.max(
+          0,
+          1 / (1 + distance / 0.055) - 0.1,
+        );
 
         let vx = velocity[i2];
         let vy = velocity[i2 + 1];
         const force = 2.0;
+
         vx += cursor.vx * force * proximity;
         vy += cursor.vy * force * proximity;
         vx -= dx * SPRING_K;
         vy -= dy * SPRING_K;
         vx *= DAMPING;
         vy *= DAMPING;
+
         velocity[i2] = vx;
         velocity[i2 + 1] = vy;
         displacement[i2] = Math.max(-1, Math.min(1, dx + vx * DT));
@@ -317,8 +370,10 @@ export function MeshTextHover({ text }: { text: string }) {
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.bindVertexArray(vao);
       gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_INT, 0);
+
       raf = requestAnimationFrame(tick);
     };
+
     raf = requestAnimationFrame(tick);
 
     return () => {
@@ -340,8 +395,27 @@ export function MeshTextHover({ text }: { text: string }) {
   }, [text]);
 
   return (
-    <div ref={wrapperRef} className="mesh-text-hover" aria-hidden="true">
-      <canvas ref={canvasRef} />
+    <div
+      ref={wrapperRef}
+      className="mesh-text-hover"
+      aria-hidden="true"
+      style={{
+        position: "relative",
+        display: "block",
+        width: "100%",
+        height: "1em",
+        overflow: "visible",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: "block",
+          width: "100%",
+          height: "100%",
+          overflow: "visible",
+        }}
+      />
     </div>
   );
 }
