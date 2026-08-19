@@ -93,9 +93,8 @@ function renderText(
   ctx.textBaseline = "middle";
   ctx.font = `300 ${fontSize}px ${fontFamily}, sans-serif`;
 
-  // Keep the complete word inside the actual canvas. The previous version
-  // used the browser's default 300px canvas width because the wrapper had no
-  // explicit dimensions, which clipped the last characters of the name.
+  // Keep the complete word inside the actual canvas without changing the
+  // intended hero type scale unless the word genuinely exceeds the box.
   const measured = ctx.measureText(text).width;
   if (measured > width * 0.96) {
     const fittedSize = fontSize * ((width * 0.96) / measured);
@@ -218,9 +217,10 @@ export function MeshTextHover({ text }: { text: string }) {
       const width = Math.max(2, Math.round(rect.width * dpr));
       const height = Math.max(2, Math.round(rect.height * dpr));
 
-      // The wrapper now has a real 1em height, so derive the glyph size from
-      // that box rather than from the browser's default 150px canvas height.
-      const fontSize = Math.max(42, height * 0.9);
+      // Preserve the original hero typography scale. The wrapper's height
+      // comes from the hero's clamp() size, so this reproduces the previous
+      // large display text while the canvas itself remains correctly sized.
+      const fontSize = Math.max(42, Math.min(160, rect.height * 1.04 * dpr));
       const fontFamily = getComputedStyle(wrapper).fontFamily || "Manrope";
 
       try {
@@ -333,10 +333,7 @@ export function MeshTextHover({ text }: { text: string }) {
         const cx = cursor.x - (px + dx);
         const cy = cursor.y - (py + dy);
         const distance = Math.hypot(cx, cy);
-        const proximity = Math.max(
-          0,
-          1 / (1 + distance / 0.055) - 0.1,
-        );
+        const proximity = Math.max(0, 1 / (1 + distance / 0.055) - 0.1);
 
         let vx = velocity[i2];
         let vy = velocity[i2 + 1];
