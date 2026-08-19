@@ -205,7 +205,7 @@ export function MeshTextHover({ text }: { text: string }) {
       const width = Math.max(2, Math.round(rect.width * dpr));
       const height = Math.max(2, Math.round(rect.height * dpr));
       const fontSize = Math.max(42, Math.min(160, rect.height * 1.04 * dpr));
-      const fontFamily = "Manrope";
+      const fontFamily = getComputedStyle(wrapper).fontFamily;
 
       try {
         if (document.fonts?.load) {
