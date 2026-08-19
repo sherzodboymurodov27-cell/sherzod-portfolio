@@ -24,12 +24,15 @@ void main(){
 
 const MAX_DPR=2, MAXTRAIL=32, TRAIL_LIFE=0.62, SAMPLE_DISTANCE=0.045
 
-interface ShaderBackgroundProps { background?:string; tint?:string; speed?:number; brightness?:number; zoom?:number; style?:React.CSSProperties }
+interface ShaderBackgroundProps {
+ background?:string; tint?:string; speed?:number; brightness?:number; zoom?:number;
+ thickness?:number; chromatic?:number; bandGap?:number; hover?:number; style?:React.CSSProperties
+}
 function parseColor(input:string|undefined):[number,number,number]{
  if(!input)return[1,1,1]; const s=input.trim(); if(s[0]==="#"){const n=parseInt(s.slice(1),16);return[((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255]} return[1,1,1]
 }
 
-export function ShaderBackground({background="#020202",tint="#ffffff",speed=42,brightness=42,zoom=250,style}:ShaderBackgroundProps){
+export function ShaderBackground({background="#020202",tint="#ffffff",speed=42,brightness=42,zoom=250,thickness,chromatic,bandGap,hover,style}:ShaderBackgroundProps){
  const canvasRef=React.useRef<HTMLCanvasElement|null>(null)
  const live=React.useRef({tint,brightness,zoom})
  live.current={tint,brightness,zoom}
