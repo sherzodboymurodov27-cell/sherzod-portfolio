@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { site } from "@/data/site";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const LINKS = [
   { href: "/#work", label: "Work", index: "01" },
@@ -50,18 +49,15 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="md:hidden text-xs uppercase tracking-[0.12em] font-medium text-ink"
-          >
-            {open ? "Close" : "Menu"}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="md:hidden text-xs uppercase tracking-[0.12em] font-medium text-ink"
+        >
+          {open ? "Close" : "Menu"}
+        </button>
       </div>
 
       {open && (
