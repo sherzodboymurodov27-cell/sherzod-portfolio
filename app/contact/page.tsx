@@ -86,17 +86,18 @@ export default function ContactPage() {
               href={s.href}
               target={s.label === "Phone" ? undefined : "_blank"}
               rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
-              className="flex items-center gap-5 py-5 md:py-6 border-b border-line group"
+              className="group relative flex items-center gap-5 py-5 md:py-6 border-b border-line overflow-hidden transition-transform duration-200 ease-out hover:translate-x-1"
             >
-              <span className="shrink-0 text-accent transition-transform duration-300 ease-editorial group-hover:scale-105">
+              <span className="absolute inset-0 -z-10 bg-white/[0.025] opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100" />
+              <span className="shrink-0 text-accent transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-6">
                 <SocialIcon label={s.label} />
               </span>
-              <span className="text-base md:text-lg uppercase tracking-[0.14em] text-primary transition-colors duration-300 ease-editorial group-hover:text-accent">
+              <span className="text-base md:text-lg uppercase tracking-[0.14em] text-primary transition-all duration-200 ease-out group-hover:text-accent group-hover:translate-x-1">
                 {s.label}
               </span>
               <span
                 aria-hidden="true"
-                className="ml-auto text-xl md:text-2xl font-light text-primary transition-all duration-300 ease-editorial group-hover:text-accent group-hover:translate-x-1"
+                className="ml-auto text-xl md:text-2xl font-light text-primary transition-all duration-200 ease-out group-hover:text-accent group-hover:translate-x-2 group-hover:scale-125"
               >
                 →
               </span>
