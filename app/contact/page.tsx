@@ -86,7 +86,7 @@ export default function ContactPage() {
               href={s.href}
               target={s.label === "Phone" ? undefined : "_blank"}
               rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
-              className="group relative flex items-center gap-5 py-5 md:py-6 border-b border-line overflow-hidden transition-transform duration-200 ease-out hover:translate-x-1"
+              className="group relative flex items-center gap-5 px-3 md:px-4 py-5 md:py-6 border-b border-line transition-transform duration-200 ease-out hover:translate-x-1"
             >
               <span className="absolute inset-0 -z-10 bg-white/[0.025] opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100" />
               <span className="shrink-0 text-accent transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-6">
