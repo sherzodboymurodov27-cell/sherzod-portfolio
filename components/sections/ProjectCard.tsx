@@ -22,8 +22,14 @@ export function ProjectCard({
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-700 ease-editorial group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 ease-editorial group-hover:opacity-100"
           />
+          <span
+            aria-hidden="true"
+            className="absolute right-5 bottom-5 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/20 text-white/90 opacity-0 translate-y-2 scale-90 backdrop-blur-md transition-[opacity,transform] duration-500 ease-editorial group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100"
+          >
+            <span className="transition-transform duration-500 ease-editorial group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+          </span>
         </div>
       </div>
 
