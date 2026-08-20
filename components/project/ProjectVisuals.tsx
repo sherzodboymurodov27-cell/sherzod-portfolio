@@ -23,7 +23,7 @@ function ProjectImage({ src, alt, className = "" }: { src: string; alt: string; 
     <img
       src={src}
       alt={alt}
-      className={`block w-full h-auto ${className}`}
+      className={`block w-full h-auto transition-transform duration-1000 ease-editorial group-hover:scale-[1.018] ${className}`}
       loading="lazy"
     />
   );
@@ -33,7 +33,7 @@ function Block({ block }: { block: ProjectBlock }) {
   switch (block.type) {
     case "full":
       return (
-        <div className="w-full overflow-hidden glass-panel">
+        <div className="group w-full overflow-hidden glass-panel gallery-item">
           <ProjectImage src={block.image} alt={block.alt} />
         </div>
       );
@@ -43,7 +43,7 @@ function Block({ block }: { block: ProjectBlock }) {
         <Contained>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {block.images.map((img, i) => (
-              <div key={img} className="overflow-hidden glass-panel gallery-item">
+              <div key={img} className="group overflow-hidden glass-panel gallery-item">
                 <ProjectImage src={img} alt={block.alt[i] ?? "Project visual"} />
               </div>
             ))}
@@ -56,7 +56,7 @@ function Block({ block }: { block: ProjectBlock }) {
         <Contained>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
             {block.images.map((img, i) => (
-              <div key={img} className="overflow-hidden glass-panel">
+              <div key={img} className="group overflow-hidden glass-panel gallery-item">
                 <ProjectImage src={img} alt={block.alt[i]} />
               </div>
             ))}
@@ -67,7 +67,7 @@ function Block({ block }: { block: ProjectBlock }) {
     case "single":
       return (
         <Contained>
-          <div className="w-full max-w-3xl mx-auto overflow-hidden glass-panel">
+          <div className="group w-full max-w-3xl mx-auto overflow-hidden glass-panel gallery-item">
             <ProjectImage src={block.image} alt={block.alt} />
           </div>
         </Contained>
