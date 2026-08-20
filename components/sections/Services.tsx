@@ -14,12 +14,12 @@ export function Services() {
         <div>
           {site.services.map((service, i) => (
             <RevealOnScroll key={service.title} delay={i * 60}>
-              <div className="group grid grid-cols-[2.5rem_1fr] md:grid-cols-[4rem_1fr_1fr] items-baseline gap-x-4 md:gap-x-8 py-6 md:py-7 border-t border-line last:border-b last:border-line">
-                <span className="text-sm text-muted tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="text-h2 font-light tracking-tight transition-transform duration-300 ease-editorial group-hover:translate-x-1">
+              <div className="group grid grid-cols-[2.5rem_1fr] md:grid-cols-[4rem_1fr_1fr] items-baseline gap-x-4 md:gap-x-8 py-6 md:py-7 border-t border-line last:border-b last:border-line transition-[background-color,padding] duration-400 ease-editorial hover:bg-white/[0.018] md:hover:px-3">
+                <span className="text-sm text-muted tabular-nums transition-colors duration-300 group-hover:text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="text-h2 font-light tracking-tight transition-transform duration-400 ease-editorial group-hover:translate-x-1">
                   {service.title}
                 </h3>
-                <p className="hidden md:block text-muted text-base md:text-lg max-w-sm md:text-right">
+                <p className="hidden md:block text-muted text-base md:text-lg max-w-sm md:text-right transition-colors duration-400 group-hover:text-ink/80">
                   {service.description}
                 </p>
               </div>
