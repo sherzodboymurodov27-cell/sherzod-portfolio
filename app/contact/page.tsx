@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 function SocialIcon({ label }: { label: string }) {
   const common = {
-    width: 36,
-    height: 36,
+    width: 30,
+    height: 30,
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
@@ -86,17 +86,17 @@ export default function ContactPage() {
               href={s.href}
               target={s.label === "Phone" ? undefined : "_blank"}
               rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
-              className="flex items-center gap-7 py-7 md:py-8 border-b border-line group"
+              className="flex items-center gap-5 py-5 md:py-6 border-b border-line group"
             >
               <span className="shrink-0 text-accent transition-transform duration-300 ease-editorial group-hover:scale-105">
                 <SocialIcon label={s.label} />
               </span>
-              <span className="text-lg md:text-xl uppercase tracking-[0.14em] text-primary transition-colors duration-300 ease-editorial group-hover:text-accent">
+              <span className="text-base md:text-lg uppercase tracking-[0.14em] text-primary transition-colors duration-300 ease-editorial group-hover:text-accent">
                 {s.label}
               </span>
               <span
                 aria-hidden="true"
-                className="ml-auto text-2xl md:text-3xl font-light text-primary transition-all duration-300 ease-editorial group-hover:text-accent group-hover:translate-x-1"
+                className="ml-auto text-xl md:text-2xl font-light text-primary transition-all duration-300 ease-editorial group-hover:text-accent group-hover:translate-x-1"
               >
                 →
               </span>
