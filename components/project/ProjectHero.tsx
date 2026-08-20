@@ -13,7 +13,7 @@ export function ProjectHero({ project }: { project: Project }) {
           <span className="hidden md:block text-xs text-muted">{project.year}</span>
         </div>
 
-        <div className="flex flex-wrap spine text-[10px] uppercase tracking-[0.12em] text-muted mt-5 mb-10 md:mb-14">
+        <div className="flex flex-wrap spine text-[10px] uppercase tracking-[0.12em] text-muted mt-5 mb-10 md:mb-14 px-5 md:px-8">
           <span className="pr-4 py-1 first:pl-0">{project.category}</span>
           <span className="px-4 py-1">{project.role}</span>
           <span className="px-4 py-1">{project.year}</span>
