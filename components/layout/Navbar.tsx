@@ -28,7 +28,7 @@ export function Navbar() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 px-3 md:px-6 pt-3 md:pt-5 transition-all duration-300 ease-editorial">
       <div className={`max-w-[1320px] mx-auto rounded-2xl border border-white/10 px-4 md:px-7 flex items-center justify-between transition-all duration-300 ease-editorial ${scrolled || open ? "h-14 md:h-16 bg-[#09090A]/78 backdrop-blur-2xl shadow-[0_18px_50px_rgba(0,0,0,0.35)]" : "h-14 md:h-16 bg-black/10 backdrop-blur-xl"}`}>
-        <Link href="/" className="text-xs md:text-sm font-semibold tracking-[0.08em] uppercase text-ink">
+        <Link href="/" className="text-xs md:text-sm font-semibold tracking-[0.08em] uppercase text-ink transition-transform duration-300 ease-editorial hover:-translate-y-px">
           {site.name}
         </Link>
 
@@ -54,7 +54,7 @@ export function Navbar() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
-          className="md:hidden text-xs uppercase tracking-[0.12em] font-medium text-ink"
+          className="md:hidden text-xs uppercase tracking-[0.12em] font-medium text-ink transition-transform duration-300 ease-editorial hover:translate-x-0.5"
         >
           {open ? "Close" : "Menu"}
         </button>
@@ -67,9 +67,9 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="flex items-baseline gap-3 text-2xl font-light tracking-tight text-ink"
+              className="group flex items-baseline gap-3 text-2xl font-light tracking-tight text-ink transition-transform duration-300 ease-editorial hover:translate-x-1"
             >
-              <span className="text-xs text-accent tabular-nums">{link.index}</span>
+              <span className="text-xs text-accent tabular-nums transition-transform duration-300 ease-editorial group-hover:translate-x-0.5">{link.index}</span>
               {link.label}
             </Link>
           ))}
