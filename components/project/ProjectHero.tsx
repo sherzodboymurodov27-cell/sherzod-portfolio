@@ -8,7 +8,7 @@ export function ProjectHero({ project }: { project: Project }) {
         <div className="project-title-glass flex items-end justify-between gap-8 px-5 py-6 md:px-8 md:py-8">
           <div>
             <p className="text-[10px] uppercase tracking-[0.18em] text-muted mb-4">Project</p>
-            <h1 className="text-h1 font-extralight tracking-tight max-w-4xl">{project.title}</h1>
+            <h1 className="text-h1 font-extralight tracking-tight max-w-4xl transition-transform duration-500 ease-editorial hover:translate-x-1">{project.title}</h1>
           </div>
           <span className="hidden md:block text-xs text-muted">{project.year}</span>
         </div>
@@ -21,12 +21,12 @@ export function ProjectHero({ project }: { project: Project }) {
       </div>
 
       <div className="max-w-grid mx-auto px-5 md:px-10">
-        <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-3xl glass-panel p-2 md:p-3">
+        <div className="group relative w-full max-w-5xl mx-auto overflow-hidden rounded-3xl glass-panel p-2 md:p-3">
           <TickMarks corners={["tl", "tr", "bl", "br"]} />
           <img
             src={project.cover}
             alt={project.coverAlt}
-            className="block w-full h-auto rounded-[1.25rem]"
+            className="block w-full h-auto rounded-[1.25rem] transition-[transform,filter] duration-1000 ease-editorial group-hover:scale-[1.012] group-hover:contrast-[1.02]"
             fetchPriority="high"
           />
         </div>
