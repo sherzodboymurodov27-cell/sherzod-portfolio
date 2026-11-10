@@ -98,6 +98,7 @@ body::before {
 @media (max-width: 767px) {
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: block; }
+  .nav-inner { grid-template-columns: 1fr auto; }
   .nav-mobile.is-open { display: flex; flex-direction: column; gap: 22px; padding: 28px clamp(16px, 2.6vw, 40px) 36px; }
   .nav-mobile.is-open a { font-size: 30px; letter-spacing: -0.01em; text-transform: none; color: #F1F1F0; }
 }
@@ -179,8 +180,8 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 767px) {
   .hero { height: 100svh; min-height: 600px; }
   .hero-title { padding-top: 96px; font-size: 17.5vw; }
-  .hero-stage { padding-top: 40vh; }
-  .phone { width: 46vw; }
+  .hero-stage { padding-top: 33vh; }
+  .phone { width: 38vw; }
   .hero-meta { flex-direction: column; align-items: flex-start; gap: 14px; }
   .hero-meta-right { max-width: 26ch; font-size: 14px; }
   .hero-grid { background-size: calc(100% / 4) 100%; }
