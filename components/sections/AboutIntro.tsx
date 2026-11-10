@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIsoLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site } from "@/data/site";
@@ -13,7 +14,7 @@ export function AboutIntro() {
   const root = useRef<HTMLElement>(null);
   const words = site.about.intro.split(" ");
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(

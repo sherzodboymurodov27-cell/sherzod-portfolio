@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { useIsoLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Project } from "@/data/projects";
@@ -49,7 +50,7 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
     };
   }, []);
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference) and (min-width: 768px)", () => {
         gsap.utils.toArray<HTMLElement>(".work-tile").forEach((tile) => {

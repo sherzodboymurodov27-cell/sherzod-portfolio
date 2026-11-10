@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useIsoLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -11,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 export function FooterCta() {
   const root = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from(".cta-line-inner", {
