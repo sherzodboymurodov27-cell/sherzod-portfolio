@@ -1,13 +1,7 @@
-import Link from "next/link";
 import { site } from "@/data/site";
 import { BadgeScene } from "@/components/three/BadgeScene";
 import { FooterCta } from "@/components/layout/FooterCta";
-
-const PAGES = [
-  { href: "/work", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-];
+import { FooterPages } from "@/components/layout/FooterPages";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -15,18 +9,13 @@ export function Footer() {
 
   return (
     <footer className="footer">
+      <div className="section-grid" aria-hidden="true" />
       <BadgeScene name={site.name} role="Designer" place={`${site.location} · since ${site.about.since}`} />
 
       <FooterCta />
 
       <div className="footer-links">
-        <nav aria-label="Pages">
-          {PAGES.map((p) => (
-            <Link key={p.href} href={p.href}>
-              {p.label}
-            </Link>
-          ))}
-        </nav>
+        <FooterPages />
         <nav aria-label="Social">
           {site.socials
             .filter((s) => s.label !== "Phone")
@@ -45,7 +34,7 @@ export function Footer() {
 
       <div className="footer-base">
         <span>
-          © {year} {site.name}
+          {site.name}, {year}
         </span>
         <span>{site.location}</span>
       </div>

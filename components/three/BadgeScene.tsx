@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createStage, whenNear } from "@/lib/three-stage";
 
 /**
@@ -9,18 +9,22 @@ import { createStage, whenNear } from "@/lib/three-stage";
  */
 export function BadgeScene({ name, role, place }: { name: string; role: string; place: string }) {
   const host = useRef<HTMLDivElement>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let dispose = () => {};
+    let stopNear = () => {};
     let cancelled = false;
 
     (async () => {
       const el = host.current;
       if (!el) return;
-      await whenNear(el);
+      const near = whenNear(el);
+      stopNear = near.stop;
+      await near.ready;
       if (cancelled) return;
       const stage = await createStage(el, 30);
-      if (!stage) return;
+      if (!stage) return setFailed(true);
       if (cancelled) return stage.dispose();
       dispose = () => stage.dispose();
       const { THREE, scene, camera } = stage;
@@ -102,7 +106,7 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         new RoundedBoxGeometry(0.42, 0.3, 0.09, 3, 0.03),
         new THREE.MeshStandardMaterial({ color: 0xc8c8cc, metalness: 1, roughness: 0.2 }),
       );
-      clip.position.y = 1.2;
+      clip.position.y = 0.1; // sits on the card's top edge, where the strap ends
       cardBody.position.y = -1.125 + 0.05;
       front.position.y = cardBody.position.y;
       card.add(cardBody, front, clip);
@@ -110,9 +114,12 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
 
       const strap = new THREE.Mesh(
         new THREE.BoxGeometry(0.16, 1, 0.012),
-        new THREE.MeshStandardMaterial({ color: 0xff5a1f, roughness: 0.7 }),
+        new THREE.MeshBasicMaterial({ color: 0xff5a1f, toneMapped: false }),
       );
       scene.add(strap);
+
+      const pivot = new THREE.Vector3();
+      const top = ANCHOR.clone().add(new THREE.Vector3(0, 2, 0));
 
       // Pendulum state.
       const s = { angle: 0.3, velocity: 0, twist: 0, twistVelocity: 0, dragging: false, target: 0 };
@@ -129,6 +136,8 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         return hit;
       };
       const onDown = (e: PointerEvent) => {
+        // On touch screens the badge only swings by itself, so swipes keep scrolling the page.
+        if (e.pointerType === "touch") return;
         const r = el.getBoundingClientRect();
         ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
         raycaster.setFromCamera(ndc, camera);
@@ -178,13 +187,11 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         s.twistVelocity += (-6 * s.twist - 1.2 * s.twistVelocity) * step;
         s.twist += s.twistVelocity * step;
 
-        const pivot = new THREE.Vector3(ANCHOR.x + Math.sin(s.angle) * LENGTH, ANCHOR.y - Math.cos(s.angle) * LENGTH, 0);
+        pivot.set(ANCHOR.x + Math.sin(s.angle) * LENGTH, ANCHOR.y - Math.cos(s.angle) * LENGTH, 0);
         card.position.copy(pivot);
         card.rotation.set(0, s.twist + Math.sin(t * 0.7) * 0.05, s.angle);
 
-        const top = ANCHOR.clone().add(new THREE.Vector3(0, 2, 0));
-        const mid = top.clone().lerp(pivot, 0.5);
-        strap.position.copy(mid);
+        strap.position.copy(top).lerp(pivot, 0.5);
         strap.scale.y = top.distanceTo(pivot);
         strap.rotation.z = Math.atan2(pivot.x - top.x, top.y - pivot.y);
       });
@@ -200,9 +207,11 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
 
     return () => {
       cancelled = true;
+      stopNear();
       dispose();
     };
   }, [name, role, place]);
 
+  if (failed) return null;
   return <div ref={host} className="badge-scene" aria-hidden="true" />;
 }

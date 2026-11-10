@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { site } from "@/data/site";
 import { pageMeta } from "@/lib/meta";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { AboutIntro } from "@/components/sections/AboutIntro";
-import { ClientLogos } from "@/components/sections/ClientLogos";
 
 export const metadata: Metadata = pageMeta(
   "About",
@@ -16,8 +14,9 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHeader lines={["About"]} script="me" label="About me" />
-      <AboutIntro showLink={false} />
+      <PageHeader lines={["About"]} script="me" label="About me">
+        <p className="lead about-long">{site.about.long}</p>
+      </PageHeader>
 
       <section className="list-section" aria-labelledby="experience-heading">
         <div className="section-grid" aria-hidden="true" />
@@ -44,6 +43,7 @@ export default function AboutPage() {
       </section>
 
       <section className="list-section" aria-labelledby="tools-heading">
+        <div className="section-grid" aria-hidden="true" />
         <div className="container list-inner">
           <div className="list-side">
             <h2 id="tools-heading" className="section-heading">
@@ -61,7 +61,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <ClientLogos />
     </>
   );
 }

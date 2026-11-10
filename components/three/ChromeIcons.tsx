@@ -17,13 +17,16 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
 
   useEffect(() => {
     let dispose = () => {};
+    let stopNear = () => {};
     let cancelled = false;
 
     (async () => {
       const el = host.current;
       const list = el?.parentElement;
       if (!el || !list) return;
-      await whenNear(list);
+      const near = whenNear(list);
+      stopNear = near.stop;
+      await near.ready;
       if (cancelled) return;
       const stage = await createStage(el, 26);
       if (!stage) return;
@@ -39,6 +42,7 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
         scene.environment = baseScene.environment;
         scene.add(new THREE.DirectionalLight(0xffffff, 0.8));
         const object = build(THREE, shapes[i % shapes.length], chrome);
+        object.scale.multiplyScalar(0.88); // room for the nib tip and bob inside the box
         scene.add(object);
         const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 50);
         camera.position.set(0, 0, 6);
@@ -59,7 +63,11 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
         items.forEach((it) => {
           it.card.removeEventListener("pointermove", it.move);
           it.card.removeEventListener("pointerleave", it.leave);
-          it.scene.traverse((o) => (o as T.Mesh).geometry?.dispose?.());
+          it.scene.traverse((o) => {
+            const mesh = o as T.Mesh;
+            mesh.geometry?.dispose?.();
+            (mesh.material as T.Material | undefined)?.dispose?.();
+          });
         });
         chrome.dispose();
         stage.dispose();
@@ -91,6 +99,7 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
 
     return () => {
       cancelled = true;
+      stopNear();
       dispose();
     };
   }, [shapes]);

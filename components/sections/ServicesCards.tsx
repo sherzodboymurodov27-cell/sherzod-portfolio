@@ -4,7 +4,7 @@ import { ChromeIcons, ChromeFallback, type ChromeShape } from "@/components/thre
 
 const SHAPES: ChromeShape[] = ["heart", "nib", "registration"];
 
-export function ServicesCards({ showLink = true }: { showLink?: boolean }) {
+export function ServicesCards() {
   return (
     <section className="services paper" aria-labelledby="services-heading">
       <div className="section-grid" aria-hidden="true" />
@@ -37,12 +37,10 @@ export function ServicesCards({ showLink = true }: { showLink?: boolean }) {
       <ChromeIcons shapes={SHAPES} />
       </div>
 
-      {showLink && (
-        <Link href="/about" className="btn btn-signal services-more">
-          <i aria-hidden="true" />
-          More about me
-        </Link>
-      )}
+      <Link href="/contact" className="btn btn-signal services-more">
+        <i aria-hidden="true" />
+        Start a project
+      </Link>
     </section>
   );
 }

@@ -17,6 +17,7 @@ export function Navbar() {
   const toggle = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
   const wasOpen = useRef(false);
+  const navigated = useRef(false);
 
   const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -28,6 +29,14 @@ export function Navbar() {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // The mobile menu only exists below 768px; close it if the window grows past that.
+  useEffect(() => {
+    const wide = window.matchMedia("(min-width: 768px)");
+    const onChange = () => wide.matches && setOpen(false);
+    wide.addEventListener("change", onChange);
+    return () => wide.removeEventListener("change", onChange);
+  }, []);
 
   // While the menu is open the page behind it is inert and does not scroll;
   // focus moves into the menu and comes back to the toggle when it closes.
@@ -41,7 +50,12 @@ export function Navbar() {
       firstLink.current?.focus();
     } else {
       lenis?.start();
-      if (wasOpen.current) toggle.current?.focus();
+      if (wasOpen.current) {
+        // After following a menu link, start the new page at its content; otherwise back on the toggle.
+        if (navigated.current) document.getElementById("main")?.focus({ preventScroll: true });
+        else toggle.current?.focus();
+      }
+      navigated.current = false;
     }
     wasOpen.current = open;
 
@@ -89,7 +103,10 @@ export function Navbar() {
             key={link.href}
             ref={i === 0 ? firstLink : undefined}
             href={link.href}
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              navigated.current = true;
+              setOpen(false);
+            }}
             aria-current={isCurrent(link.href) ? "page" : undefined}
           >
             {link.label}

@@ -15,11 +15,13 @@ export const site = {
   seo: {
     title: "Sherzod Boymurodov — Graphic Designer",
     description:
-      "Portfolio of Sherzod Boymurodov, a graphic designer working across digital design, branding, packaging, social media and print.",
+      "Portfolio of Sherzod Boymurodov, a graphic designer in Tashkent working across social media, brand identity and print.",
   },
 
   about: {
     heading: "About",
+    long:
+      "Since 2022 I’ve designed in teams rather than alone: for an education ecosystem, a branding studio, schools, food brands and cargo companies. My strongest work is social media and print. To me a design is an idea first, then communication, composition and a brand that stays recognisable from one post to the next.",
     intro:
       "I’m a graphic designer from Tashkent, working since 2022 across social media, brand identity and print. I’ve designed for schools, food brands, cargo companies and agencies, turning briefs into visuals people stop scrolling for.",
     since: "2022",

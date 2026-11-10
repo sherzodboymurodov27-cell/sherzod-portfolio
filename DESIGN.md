@@ -17,10 +17,12 @@ chrome objects, a lanyard badge and a giant wordmark in the footer. Name, copy, 
 | `paper` | `#E7E7E8` | Light sections (work, services) |
 | `paper-2` | `#F4F4F4` | Cards and panels on paper |
 | `text` | `#F1F1F0` | Text on dark (18:1 on ink) |
+| `text-soft` | `#C9C9CB` | Lead paragraphs on dark |
 | `text-muted` | `#9A9A9D` | Secondary text on dark (7.3:1 on ink) |
 | `text-dark` | `#0C0C0D` | Text on paper (15.8:1) |
 | `text-dark-muted` | `#55555A` | Secondary text on paper (6:1) |
-| `line` | `rgba(255,255,255,0.08)` | Grid lines and dividers on dark |
+| `line` | `rgba(255,255,255,0.08)` | Grid lines on dark |
+| `line-strong` | `rgba(255,255,255,0.16)` | Row dividers and button borders on dark |
 | `line-dark` | `rgba(0,0,0,0.09)` | Grid lines and dividers on paper |
 | `signal` | `#FF5A1F` | The one accent: status dots, active nav, current slide, footer glow. Never body text. |
 
@@ -31,7 +33,7 @@ Headline metal (owner's choice, from the reference): `#FAFAFA → #BDBDC1 → #7
 
 Three voices, never mixed inside one line except display + script.
 
-- **Display — Archivo** (variable, OFL), weight 800, uppercase, tracking −0.035em, line height 0.86. Names,
+- **Display — Archivo** (OFL), a static 800 / 100%-width instance subset to Latin (12 KB), uppercase, tracking −0.035em, line height 0.86. Names,
   page words and section words only. Metal gradient on dark (`.metal`), flat ink on paper.
 - **Script — Parisienne** (OFL), 400. Written across display type, rotated −6°, never smaller than 40px and
   never on its own as body copy. One script word per view.
@@ -44,13 +46,16 @@ Three voices, never mixed inside one line except display + script.
 | `.display` page | `clamp(64px, 15vw, 240px)` | 0.86 | −0.035em | ABOUT, WORK, LET'S, client name |
 | `.display` section | `clamp(56px, 9vw, 150px)` | 0.86 | −0.035em | ALL WORK, CTA, contact rows |
 | `.script` | 0.6–0.65 × the display it sits on | 1 | 0 | Designer, me, talk, in mind? |
-| `.statement` | `clamp(34px, 5.4vw, 88px)` | 1.03 | −0.038em | About sentence, max 21ch, balanced |
+| `.statement` | `clamp(32px, 4.8vw, 76px)` 600 | 1.04 | −0.036em | Home about sentence, max 23ch, balanced |
 | card title | `clamp(26px, 2.2vw, 34px)` 700 | 1.05 | −0.03em | Services, work cards |
 | `.lead` | `clamp(19px, 1.55vw, 24px)` | 1.42 | −0.012em | Intros, project descriptions, max 44ch |
 | body | 17px | 1.6 | 0 | Paragraphs, max 64ch |
+| secondary | 16px | 1.5 | 0 | Card and list descriptions, footer links |
+| `.section-heading` | `clamp(22px, 2vw, 30px)` 700 | 1.1 | −0.03em | What I do, Teams and clients, Tools, Brands |
 | UI | 12px 600 uppercase | 1 | 0.08em | Buttons, nav |
 | `.meta` | 11px mono | 1.4 | 0.06em | Tags, facts, clock |
 
+Script appears at most once per view and is never used on case studies (the client name stands alone).
 Rules: headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`; no sentence ends on a lone word;
 numbers in meta are tabular; superscript counts sit at 0.24em of the display size.
 
@@ -58,7 +63,7 @@ numbers in meta are tabular; superscript counts sit at 0.24em of the display siz
 
 - 8px scale: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 160.
 - Content width 1440px; side padding `clamp(16px, 2.6vw, 40px)`.
-- Section padding 160px top/bottom desktop, 96px mobile.
+- Section padding `clamp(96px, 14vh, 160px)` (`--section-y`).
 - Grid: 6 columns desktop, 4 under 768px, drawn as 1px vertical lines on every section.
 - Text left-aligned everywhere except the hero headline.
 
@@ -66,18 +71,18 @@ numbers in meta are tabular; superscript counts sit at 0.24em of the display siz
 
 - Radius: 0 on work images and sections; 4px on buttons, tags and the contact button; the monitor and badge keep their own.
 - One shadow, for objects only (monitor, badge): `0 50px 60px rgba(0,0,0,.55)`. No shadows on cards or text.
-- No glassmorphism except the navbar after scroll (`rgba(7,7,8,.72)` + 16px blur).
+- No glassmorphism except the navbar after scroll (`rgba(5,5,6,.78)` + 16px blur).
 
 ## Components
 
 - **Nav**: "SB" mark left; dotted text links center (dot turns `signal` when hovered or current); dark contact button right with a signal dot. Mobile: Menu toggle opens a full-height list in display type; page behind is inert and does not scroll; Escape closes and returns focus.
 - **Button** (`.btn`): dark, 1px border, 4px radius, 12px uppercase 600, min height 40px, never wraps. `.btn-signal` adds the orange dot.
 - **Hero**: SHERZOD in metal display type, "Designer" in script, three.js monitor playing a feed of posts. A flat HTML monitor with the same posts shows until the 3D is ready and when WebGL is missing.
-- **Work tile**: image with no radius at varied sizes in a staggered grid; dark tag pinned bottom-left on desktop, caption under the image on mobile. Only the first tile per project is a tab stop.
+- **Work tile**: image with no radius at varied sizes in a staggered grid; caption (signal dot, client, category) under the image, never over the artwork. Only the first tile per project is a tab stop.
 - **All work link**: display word with a superscript count (hidden from screen readers, count read as text).
 - **Collaborations**: light band of slanted cells, logos as dark silhouettes with names as alt text; drifting, paused on hover, focus or the Pause button.
 - **Service card**: paper-2 panel with crop marks, a chrome object on a dark gradient (one shared WebGL canvas for all cards; flat SVG fallback), title and one-line description. Ghost "SERVICES" word above is decorative; the real heading is "What I do".
-- **Footer**: giant two-line CTA (hidden on /contact), draggable lanyard badge (hidden on /contact), links, full-width metal wordmark, signal glow at the bottom edge.
+- **Footer**: giant two-line CTA (hidden on /contact), lanyard badge (hidden on /contact and without WebGL; drag with a mouse, swings on its own on touch), links, full-width metal wordmark, signal glow at the bottom edge.
 - **Page header** (inner pages): giant metal display word(s) with a script word, optional lead and facts.
 
 ## Imagery

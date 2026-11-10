@@ -10,7 +10,7 @@ import { site } from "@/data/site";
 gsap.registerPlugin(ScrollTrigger);
 
 /** The about statement sharpens word by word as it scrolls into view. */
-export function AboutIntro({ showLink = true }: { showLink?: boolean }) {
+export function AboutIntro() {
   const root = useRef<HTMLElement>(null);
   // Keep the last two words together so the sentence never ends on a lone word.
   const words = site.about.intro.replace(/ (\S+)$/, "\u00a0$1").split(" ");
@@ -20,13 +20,13 @@ export function AboutIntro({ showLink = true }: { showLink?: boolean }) {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
           ".about-word",
-          { opacity: 0.18, filter: "blur(3px)" },
+          { opacity: 0.35, filter: "blur(1.5px)" },
           {
             opacity: 1,
             filter: "blur(0px)",
             stagger: 0.04,
             ease: "none",
-            scrollTrigger: { trigger: ".about-statement", start: "top 85%", end: "top 30%", scrub: true },
+            scrollTrigger: { trigger: ".about-statement", start: "top 90%", end: "top 50%", scrub: true },
           },
         );
       });
@@ -53,11 +53,9 @@ export function AboutIntro({ showLink = true }: { showLink?: boolean }) {
           <p className="meta">
             {site.name} <span>Since {site.about.since}</span> <span>{site.location}</span>
           </p>
-          {showLink && (
-            <Link href="/about" className="btn">
-              More about me
-            </Link>
-          )}
+          <Link href="/about" className="btn">
+            More about me
+          </Link>
         </div>
       </div>
     </section>

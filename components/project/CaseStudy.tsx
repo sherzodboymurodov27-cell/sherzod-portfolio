@@ -10,7 +10,7 @@ export function CaseStudy({ project, next }: { project: Project; next: Project |
 
   return (
     <article>
-      <PageHeader lines={client.split(" ")} script={project.category} label={`${client}, ${project.category}`}>
+      <PageHeader lines={client.split(" ")} label={`${client}, ${project.category}`}>
         <p className="lead">{project.description}</p>
         <dl className="facts">
           <div>

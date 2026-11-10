@@ -14,12 +14,13 @@ export default function ContactPage() {
     <>
       <PageHeader lines={["Let's"]} script="talk" label="Let's talk">
         <p className="lead">
-          Write about your project on Telegram or Instagram, or call. I&rsquo;m based in {site.location} and work with
+          Write about your project on Telegram or Instagram, or call. I&rsquo;m based in {site.location}, and work with
           brands anywhere.
         </p>
       </PageHeader>
 
       <section className="contact-list" aria-label="Ways to reach me">
+        <div className="section-grid" aria-hidden="true" />
         <ul className="container">
           {site.socials.map((s) => {
             const external = s.label !== "Phone";

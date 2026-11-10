@@ -16,13 +16,17 @@ export type Stage = {
   dispose: () => void;
 };
 
-/** Resolves when `el` comes within `margin` of the viewport (or immediately if already there). */
-export function whenNear(el: Element, margin = "400px"): Promise<void> {
-  return new Promise((resolve) => {
-    const io = new IntersectionObserver(
+/**
+ * Resolves when `el` comes within `margin` of the viewport. `stop()` disconnects
+ * the observer if the caller unmounts first (the promise then never resolves).
+ */
+export function whenNear(el: Element, margin = "400px") {
+  let io: IntersectionObserver | null = null;
+  const ready = new Promise<void>((resolve) => {
+    io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          io.disconnect();
+          io?.disconnect();
           resolve();
         }
       },
@@ -30,6 +34,20 @@ export function whenNear(el: Element, margin = "400px"): Promise<void> {
     );
     io.observe(el);
   });
+  return { ready, stop: () => io?.disconnect() };
+}
+
+/** True if this browser can create a WebGL context. The probe context is released immediately. */
+export function hasWebGL(): boolean {
+  try {
+    const probe = document.createElement("canvas");
+    const gl = (probe.getContext("webgl2") || probe.getContext("webgl")) as WebGLRenderingContext | null;
+    if (!gl) return false;
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -39,11 +57,10 @@ export function whenNear(el: Element, margin = "400px"): Promise<void> {
  * unavailable so callers can show their fallback.
  */
 export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | null> {
+  // Check before downloading three.js, so devices without WebGL never fetch it.
+  if (!hasWebGL()) return null;
   const THREE = await import("three");
   const { RoomEnvironment } = await import("three/examples/jsm/environments/RoomEnvironment.js");
-
-  const probe = document.createElement("canvas");
-  if (!(probe.getContext("webgl2") || probe.getContext("webgl"))) return null;
 
   let renderer: THREE_NS.WebGLRenderer;
   try {

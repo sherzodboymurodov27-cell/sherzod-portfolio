@@ -16,14 +16,12 @@ const manrope = localFont({
   weight: "200 800",
 });
 
-// Display face for the name: Archivo's width axis (62–125%) lets both name
-// lines be set to one measure. Latin subset only; OFL-1.1.
+// Display face: Archivo 800 at 100% width, instanced and Latin-subset (OFL-1.1).
 const archivo = localFont({
-  src: "../public/fonts/Archivo-Variable.woff2",
+  src: "../public/fonts/Archivo-800.woff2",
   variable: "--font-archivo",
   display: "swap",
-  weight: "100 900",
-  declarations: [{ prop: "font-stretch", value: "62% 125%" }],
+  weight: "800",
 });
 
 // Script face for the "Designer" signature line. OFL-1.1.
@@ -37,6 +35,7 @@ const parisienne = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   ...pageMeta(null, site.seo.description, "/"),
+  alternates: undefined,
   title: { default: site.seo.title, template: `%s — ${site.name}` },
   icons: { icon: "/favicon.svg" },
 };
@@ -50,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SmoothScroll />
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>

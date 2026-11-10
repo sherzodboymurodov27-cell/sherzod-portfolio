@@ -90,8 +90,10 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
             data-speed={[1, -1, 1.5, -0.5, 1][i]}
             tabIndex={repeat ? -1 : undefined}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img {...imgProps(tile.src, "(min-width: 768px) 50vw, 86vw")} alt={tile.alt} loading="lazy" decoding="async" />
+            <span className="work-tile-media">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img {...imgProps(tile.src, "(min-width: 768px) 50vw, 86vw")} alt={tile.alt} loading="lazy" decoding="async" />
+            </span>
             <span className="tag meta">
               <i aria-hidden="true" />
               {tile.title}
