@@ -28,6 +28,14 @@ const archivo = localFont({
   declarations: [{ prop: "font-stretch", value: "62% 125%" }],
 });
 
+// Script face for the "Designer" signature line. OFL-1.1.
+const parisienne = localFont({
+  src: "../public/fonts/Parisienne.woff2",
+  variable: "--font-script",
+  display: "swap",
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${archivo.variable} ${parisienne.variable}`}>
       <body className="font-sans bg-paper text-ink antialiased">
         <a
           href="#main"

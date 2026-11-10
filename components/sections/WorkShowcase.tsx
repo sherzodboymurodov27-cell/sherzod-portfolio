@@ -17,7 +17,37 @@ type Tile = { src: string; alt: string; slug: string; title: string; category: s
  */
 export function WorkShowcase({ projects }: { projects: Project[] }) {
   const root = useRef<HTMLElement>(null);
+  const bubble = useRef<HTMLSpanElement>(null);
   const tiles = buildTiles(projects, 5);
+
+  // A "View" bubble that trails the cursor over the tiles (fine pointers only).
+  useEffect(() => {
+    const el = root.current;
+    const b = bubble.current;
+    if (!el || !b || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const x = gsap.quickTo(b, "x", { duration: 0.35, ease: "power3" });
+    const y = gsap.quickTo(b, "y", { duration: 0.35, ease: "power3" });
+    const move = (e: PointerEvent) => {
+      x(e.clientX);
+      y(e.clientY);
+    };
+    const show = (on: boolean) => gsap.to(b, { scale: on ? 1 : 0, duration: 0.3, ease: "power3.out" });
+    const tilesEls = el.querySelectorAll<HTMLElement>(".work-tile");
+    const enter = () => show(true);
+    const leave = () => show(false);
+    window.addEventListener("pointermove", move, { passive: true });
+    tilesEls.forEach((t) => {
+      t.addEventListener("pointerenter", enter);
+      t.addEventListener("pointerleave", leave);
+    });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      tilesEls.forEach((t) => {
+        t.removeEventListener("pointerenter", enter);
+        t.removeEventListener("pointerleave", leave);
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -64,6 +94,10 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
           </Link>
         ))}
       </div>
+
+      <span ref={bubble} className="view-bubble" aria-hidden="true">
+        View
+      </span>
 
       <Link href="/work" className="show-all">
         All work<sup>{projects.length}</sup>

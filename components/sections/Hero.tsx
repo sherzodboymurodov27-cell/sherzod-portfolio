@@ -4,23 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site } from "@/data/site";
+import { MonitorScene } from "@/components/three/MonitorScene";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Placeholder feed until the final hero posts are chosen.
 const POSTS = [1, 2, 3, 4, 5].map((n) => `/images/hero/post-${String(n).padStart(2, "0")}.webp`);
-const HANDLE = "sherzod.design";
+const COLUMNS = 6;
 
 /**
- * Hero: a two-line metallic headline with a phone in front of it. The phone
- * plays a social feed of the work, because most of that work lives on a
- * phone screen. Scrolling pins the hero while the phone straightens and
- * comes forward.
+ * Hero: SHERZOD in heavy metallic caps with "Designer" written across it in
+ * script, and a monitor standing in front playing a feed of the work.
+ * The hero pins while the camera moves into the screen, then the grid
+ * columns rise one after another and close over it.
  */
 export function Hero() {
   const root = useRef<HTMLElement>(null);
-  const phone = useRef<HTMLDivElement>(null);
-  const title = useRef<HTMLHeadingElement>(null);
+  const progress = useRef(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,17 +28,29 @@ export function Hero() {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap
           .timeline({ defaults: { ease: "expo.out" } })
-          .from(".hero-line-inner", { yPercent: 105, duration: 1.4, stagger: 0.12 })
-          .from(phone.current, { y: 160, rotateX: 38, opacity: 0, duration: 1.6 }, 0.35)
+          .from(".hero-word-inner", { yPercent: 110, duration: 1.4 })
+          .from(".hero-script", { opacity: 0, x: -40, duration: 1.6 }, 0.35)
+          .from(".monitor-scene", { opacity: 0, y: 120, duration: 1.8 }, 0.25)
           .from(".hero-meta > *", { opacity: 0, y: 12, duration: 1, stagger: 0.08 }, 0.9);
 
-        gsap
-          .timeline({
-            scrollTrigger: { trigger: root.current, start: "top top", end: "+=90%", scrub: 0.6, pin: true },
-          })
-          .to(phone.current, { scale: 1.32, rotateX: 0, rotateY: 0, rotateZ: 0, y: "-6vh", ease: "none" }, 0)
-          .to(title.current, { yPercent: -18, opacity: 0.18, ease: "none" }, 0)
-          .to(".hero-meta", { opacity: 0, ease: "none" }, 0);
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top top",
+            end: "+=170%",
+            scrub: 0.6,
+            pin: true,
+            onUpdate: (self) => (progress.current = Math.min(1, self.progress / 0.72)),
+          },
+        });
+        tl.to(".hero-title", { yPercent: -22, opacity: 0.15, ease: "none", duration: 0.7 }, 0)
+          .to(".hero-meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
+          .fromTo(
+            ".hero-shutter i",
+            { yPercent: 100 },
+            { yPercent: 0, ease: "power2.inOut", duration: 0.3, stagger: { each: 0.035, from: "random" } },
+            0.68,
+          );
       });
     }, root);
     return () => ctx.revert();
@@ -48,23 +60,18 @@ export function Hero() {
     <section ref={root} className="hero" aria-label="Introduction">
       <div className="hero-grid" aria-hidden="true" />
 
-      <h1 ref={title} className="hero-title" aria-label={`${site.name}, designer`}>
-        <span className="hero-line" aria-hidden="true">
-          <span className="hero-line-inner">Sherzod</span>
+      <h1 className="hero-title">
+        <span className="hero-word">
+          <span className="hero-word-inner">Sherzod</span>
         </span>
-        <span className="hero-line hero-line-italic" aria-hidden="true">
-          <span className="hero-line-inner">Designer</span>
-        </span>
+        <span className="hero-script">Designer</span>
+        <span className="sr-only">{site.name}, graphic designer</span>
       </h1>
 
-      <div className="hero-stage">
-        <div ref={phone} className="phone" role="img" aria-label="Phone showing a feed of social media posts">
-          <PhoneFeed />
-        </div>
-      </div>
+      <MonitorScene posts={POSTS} progress={progress} />
 
       <div className="hero-meta">
-        <div className="hero-meta-left">
+        <div className="hero-meta-left meta">
           <span>{site.name}</span>
           <LocalTime />
         </div>
@@ -73,50 +80,13 @@ export function Hero() {
           to be noticed.
         </p>
       </div>
-    </section>
-  );
-}
 
-function PhoneFeed() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => setIndex((i) => (i + 1) % POSTS.length), 2400);
-    return () => window.clearInterval(id);
-  }, []);
-
-  return (
-    <div className="phone-body">
-      <div className="phone-screen">
-        <div className="phone-island" />
-        <div className="feed-head">
-          <span className="feed-avatar">SB</span>
-          <span className="feed-handle">{HANDLE}</span>
-        </div>
-        <div className="feed-media">
-          {POSTS.map((src, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt="" className={i === index ? "is-current" : ""} loading={i === 0 ? "eager" : "lazy"} />
-          ))}
-        </div>
-        <div className="feed-actions" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" /></svg>
-          <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3.1-6.3L20 4v5h-5" /></svg>
-          <svg viewBox="0 0 24 24"><path d="m4 12 16-8-5 16-3-7-8-1Z" /></svg>
-        </div>
-        <div className="feed-lines" aria-hidden="true">
-          <i />
-          <i />
-        </div>
-        <div className="feed-dots" aria-hidden="true">
-          {POSTS.map((src, i) => (
-            <i key={src} className={i === index ? "is-current" : ""} />
-          ))}
-        </div>
+      <div className="hero-shutter" aria-hidden="true">
+        {Array.from({ length: COLUMNS }, (_, i) => (
+          <i key={i} />
+        ))}
       </div>
-      <div className="phone-glare" />
-    </div>
+    </section>
   );
 }
 

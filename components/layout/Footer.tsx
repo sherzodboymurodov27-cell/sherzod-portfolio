@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { site } from "@/data/site";
+import { BadgeScene } from "@/components/three/BadgeScene";
+import { FooterCta } from "@/components/layout/FooterCta";
 
 const PAGES = [
   { href: "/#work", label: "Work" },
@@ -13,13 +15,9 @@ export function Footer() {
 
   return (
     <footer className="footer">
-      <div className="footer-top">
-        <p className="footer-ask">Have a project in mind?</p>
-        <Link href="/contact" className="btn btn-signal">
-          <i aria-hidden="true" />
-          Get in touch
-        </Link>
-      </div>
+      <BadgeScene name={site.name} role="Designer" place={`${site.location} · since ${site.about.since}`} />
+
+      <FooterCta />
 
       <div className="footer-links">
         <nav aria-label="Pages">

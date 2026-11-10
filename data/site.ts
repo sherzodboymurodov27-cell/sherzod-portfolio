@@ -42,17 +42,14 @@ export const site = {
     {
       title: "Social media",
       description: "Posts, carousels, covers and campaign visuals that hold attention in a feed.",
-      image: "/images/projects/project-01/02.webp",
     },
     {
       title: "Brand identity",
       description: "Logos, brand systems and the guidelines that keep every touchpoint consistent.",
-      image: "/images/projects/project-01/04.webp",
     },
     {
       title: "Print",
       description: "Brochures, flyers, packaging and outdoor, prepared for production.",
-      image: "/images/projects/project-01/05.webp",
     },
   ],
 
