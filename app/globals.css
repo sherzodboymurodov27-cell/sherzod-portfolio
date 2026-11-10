@@ -122,8 +122,10 @@ body::before {
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
+.hero-wrap { position: relative; height: 270svh; }
+@media (prefers-reduced-motion: reduce) { .hero-wrap { height: auto; } }
 .hero {
-  position: relative; height: 100svh; min-height: 640px; overflow: hidden;
+  position: sticky; top: 0; height: 100svh; min-height: 640px; overflow: hidden;
   background: linear-gradient(180deg, #050506 0%, #18181b 30%, #4a4a4f 72%, #6a6a6f 88%, #070708 100%);
   perspective: 1400px;
 }

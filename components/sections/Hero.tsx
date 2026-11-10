@@ -20,7 +20,7 @@ const COLUMNS = 6;
  * columns rise one after another and close over it.
  */
 export function Hero() {
-  const root = useRef<HTMLElement>(null);
+  const root = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
 
   useIsoLayoutEffect(() => {
@@ -36,11 +36,12 @@ export function Hero() {
 
         const tl = gsap.timeline({
           scrollTrigger: {
+            // The section is position: sticky inside a tall wrapper, so nothing
+            // is pinned by moving DOM nodes React owns.
             trigger: root.current,
             start: "top top",
-            end: "+=170%",
+            end: "bottom bottom",
             scrub: 0.6,
-            pin: true,
             onUpdate: (self) => (progress.current = Math.min(1, self.progress / 0.72)),
           },
         });
@@ -58,7 +59,8 @@ export function Hero() {
   }, []);
 
   return (
-    <section ref={root} className="hero" aria-label="Introduction">
+    <div ref={root} className="hero-wrap">
+    <section className="hero" aria-label="Introduction">
       <div className="hero-grid" aria-hidden="true" />
 
       <h1 className="hero-title">
@@ -88,6 +90,7 @@ export function Hero() {
         ))}
       </div>
     </section>
+    </div>
   );
 }
 
