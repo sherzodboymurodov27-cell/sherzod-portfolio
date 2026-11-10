@@ -16,8 +16,8 @@ export function Footer() {
             <a
               key={s.label}
               href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={s.label === "Phone" ? undefined : "_blank"}
+              rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
               className="text-muted hover:text-accent transition-colors duration-200"
             >
               {s.label}
