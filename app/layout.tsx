@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { site } from "@/data/site";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
 // Self-hosted variable font (Latin + Cyrillic support) — avoids a Google
 // Fonts network fetch at build time, which some CI/deploy environments block.
@@ -17,7 +18,10 @@ const manrope = localFont({
 // Display face for the name: Archivo's width axis (62–125%) lets both name
 // lines be set to one measure. Latin subset only; OFL-1.1.
 const archivo = localFont({
-  src: "../public/fonts/Archivo-Variable.woff2",
+  src: [
+    { path: "../public/fonts/Archivo-Variable.woff2", style: "normal" },
+    { path: "../public/fonts/Archivo-Variable-Italic.woff2", style: "italic" },
+  ],
   variable: "--font-archivo",
   display: "swap",
   weight: "100 900",
@@ -52,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <SmoothScroll />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
