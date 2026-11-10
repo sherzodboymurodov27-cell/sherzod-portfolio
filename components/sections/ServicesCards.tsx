@@ -4,11 +4,11 @@ import { ChromeIcon, type ChromeShape } from "@/components/three/ChromeIcon";
 
 const SHAPES: ChromeShape[] = ["heart", "nib", "registration"];
 
-export function ServicesCards() {
+export function ServicesCards({ showLink = true }: { showLink?: boolean }) {
   return (
     <section className="services paper" aria-labelledby="services-heading">
       <div className="section-grid" aria-hidden="true" />
-      <h2 id="services-heading" className="services-word">
+      <h2 id="services-heading" className="display services-word">
         Services
       </h2>
 
@@ -28,10 +28,12 @@ export function ServicesCards() {
         ))}
       </ul>
 
-      <Link href="/about" className="btn btn-signal services-more">
-        <i aria-hidden="true" />
-        More about how I work
-      </Link>
+      {showLink && (
+        <Link href="/about" className="btn btn-signal services-more">
+          <i aria-hidden="true" />
+          More about me
+        </Link>
+      )}
     </section>
   );
 }

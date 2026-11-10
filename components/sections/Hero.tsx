@@ -65,9 +65,9 @@ export function Hero() {
 
       <h1 className="hero-title">
         <span className="hero-word">
-          <span className="hero-word-inner">Sherzod</span>
+          <span className="hero-word-inner display metal">Sherzod</span>
         </span>
-        <span className="hero-script">Designer</span>
+        <span className="hero-script script">Designer</span>
         <span className="sr-only">{site.name}, graphic designer</span>
       </h1>
 

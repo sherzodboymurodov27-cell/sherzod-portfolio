@@ -87,7 +87,7 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={tile.src} alt={tile.alt} loading="lazy" />
-            <span className="tag">
+            <span className="tag meta">
               <i aria-hidden="true" />
               {tile.title}
               <span>{tile.category}</span>
@@ -100,7 +100,7 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
         View
       </span>
 
-      <Link href="/work" className="show-all">
+      <Link href="/work" className="display show-all">
         All work<sup>{projects.length}</sup>
       </Link>
     </section>

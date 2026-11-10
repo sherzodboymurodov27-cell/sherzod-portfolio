@@ -10,7 +10,6 @@ export const site = {
 
   name: "Sherzod Boymurodov",
   role: "Graphic Designer",
-  tagline: ["Digital Design", "Branding", "Packaging", "Social Media", "Print"],
   location: "Tashkent, Uzbekistan",
 
   seo: {
@@ -29,15 +28,6 @@ export const site = {
     ],
   },
 
-  skills: [
-    "Digital Design",
-    "Branding",
-    "Packaging",
-    "Social Media",
-    "Logo Design",
-    "Print Design",
-  ],
-
   services: [
     {
       title: "Social media",
@@ -51,6 +41,14 @@ export const site = {
       title: "Print",
       description: "Brochures, flyers, packaging and outdoor, prepared for production.",
     },
+  ],
+
+  tools: [
+    { name: "Figma", use: "Layouts, social media systems and presentations" },
+    { name: "Photoshop", use: "Compositing, retouching and product visuals" },
+    { name: "Illustrator", use: "Logos, vector graphics and print files" },
+    { name: "CorelDRAW", use: "Print and large-format production" },
+    { name: "Google Flow", use: "AI image generation for campaign visuals" },
   ],
 
   contact: {

@@ -31,10 +31,10 @@ export function FooterCta() {
     <div ref={root} className="cta">
       <h2 className="cta-title">
         <span className="cta-line">
-          <span className="cta-line-inner">Got a project</span>
+          <span className="cta-line-inner display">Got a project</span>
         </span>
         <span className="cta-line cta-line-script">
-          <span className="cta-line-inner">in mind?</span>
+          <span className="cta-line-inner script">in mind?</span>
         </span>
       </h2>
       <Link href="/contact" className="btn btn-signal cta-btn">

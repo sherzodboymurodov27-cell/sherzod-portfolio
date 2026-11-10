@@ -10,9 +10,10 @@ import { site } from "@/data/site";
 gsap.registerPlugin(ScrollTrigger);
 
 /** The about statement sharpens word by word as it scrolls into view. */
-export function AboutIntro() {
+export function AboutIntro({ showLink = true }: { showLink?: boolean }) {
   const root = useRef<HTMLElement>(null);
-  const words = site.about.intro.split(" ");
+  // Keep the last two words together so the sentence never ends on a lone word.
+  const words = site.about.intro.replace(/ (\S+)$/, "\u00a0$1").split(" ");
 
   useIsoLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -36,11 +37,11 @@ export function AboutIntro() {
   return (
     <section ref={root} className="about-intro" aria-labelledby="about-heading">
       <div className="section-grid" aria-hidden="true" />
-      <div className="about-inner">
+      <div className="container">
         <h2 id="about-heading" className="sr-only">
           About
         </h2>
-        <p className="about-statement">
+        <p className="statement about-statement">
           {words.map((word, i) => (
             <span key={i} className="about-word">
               {word}{" "}
@@ -52,9 +53,11 @@ export function AboutIntro() {
           <p className="meta">
             {site.name} <span>Since {site.about.since}</span> <span>{site.location}</span>
           </p>
-          <Link href="/about" className="btn">
-            More about me
-          </Link>
+          {showLink && (
+            <Link href="/about" className="btn">
+              More about me
+            </Link>
+          )}
         </div>
       </div>
     </section>

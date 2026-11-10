@@ -46,7 +46,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <Link href="/contact" className="nav-cta" aria-current={pathname === "/contact" ? "page" : undefined}>
+        <Link href="/contact" className="btn btn-signal nav-cta" aria-current={pathname === "/contact" ? "page" : undefined}>
           <i aria-hidden="true" />
           Contact
         </Link>

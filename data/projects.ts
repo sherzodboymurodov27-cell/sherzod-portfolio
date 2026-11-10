@@ -135,6 +135,11 @@ export const projects: Project[] = [
   },
 ];
 
+/** The client part of a title like "Zamin Maktabi — Social Media". */
+export function clientOf(project: Project): string {
+  return project.title.split(" — ")[0];
+}
+
 export const publishedProjects = projects.filter((p) => !p.draft);
 
 export function getProject(slug: string): Project | undefined {

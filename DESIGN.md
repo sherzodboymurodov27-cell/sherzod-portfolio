@@ -28,20 +28,30 @@ Headline metal (owner's choice, from the reference): `#FAFAFA → #BDBDC1 → #7
 
 ## Typography
 
-- **Display — Archivo** (variable, OFL): weight 800, width 92–100%, italic for the second line. Uppercase only.
-- **Body — Manrope** (variable): 400 text, 500 labels, 300 large statements.
-- **Meta — system mono** (`ui-monospace`): 11px uppercase, 0.06em tracking. Location, time, project tags only.
+Three voices, never mixed inside one line except display + script.
 
-| Step | Size | Line height | Use |
-|---|---|---|---|
-| display | `min(16vw, 34vh)` | 0.84 | Hero, footer wordmark |
-| h1 | 72px / 44px mobile | 0.95 | Section words (WORK, SERVICES) |
-| h2 | 48px / 32px | 1.05 | Statement text, project titles on case pages |
-| h3 | 28px / 22px | 1.15 | Card titles |
-| body-lg | 20px / 18px | 1.45 | About statement, intros |
-| body | 16px | 1.55 | Paragraphs (max 68ch) |
-| small | 14px | 1.45 | Captions, footer links |
-| meta | 11px mono | 1.4 | Tags, time, counts |
+- **Display — Archivo** (variable, OFL), weight 800, uppercase, tracking −0.035em, line height 0.86. Names,
+  page words and section words only. Metal gradient on dark (`.metal`), flat ink on paper.
+- **Script — Parisienne** (OFL), 400. Written across display type, rotated −6°, never smaller than 40px and
+  never on its own as body copy. One script word per view.
+- **Body — Manrope** (variable): 600 for the statement and card titles, 500 for UI text, 400 for paragraphs.
+- **Meta — system mono**, 11px uppercase, 0.06em tracking, tabular figures: tags, facts, time.
+
+| Class | Size | Line height | Tracking | Use |
+|---|---|---|---|---|
+| `.display` hero | `min(19vw, 36vh)` | 0.86 | −0.035em | SHERZOD |
+| `.display` page | `clamp(64px, 15vw, 240px)` | 0.86 | −0.035em | ABOUT, WORK, LET'S, client name |
+| `.display` section | `clamp(56px, 9vw, 150px)` | 0.86 | −0.035em | ALL WORK, CTA, contact rows |
+| `.script` | 0.6–0.65 × the display it sits on | 1 | 0 | Designer, me, talk, in mind? |
+| `.statement` | `clamp(34px, 5.4vw, 88px)` | 1.03 | −0.038em | About sentence, max 21ch, balanced |
+| card title | `clamp(26px, 2.2vw, 34px)` 700 | 1.05 | −0.03em | Services, work cards |
+| `.lead` | `clamp(19px, 1.55vw, 24px)` | 1.42 | −0.012em | Intros, project descriptions, max 44ch |
+| body | 17px | 1.6 | 0 | Paragraphs, max 64ch |
+| UI | 12px 600 uppercase | 1 | 0.08em | Buttons, nav |
+| `.meta` | 11px mono | 1.4 | 0.06em | Tags, facts, clock |
+
+Rules: headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`; no sentence ends on a lone word;
+numbers in meta are tabular; superscript counts sit at 0.24em of the display size.
 
 ## Spacing and layout
 

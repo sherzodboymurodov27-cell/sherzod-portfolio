@@ -38,7 +38,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <p className="footer-word" aria-hidden="true">
+      <p className="footer-word display metal" aria-hidden="true">
         <span>©</span>
         {first}
       </p>

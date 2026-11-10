@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
 import { publishedProjects } from "@/data/projects";
-import { ProjectCard } from "@/components/sections/ProjectCard";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { WorkGrid } from "@/components/sections/WorkGrid";
 
-export const metadata: Metadata = { title: "Work" };
+export const metadata: Metadata = {
+  title: "Work",
+  description: "Social media, brand identity and print projects by Sherzod Boymurodov.",
+};
 
 export default function WorkPage() {
   return (
-    <section className="work-page">
-      <div className="section-grid" aria-hidden="true" />
-      <h1 className="services-word">
-        Work<sup>{publishedProjects.length}</sup>
-      </h1>
-      <div className="work-page-grid">
-        {publishedProjects.map((project, i) => (
-          <ProjectCard key={project.slug} project={project} priority={i < 3} />
-        ))}
-      </div>
-    </section>
+    <>
+      <PageHeader lines={["Work"]} count={publishedProjects.length} label="Work" />
+      <WorkGrid projects={publishedProjects} />
+    </>
   );
 }
