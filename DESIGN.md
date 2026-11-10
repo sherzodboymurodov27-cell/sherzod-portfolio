@@ -15,10 +15,10 @@ phone object are his own; nothing is copied from the reference.
 | `graphite-3` | `#6A6A6F` | Hero gradient bottom |
 | `paper` | `#E7E7E8` | Light sections (work, services) |
 | `paper-2` | `#F4F4F4` | Cards and panels on paper |
-| `text` | `#F1F1F0` | Text on dark (15.9:1 on ink) |
-| `text-muted` | `#9A9A9D` | Secondary text on dark (6.9:1 on ink) |
-| `text-dark` | `#0C0C0D` | Text on paper (16.3:1) |
-| `text-dark-muted` | `#55555A` | Secondary text on paper (6.4:1) |
+| `text` | `#F1F1F0` | Text on dark (18:1 on ink) |
+| `text-muted` | `#9A9A9D` | Secondary text on dark (7.3:1 on ink) |
+| `text-dark` | `#0C0C0D` | Text on paper (15.8:1) |
+| `text-dark-muted` | `#55555A` | Secondary text on paper (6:1) |
 | `line` | `rgba(255,255,255,0.08)` | Grid lines and dividers on dark |
 | `line-dark` | `rgba(0,0,0,0.09)` | Grid lines and dividers on paper |
 | `signal` | `#FF5A1F` | The one accent: status dots, active nav, current slide, footer glow. Never body text. |
