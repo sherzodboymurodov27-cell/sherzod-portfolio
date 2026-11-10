@@ -4,6 +4,21 @@
 
 :root {
   color-scheme: dark;
+  /* Tokens from DESIGN.md */
+  --ink: #050506;
+  --graphite-1: #18181B;
+  --graphite-2: #4A4A4F;
+  --graphite-3: #6A6A6F;
+  --paper: #E7E7E8;
+  --paper-2: #F4F4F4;
+  --text: #F1F1F0;
+  --text-muted: #9A9A9D;
+  --text-dark: #0C0C0D;
+  --text-dark-muted: #55555A;
+  --line: rgba(255,255,255,0.08);
+  --line-dark: rgba(0,0,0,0.09);
+  --signal: #FF5A1F;
+  --gutter: clamp(16px, 2.6vw, 40px);
 }
 
 * { box-sizing: border-box; }
