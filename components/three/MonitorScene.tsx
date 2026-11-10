@@ -37,31 +37,31 @@ export function MonitorScene({ posts, progress }: Props) {
 
       const { THREE, scene, camera } = stage;
       const { RoundedBoxGeometry } = await import("three/examples/jsm/geometries/RoundedBoxGeometry.js");
-      const bodyFont = getComputedStyle(document.documentElement).getPropertyValue("--font-archivo").trim() || "sans-serif";
-      await document.fonts.load(`500 26px ${bodyFont}`).catch(() => undefined);
       const images = await Promise.all(posts.map(loadImage));
       if (cancelled) return;
 
-      const shell = new THREE.MeshStandardMaterial({ color: 0x1b1b1e, metalness: 0.85, roughness: 0.32 });
-      const edge = new THREE.MeshStandardMaterial({ color: 0x2c2c30, metalness: 0.9, roughness: 0.22 });
+      const shell = new THREE.MeshStandardMaterial({ color: 0x1b1b1e, metalness: 0.35, roughness: 0.4 });
+      const edge = new THREE.MeshStandardMaterial({ color: 0x3a3a3f, metalness: 0.8, roughness: 0.25 });
 
       const monitor = new THREE.Group();
       scene.add(monitor);
       monitor.add(new THREE.Mesh(new RoundedBoxGeometry(W, H, 0.12, 6, 0.06), shell));
 
+      const SW = W - 0.05; // thin bezel
+      const SH = H - 0.05;
       const canvas = document.createElement("canvas");
       canvas.width = 1600;
-      canvas.height = Math.round(1600 * ((H - 0.12) / (W - 0.12)));
+      canvas.height = Math.round(1600 * (SH / SW));
       const ctx = canvas.getContext("2d")!;
       const texture = new THREE.CanvasTexture(canvas);
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 8;
-      const screen = new THREE.Mesh(new THREE.PlaneGeometry(W - 0.12, H - 0.12), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
+      const screen = new THREE.Mesh(new THREE.PlaneGeometry(SW, SH), new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }));
       screen.position.z = 0.061;
       monitor.add(screen);
 
       const glass = new THREE.Mesh(
-        new THREE.PlaneGeometry(W - 0.12, H - 0.12),
+        new THREE.PlaneGeometry(SW, SH),
         new THREE.MeshPhysicalMaterial({ transparent: true, opacity: 0.08, roughness: 0.05, clearcoat: 1 }),
       );
       glass.position.z = 0.063;
@@ -94,40 +94,48 @@ export function MonitorScene({ posts, progress }: Props) {
 
       const key = new THREE.DirectionalLight(0xffffff, 1.4);
       key.position.set(-3, 4, 5);
-      scene.add(key, new THREE.AmbientLight(0xffffff, 0.25));
+      const rim = new THREE.DirectionalLight(0xffffff, 2.5);
+      rim.position.set(0, 2, -4);
+      scene.add(key, rim, new THREE.AmbientLight(0xffffff, 0.25));
+
+      // Desk the monitor stands on, running off both sides, and a cable behind it.
+      const deskTop = -H / 2 - 0.98;
+      const desk = new THREE.Mesh(
+        new RoundedBoxGeometry(14, 0.5, 2.4, 3, 0.04),
+        new THREE.MeshStandardMaterial({ color: 0x0d0d0f, metalness: 0.2, roughness: 0.6 }),
+      );
+      desk.position.set(0, deskTop - 0.25, 0.1);
+      monitor.add(desk);
+      const cablePath = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0.05, -H / 2 - 0.55, -0.2),
+        new THREE.Vector3(0.25, deskTop + 0.05, -0.55),
+        new THREE.Vector3(1.4, deskTop + 0.03, -0.75),
+        new THREE.Vector3(2.6, deskTop + 0.03, -0.6),
+      ]);
+      const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 48, 0.025, 8, false), new THREE.MeshStandardMaterial({ color: 0x111113, roughness: 0.5 }));
+      monitor.add(cable);
 
       const feed = images.filter(Boolean) as HTMLImageElement[];
       let offset = 0;
       let slide = 1;
 
+      // The posts fill the screen edge to edge (4:5 tiles at full height), sliding left.
       const drawScreen = () => {
         const cw = canvas.width;
         const ch = canvas.height;
-        ctx.fillStyle = "#0E0E10";
+        ctx.fillStyle = "#0B0B0C";
         ctx.fillRect(0, 0, cw, ch);
-        ctx.fillStyle = "#17171A";
-        ctx.fillRect(0, 0, cw, 70);
-        ["#FF5F57", "#FEBC2E", "#28C840"].forEach((c, i) => {
-          ctx.fillStyle = c;
-          ctx.beginPath();
-          ctx.arc(40 + i * 30, 35, 9, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        ctx.fillStyle = "rgba(241,241,240,0.55)";
-        ctx.font = `500 26px ${bodyFont}`;
-        ctx.fillText("Sherzod Boymurodov — selected posts", 160, 44);
         if (!feed.length) return;
-        const cols = 3;
-        const gap = 36;
-        const tileW = (cw - gap * (cols + 1)) / cols;
-        const tileH = tileW * 1.25;
-        const top = 70 + (ch - 70 - tileH) / 2;
+        const gap = 14;
+        const tileH = ch;
+        const tileW = tileH * 0.8;
         const ease = 1 - Math.pow(1 - slide, 3);
-        for (let i = -1; i <= cols; i++) {
+        const span = tileW + gap;
+        for (let i = -1; i <= Math.ceil(cw / span) + 1; i++) {
           const img = feed[(((offset + i) % feed.length) + feed.length) % feed.length];
-          const x = gap + (i + 1 - ease) * (tileW + gap) - (tileW + gap);
+          const x = (i + 1 - ease) * span - span;
           if (x > cw || x + tileW < 0) continue;
-          ctx.drawImage(img, x, top, tileW, tileH);
+          ctx.drawImage(img, x, 0, tileW, tileH);
         }
         texture.needsUpdate = true;
       };
@@ -148,10 +156,12 @@ export function MonitorScene({ posts, progress }: Props) {
       const tanHalf = Math.tan(((FOV / 2) * Math.PI) / 180);
       const distances = () => {
         const aspect = stage.width() / stage.height();
-        const fitH = ((H / 2) * 1.06) / tanHalf;
-        const fitW = ((W / 2) * 1.06) / (tanHalf * aspect);
-        const end = Math.max(fitH, fitW);
-        return { start: end * (aspect < 1 ? 1.5 : 1.95), end };
+        // Start: the monitor takes ~46% of the width (80% on portrait screens).
+        const share = aspect < 1 ? 0.8 : 0.42;
+        const start = W / (share * 2 * tanHalf * aspect);
+        // End: the screen covers the whole view.
+        const end = Math.min(SH / 2 / tanHalf, SW / 2 / (tanHalf * aspect)) * 0.97;
+        return { start, end };
       };
 
       let nextAt = 2.6;
@@ -170,10 +180,10 @@ export function MonitorScene({ posts, progress }: Props) {
         const { start, end } = distances();
         camera.position.set(0, 0.25 - p * 0.25, start + (end - start) * p);
         camera.lookAt(0, 0.05 - p * 0.05, 0);
-        const idle = Math.sin(t * 0.6) * 0.02;
+        const idle = Math.sin(t * 0.6) * 0.02 * (1 - p);
         monitor.rotation.y += ((-0.32 + pointer.x * 0.12) * (1 - p) - monitor.rotation.y) * 0.06;
         monitor.rotation.x += ((0.1 + pointer.y * 0.05) * (1 - p) + idle - monitor.rotation.x) * 0.06;
-        monitor.position.y = -0.35 * (1 - p);
+        monitor.position.y = -0.62 * (1 - p);
       });
     })();
 

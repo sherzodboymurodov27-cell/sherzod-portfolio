@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMeta("Work", "Social media, brand identity
 export default function WorkPage() {
   return (
     <>
-      <PageHeader lines={["Work"]} count={publishedProjects.length} label={`Work, ${publishedProjects.length} ${publishedProjects.length === 1 ? "project" : "projects"}`} />
+      <PageHeader lines={["Work"]} count={publishedProjects.length >= 3 ? publishedProjects.length : undefined} label={`Work, ${publishedProjects.length} ${publishedProjects.length === 1 ? "project" : "projects"}`} />
       <WorkGrid projects={publishedProjects} />
     </>
   );

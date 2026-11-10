@@ -109,8 +109,13 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
       </span>
 
       <Link href="/work" className="display show-all">
-        All work<sup aria-hidden="true">{projects.length}</sup>
-        <span className="sr-only">, {projects.length === 1 ? "1 project" : `${projects.length} projects`}</span>
+        All work
+        {projects.length >= 3 && (
+          <>
+            <sup aria-hidden="true">{projects.length}</sup>
+            <span className="sr-only">, {projects.length} projects</span>
+          </>
+        )}
       </Link>
     </section>
   );

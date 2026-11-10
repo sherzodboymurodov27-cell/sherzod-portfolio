@@ -13,11 +13,13 @@ type Props = {
   count?: number;
   /** Visually hidden full heading when the display words alone are not enough. */
   label?: string;
+  /** Title spans the full width with the body below it (long names). */
+  wide?: boolean;
   children?: ReactNode;
 };
 
 /** The opening of every inner page: giant display type on the hero gradient, lines rising on load. */
-export function PageHeader({ lines, italic, count, label, children }: Props) {
+export function PageHeader({ lines, italic, count, label, wide, children }: Props) {
   const root = useRef<HTMLElement>(null);
 
   useIsoLayoutEffect(() => {
@@ -34,7 +36,7 @@ export function PageHeader({ lines, italic, count, label, children }: Props) {
   }, []);
 
   return (
-    <header ref={root} className="page-head">
+    <header ref={root} className={`page-head ${wide ? "page-head-wide" : ""}`}>
       <div className="section-grid" aria-hidden="true" />
       <div className="container">
         <h1 className="page-title" aria-label={label}>

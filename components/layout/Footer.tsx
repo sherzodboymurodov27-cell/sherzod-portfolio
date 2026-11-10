@@ -10,9 +10,9 @@ export function Footer() {
   return (
     <footer className="footer">
       <div className="section-grid" aria-hidden="true" />
-      <BadgeScene name={site.name} role="Designer" place={`${site.location} · since ${site.about.since}`} />
-
       <FooterCta />
+
+      <BadgeScene name={site.name} role="Designer" place={`${site.location}, since ${site.about.since}`} />
 
       <div className="footer-links">
         <FooterPages />

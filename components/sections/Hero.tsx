@@ -41,7 +41,7 @@ export function Hero() {
             start: "top top",
             end: "bottom bottom",
             scrub: 0.6,
-            onUpdate: (self) => (progress.current = Math.min(1, self.progress / 0.72)),
+            onUpdate: (self) => (progress.current = Math.min(1, self.progress / 0.66)),
           },
         });
         tl.to(".hero-title", { yPercent: -22, opacity: 0.15, ease: "none", duration: 0.7 }, 0)
@@ -50,8 +50,8 @@ export function Hero() {
             ".hero-shutter i",
             // y: 0 overrides the CSS translateY(100%) so only yPercent moves the columns.
             { y: 0, yPercent: 100 },
-            { yPercent: 0, ease: "power2.inOut", duration: 0.3, stagger: { each: 0.035, from: "random" } },
-            0.68,
+            { yPercent: 0, ease: "power3.inOut", duration: 0.22, stagger: { each: 0.03, from: "start" } },
+            0.78,
           );
       });
     }, root);

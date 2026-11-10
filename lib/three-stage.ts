@@ -56,7 +56,7 @@ export function hasWebGL(): boolean {
  * under reduced motion it renders still frames. Returns null when WebGL is
  * unavailable so callers can show their fallback.
  */
-export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | null> {
+export async function createStage(host: HTMLElement, fov = 30, lighting: "room" | "strips" = "strips"): Promise<Stage | null> {
   // Check before downloading three.js, so devices without WebGL never fetch it.
   if (!hasWebGL()) return null;
   const THREE = await import("three");
@@ -77,9 +77,15 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const room = new RoomEnvironment();
-  const envTexture = pmrem.fromScene(room, 0.04).texture;
-  room.dispose();
+  // "strips": a black studio with tall softbox strips, so chrome gets crisp
+  // highlights against dark reflections. "room": an even grey studio.
+  const envScene = lighting === "strips" ? stripStudio(THREE) : new RoomEnvironment();
+  const envTexture = pmrem.fromScene(envScene, 0.02).texture;
+  envScene.traverse((o) => {
+    const m = o as THREE_NS.Mesh;
+    m.geometry?.dispose?.();
+    (m.material as THREE_NS.Material | undefined)?.dispose?.();
+  });
   scene.environment = envTexture;
 
   const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 100);
@@ -167,4 +173,34 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
       renderer.domElement.remove();
     },
   };
+}
+
+function stripStudio(THREE: Three): THREE_NS.Scene {
+  const studio = new THREE.Scene();
+  studio.background = new THREE.Color(0x050506);
+  const light = (w: number, h: number, intensity: number) =>
+    new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1).multiplyScalar(intensity), side: THREE.DoubleSide }));
+  // Wide softboxes left, right and behind, a big top panel and a low front fill:
+  // enough bright area that chrome reads as metal, with dark gaps for contrast.
+  const strips: [number, number, number, number, number][] = [
+    [-5, 0.5, 2.5, 3, 4],
+    [5, 0.5, 1.5, 3, 3.2],
+    [0.8, 0.5, -5, 3.5, 2.6],
+    [-2.5, 0, -4.5, 1.2, 2],
+  ];
+  for (const [x, y, z, w, k] of strips) {
+    const m = light(w, 10, k);
+    m.position.set(x, y, z);
+    m.lookAt(0, 0, 0);
+    studio.add(m);
+  }
+  const topPanel = light(9, 9, 2.2);
+  topPanel.position.set(0, 6, 0);
+  topPanel.lookAt(0, 0, 0);
+  studio.add(topPanel);
+  const front = light(8, 2.5, 1.4);
+  front.position.set(0, -2, 6);
+  front.lookAt(0, 0, 0);
+  studio.add(front);
+  return studio;
 }

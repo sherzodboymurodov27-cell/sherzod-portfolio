@@ -10,7 +10,7 @@ export function CaseStudy({ project, next }: { project: Project; next: Project |
 
   return (
     <article>
-      <PageHeader lines={client.split(" ")} label={`${client}, ${project.category}`}>
+      <PageHeader lines={client.split(" ")} label={`${client}, ${project.category}`} wide>
         <p className="lead">{project.description}</p>
         <dl className="facts">
           <div>
@@ -40,8 +40,8 @@ export function CaseStudy({ project, next }: { project: Project; next: Project |
           ))}
         </div>
         <div className="container case-back">
-          <Link href="/work" className="btn">
-            Back to all work
+          <Link href="/work" className="display show-all case-back-link">
+            All work
           </Link>
         </div>
       </section>
@@ -67,28 +67,36 @@ function Img({ src, alt, sizes = "(min-width: 768px) 50vw, 100vw" }: { src: stri
   return <img {...imgProps(src, sizes)} alt={alt} loading="lazy" decoding="async" />;
 }
 
+/** One image with its caption under it. */
+function Figure({ src, alt, className, sizes }: { src: string; alt: string; className?: string; sizes?: string }) {
+  return (
+    <figure className={className}>
+      <div className="case-media">
+        <Img src={src} alt={alt} sizes={sizes} />
+      </div>
+      {alt && (
+        <figcaption className="meta">
+          <i aria-hidden="true" />
+          {alt}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
 function Block({ block }: { block: ProjectBlock }) {
   switch (block.type) {
     case "full":
-      return (
-        <figure className="case-full">
-          <Img src={block.image} alt={block.alt} sizes="100vw" />
-        </figure>
-      );
+      return <Figure src={block.image} alt={block.alt} className="case-full" sizes="100vw" />;
     case "single":
-      return (
-        <figure className="case-single">
-          <Img src={block.image} alt={block.alt} />
-        </figure>
-      );
+      return <Figure src={block.image} alt={block.alt} className="case-single" />;
     case "split":
     case "gallery":
+      // A staggered rhythm on the six columns, like the home page tiles.
       return (
         <div className="case-gallery">
           {block.images.map((src, i) => (
-            <figure key={src}>
-              <Img src={src} alt={block.alt[i] ?? ""} />
-            </figure>
+            <Figure key={src} src={src} alt={block.alt[i] ?? ""} className={`case-g case-g-${(i % 5) + 1}`} />
           ))}
         </div>
       );

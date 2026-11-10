@@ -93,3 +93,16 @@ sticky scroll scene in the hero (camera moves into the screen, grid columns clos
 blur-to-sharp reveal on the about statement, parallax on work tiles, a trailing "View" cursor, the footer CTA
 rising in. 3D scenes are created when near the viewport, render only while on screen and draw still frames
 under `prefers-reduced-motion`, where all other motion is off.
+
+## Layout and component decisions (designer review round 2)
+
+- **Grid**: `.section-grid` / `.hero-grid` lines align to the content box (gutter to gutter), six columns, right edge closed.
+- **Section flow**: about intro fades ink → graphite → grey, the work section continues grey → paper, so dark and light parts read as one scroll.
+- **Nav**: logo, links and contact sit in separate pills once the page scrolls (`.is-solid`); the open mobile menu has a solid ink background.
+- **Hero**: monitor stands on a desk with a cable, in front of the italic DESIGNER line; on scroll it rises and the screen fills the viewport, then the orange shutter closes the scene.
+- **Services**: white ghost word SERVICES above "What I do"; chrome icons are lit by a softbox studio (wide side strips, top panel, front fill) so they read as polished metal, never black.
+- **Badge**: paper card in a clear sleeve, chrome clip, printed orange ribbon; spans the whole footer on desktop, its own block under 1024px.
+- **Footer wordmark**: `©SHERZOD` sized to the content width (÷5.9), © at 0.72em.
+- **Counts**: "All work" shows a project count only when there are 3 or more.
+- **Case study**: staggered gallery (`.case-g-1…5`) with orange-dot captions.
+- **OG image**: Archivo only (SHERZOD + italic DESIGNER), no script font anywhere.

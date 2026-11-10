@@ -35,14 +35,14 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
 
       const { THREE, renderer, scene: baseScene } = stage;
       const medias = Array.from(list.querySelectorAll<HTMLElement>(".service-media"));
-      const chrome = new THREE.MeshStandardMaterial({ color: 0xd9d9de, metalness: 1, roughness: 0.12, envMapIntensity: 1.4 });
+      const chrome = new THREE.MeshStandardMaterial({ color: 0xc4c8ce, metalness: 1, roughness: 0.1, envMapIntensity: 1.5 });
 
       const items = medias.map((media, i) => {
         const scene = new THREE.Scene();
         scene.environment = baseScene.environment;
         scene.add(new THREE.DirectionalLight(0xffffff, 0.8));
         const object = build(THREE, shapes[i % shapes.length], chrome);
-        object.scale.multiplyScalar(0.88); // room for the nib tip and bob inside the box
+        object.scale.multiplyScalar(0.66); // about 45% of the box, with room to bob
         scene.add(object);
         const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 50);
         camera.position.set(0, 0, 6);
@@ -145,8 +145,8 @@ export function ChromeFallback({ shape }: { shape: ChromeShape }) {
 const NIB_PATH = "M0 1.35L0.7 0.15Q0.62 -0.5 0.46 -0.9L0.5 -1.25L-0.5 -1.25L-0.46 -0.9Q-0.62 -0.5 -0.7 0.15Z";
 
 function build(THREE: Three, shape: ChromeShape, material: T.Material): T.Object3D {
-  const extrude = (s: T.Shape, depth = 0.35) => {
-    const g = new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.06, bevelSegments: 8, curveSegments: 48 });
+  const extrude = (s: T.Shape, depth = 0.35, bevel = 0.06) => {
+    const g = new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: true, bevelThickness: bevel * 1.2, bevelSize: bevel, bevelSegments: 14, curveSegments: 64 });
     g.center();
     return new THREE.Mesh(g, material);
   };
@@ -160,8 +160,9 @@ function build(THREE: Three, shape: ChromeShape, material: T.Material): T.Object
     s.bezierCurveTo(0.04, 0.98, 0.18, 1.12, 0.42, 1.12);
     s.bezierCurveTo(0.78, 1.12, 1.15, 0.85, 1.15, 0.38);
     s.bezierCurveTo(1.15, -0.2, 0.35, -0.75, 0, -1.05);
-    const m = extrude(s);
-    m.scale.setScalar(0.95);
+    // Deep rounded bevel so the heart reads as a soft chrome form, not a flat cut-out.
+    const m = extrude(s, 0.2, 0.2);
+    m.scale.setScalar(0.85);
     return m;
   }
 
@@ -178,11 +179,14 @@ function build(THREE: Three, shape: ChromeShape, material: T.Material): T.Object
     const hole = new THREE.Path();
     hole.absarc(0, 0.02, 0.16, 0, Math.PI * 2, true);
     s.holes.push(hole);
-    const nib = extrude(s, 0.22);
+    const nib = extrude(s, 0.16, 0.08);
     const group = new THREE.Group();
     group.add(nib);
-    group.scale.setScalar(0.92);
-    return group;
+    // Tilted like the pen-tool cursor; wrapped so the animation's rotation doesn't reset the tilt.
+    group.rotation.z = -0.6;
+    const wrap = new THREE.Group();
+    wrap.add(group);
+    return wrap;
   }
 
   const group = new THREE.Group();

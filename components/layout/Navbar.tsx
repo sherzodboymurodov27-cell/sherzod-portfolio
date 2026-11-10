@@ -66,7 +66,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={`nav ${scrolled || open ? "is-solid" : ""}`}>
+    <header className={`nav ${scrolled || open ? "is-solid" : ""} ${open ? "is-open" : ""}`}>
       <div className="nav-inner">
         <Link href="/" className="nav-mark">
           SB<span className="sr-only">, Sherzod Boymurodov, home</span>
