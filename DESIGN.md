@@ -77,7 +77,7 @@ Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`; no sentence e
 - **Collaborations**: light band of slanted cells, logos as dark silhouettes with names as alt text, drifting continuously (owner's choice: no pause); a static grid under reduced motion.
 - **Service card**: paper-2 panel with crop marks, a chrome object on a dark gradient (one shared WebGL canvas for all cards; flat SVG fallback), title and one-line description. Ghost "SERVICES" word above is decorative; the real heading is "What I do".
 - **Footer**: giant two-line CTA (hidden on /contact), lanyard badge (hidden on /contact and without WebGL; drag with a mouse, swings on its own on touch), links, full-width metal wordmark, signal glow at the bottom edge.
-- **Page header** (inner pages): giant metal display word(s) with a script word, optional lead and facts.
+- **Page header** (inner pages): giant metal display word(s), optional italic second line, lead and facts.
 
 ## Imagery
 
