@@ -33,8 +33,8 @@ export function FooterCta() {
         <span className="cta-line">
           <span className="cta-line-inner display">Got a project</span>
         </span>
-        <span className="cta-line cta-line-script">
-          <span className="cta-line-inner script">in mind?</span>
+        <span className="cta-line">
+          <span className="cta-line-inner display display-italic cta-italic">in mind?</span>
         </span>
       </h2>
       <Link href="/contact" className="btn btn-signal cta-btn">

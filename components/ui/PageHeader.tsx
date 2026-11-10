@@ -7,8 +7,8 @@ import { useIsoLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 type Props = {
   /** Heavy uppercase word(s); each array item is a line. */
   lines: string[];
-  /** Optional script word written across the last line. */
-  script?: string;
+  /** Optional second line in heavy italic, like the hero's DESIGNER. */
+  italic?: string;
   /** Superscript count after the last line. */
   count?: number;
   /** Visually hidden full heading when the display words alone are not enough. */
@@ -17,7 +17,7 @@ type Props = {
 };
 
 /** The opening of every inner page: giant display type on the hero gradient, lines rising on load. */
-export function PageHeader({ lines, script, count, label, children }: Props) {
+export function PageHeader({ lines, italic, count, label, children }: Props) {
   const root = useRef<HTMLElement>(null);
 
   useIsoLayoutEffect(() => {
@@ -27,7 +27,6 @@ export function PageHeader({ lines, script, count, label, children }: Props) {
           .timeline({ defaults: { ease: "expo.out" } })
           .from(".page-line-inner", { yPercent: 110, duration: 1.3, stagger: 0.1 });
         // Only animate parts this header actually has (avoids GSAP "target not found").
-        if (script) tl.from(".page-script", { opacity: 0, x: -30, duration: 1.4 }, 0.3);
         if (children) tl.from(".page-head-body > *", { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 0.5);
       });
     }, root);
@@ -47,9 +46,9 @@ export function PageHeader({ lines, script, count, label, children }: Props) {
               </span>
             </span>
           ))}
-          {script && (
-            <span className="script page-script" aria-hidden={label ? true : undefined}>
-              {script}
+          {italic && (
+            <span className="page-line" aria-hidden={label ? true : undefined}>
+              <span className="page-line-inner display display-italic">{italic}</span>
             </span>
           )}
         </h1>

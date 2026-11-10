@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMeta(
 export default function ContactPage() {
   return (
     <>
-      <PageHeader lines={["Let's"]} script="talk" label="Let's talk">
+      <PageHeader lines={["Let's"]} italic="talk" label="Let's talk">
         <p className="lead">
           Write about your project on Telegram or Instagram, or call. I&rsquo;m based in {site.location}, and work with
           brands anywhere.

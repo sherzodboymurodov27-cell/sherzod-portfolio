@@ -42,11 +42,10 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
       const css = getComputedStyle(document.documentElement);
       const fam = (v: string, fallback: string) => `${css.getPropertyValue(v).trim() || fallback}`;
       const display = fam("--font-archivo", "sans-serif");
-      const script = fam("--font-script", "cursive");
-      const body = fam("--font-manrope", "sans-serif");
+      const body = display;
       await Promise.all([
         document.fonts.load(`800 100px ${display}`),
-        document.fonts.load(`400 100px ${script}`),
+        document.fonts.load(`italic 800 100px ${display}`),
         document.fonts.load(`600 30px ${body}`),
       ]).catch(() => undefined);
       if (cancelled) return;
@@ -73,8 +72,8 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
       c.fillStyle = "#0C0C0D";
       c.font = `800 210px ${display}`;
       c.fillText("SB", 66, 330);
-      c.font = `400 96px ${script}`;
-      c.fillText(role, 70, 470);
+      c.font = `italic 800 92px ${display}`;
+      c.fillText(role.toUpperCase(), 70, 450);
       c.font = `600 34px ${body}`;
       c.fillText(name.toUpperCase(), 70, 700);
       c.font = `400 26px ${body}`;

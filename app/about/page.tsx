@@ -14,7 +14,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHeader lines={["About"]} script="me" label="About me">
+      <PageHeader lines={["About"]} italic="me" label="About me">
         <p className="lead about-long">{site.about.long}</p>
       </PageHeader>
 

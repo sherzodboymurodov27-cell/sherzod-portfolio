@@ -24,40 +24,34 @@ chrome objects, a lanyard badge and a giant wordmark in the footer. Name, copy, 
 | `line` | `rgba(255,255,255,0.08)` | Grid lines on dark |
 | `line-strong` | `rgba(255,255,255,0.16)` | Row dividers and button borders on dark |
 | `line-dark` | `rgba(0,0,0,0.09)` | Grid lines and dividers on paper |
-| `signal` | `#FF5A1F` | The one accent: status dots, active nav, current slide, footer glow. Never body text. |
+| `signal` | `#FF5A1F` | The one accent: dots (nav, buttons, live clock, captions, service titles), superscript counts, the ALL WORK underline, button and contact-row hover, badge strap, footer glow. Never body text. |
 
-Headline metal (owner's choice, from the reference): `#FAFAFA → #BDBDC1 → #7C7C81` top to bottom; italic line
-`#D7D7DA → #8E8E93 → #5C5C61`. Used only on the hero and footer wordmark.
+Headline metal: `--metal` `#FFF → #E4E4E7 → #A9A9AE → #6E6E73`; italic lines use `--metal-deep`
+`#D9D9DC → #9A9A9F → #5E5E63 → #3E3E42`. Hero, page titles, next-project title and the footer wordmark only.
 
 ## Typography
 
-Three voices, never mixed inside one line except display + script.
+One family for everything: **Archivo** (OFL), roman and italic, variable weight 400–800, width fixed at 100%,
+self-hosted and subset to Latin (28 KB + 31 KB). No script, no mono, no second family.
 
-- **Display — Archivo** (OFL), a static 800 / 100%-width instance subset to Latin (12 KB), uppercase, tracking −0.035em, line height 0.86. Names,
-  page words and section words only. Metal gradient on dark (`.metal`), flat ink on paper.
-- **Script — Parisienne** (OFL), 400. Written across display type, rotated −6°, never smaller than 40px and
-  never on its own as body copy. One script word per view.
-- **Body — Manrope** (variable): 600 for the statement and card titles, 500 for UI text, 400 for paragraphs.
-- **Meta — system mono**, 11px uppercase, 0.06em tracking, tabular figures: tags, facts, time.
+| Class | Weight | Size | Line height | Tracking | Use |
+|---|---|---|---|---|---|
+| `.display` hero line 1 | 800 | `min(17.6vw, 31vh)` | 0.84 | −0.035em | SHERZOD, metal gradient |
+| `.display-italic` hero line 2 | 800 italic | 0.8 × line 1 | 0.84 | −0.045em | DESIGNER, deeper metal |
+| `.display` page | 800 | `clamp(64px, 15vw, 240px)` | 0.86 | −0.035em | ABOUT / *ME*, LET'S / *TALK*, client name |
+| `.display` section | 800 | `clamp(56px, 9vw, 150px)` | 0.86 | −0.035em | ALL WORK, CTA (second line italic), contact rows |
+| `.statement` | 600 | `clamp(32px, 4.8vw, 76px)` | 1.04 | −0.04em | Home about sentence, max 23ch |
+| `.section-heading` | 700 | `clamp(22px, 2vw, 30px)` | 1.1 | −0.03em | What I do, Brands, Teams, Tools |
+| card title | 700 | `clamp(26px, 2.2vw, 34px)` | 1.05 | −0.03em | Services, work cards |
+| `.lead` | 400 | `clamp(19px, 1.55vw, 24px)` | 1.42 | −0.015em | Intros, descriptions, max 44ch |
+| body | 400 | 17px | 1.6 | 0 | Paragraphs, max 64ch |
+| secondary | 400 | 16px | 1.5 | 0 | Card and list descriptions, footer links |
+| UI | 600 | 12px uppercase | 1 | 0.08em | Buttons, nav |
+| `.meta` | 500 | 11px uppercase | 1.4 | 0.08em | Tags, facts, clock; tabular figures |
 
-| Class | Size | Line height | Tracking | Use |
-|---|---|---|---|---|
-| `.display` hero | `min(19vw, 36vh)` | 0.86 | −0.035em | SHERZOD |
-| `.display` page | `clamp(64px, 15vw, 240px)` | 0.86 | −0.035em | ABOUT, WORK, LET'S, client name |
-| `.display` section | `clamp(56px, 9vw, 150px)` | 0.86 | −0.035em | ALL WORK, CTA, contact rows |
-| `.script` | 0.6–0.65 × the display it sits on | 1 | 0 | Designer, me, talk, in mind? |
-| `.statement` | `clamp(32px, 4.8vw, 76px)` 600 | 1.04 | −0.036em | Home about sentence, max 23ch, balanced |
-| card title | `clamp(26px, 2.2vw, 34px)` 700 | 1.05 | −0.03em | Services, work cards |
-| `.lead` | `clamp(19px, 1.55vw, 24px)` | 1.42 | −0.012em | Intros, project descriptions, max 44ch |
-| body | 17px | 1.6 | 0 | Paragraphs, max 64ch |
-| secondary | 16px | 1.5 | 0 | Card and list descriptions, footer links |
-| `.section-heading` | `clamp(22px, 2vw, 30px)` 700 | 1.1 | −0.03em | What I do, Teams and clients, Tools, Brands |
-| UI | 12px 600 uppercase | 1 | 0.08em | Buttons, nav |
-| `.meta` | 11px mono | 1.4 | 0.06em | Tags, facts, clock |
-
-Script appears at most once per view and is never used on case studies (the client name stands alone).
-Rules: headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`; no sentence ends on a lone word;
-numbers in meta are tabular; superscript counts sit at 0.24em of the display size.
+Two-line titles: first line roman, second line italic of the same weight, never a different typeface.
+Superscript counts are 0.24em of the display size, in signal orange.
+Headings use `text-wrap: balance`, paragraphs `text-wrap: pretty`; no sentence ends on a lone word.
 
 ## Spacing and layout
 
@@ -77,10 +71,10 @@ numbers in meta are tabular; superscript counts sit at 0.24em of the display siz
 
 - **Nav**: "SB" mark left; dotted text links center (dot turns `signal` when hovered or current); dark contact button right with a signal dot. Mobile: Menu toggle opens a full-height list in display type; page behind is inert and does not scroll; Escape closes and returns focus.
 - **Button** (`.btn`): dark, 1px border, 4px radius, 12px uppercase 600, min height 40px, never wraps. `.btn-signal` adds the orange dot.
-- **Hero**: SHERZOD in metal display type, "Designer" in script, three.js monitor playing a feed of posts. A flat HTML monitor with the same posts shows until the 3D is ready and when WebGL is missing.
+- **Hero**: SHERZOD over italic DESIGNER in metal display type, three.js monitor playing a feed of posts. A flat HTML monitor with the same posts shows until the 3D is ready and when WebGL is missing.
 - **Work tile**: image with no radius at varied sizes in a staggered grid; caption (signal dot, client, category) under the image, never over the artwork. Only the first tile per project is a tab stop.
 - **All work link**: display word with a superscript count (hidden from screen readers, count read as text).
-- **Collaborations**: light band of slanted cells, logos as dark silhouettes with names as alt text; drifting, paused on hover, focus or the Pause button.
+- **Collaborations**: light band of slanted cells, logos as dark silhouettes with names as alt text, drifting continuously (owner's choice: no pause); a static grid under reduced motion.
 - **Service card**: paper-2 panel with crop marks, a chrome object on a dark gradient (one shared WebGL canvas for all cards; flat SVG fallback), title and one-line description. Ghost "SERVICES" word above is decorative; the real heading is "What I do".
 - **Footer**: giant two-line CTA (hidden on /contact), lanyard badge (hidden on /contact and without WebGL; drag with a mouse, swings on its own on touch), links, full-width metal wordmark, signal glow at the bottom edge.
 - **Page header** (inner pages): giant metal display word(s) with a script word, optional lead and facts.

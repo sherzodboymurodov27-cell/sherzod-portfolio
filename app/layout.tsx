@@ -7,29 +7,15 @@ import { site } from "@/data/site";
 import { pageMeta } from "@/lib/meta";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
-// Self-hosted variable font (Latin + Cyrillic support) — avoids a Google
-// Fonts network fetch at build time, which some CI/deploy environments block.
-const manrope = localFont({
-  src: "../public/fonts/Manrope-Variable.woff2",
-  variable: "--font-manrope",
-  display: "swap",
-  weight: "200 800",
-});
-
-// Display face: Archivo 800 at 100% width, instanced and Latin-subset (OFL-1.1).
+// The site's one typeface: Archivo (OFL-1.1), roman and italic, weights 400–800,
+// self-hosted and subset to Latin. Display, body and labels all use it.
 const archivo = localFont({
-  src: "../public/fonts/Archivo-800.woff2",
+  src: [
+    { path: "../public/fonts/Archivo.woff2", style: "normal", weight: "400 800" },
+    { path: "../public/fonts/Archivo-Italic.woff2", style: "italic", weight: "400 800" },
+  ],
   variable: "--font-archivo",
   display: "swap",
-  weight: "800",
-});
-
-// Script face for the "Designer" signature line. OFL-1.1.
-const parisienne = localFont({
-  src: "../public/fonts/Parisienne.woff2",
-  variable: "--font-script",
-  display: "swap",
-  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${archivo.variable} ${parisienne.variable}`}>
+    <html lang="en" className={archivo.variable}>
       <body>
          <a href="#main" className="skip-link">
           Skip to content

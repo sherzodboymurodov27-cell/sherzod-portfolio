@@ -89,7 +89,7 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
           it.camera.updateProjectionMatrix();
           it.tilt.x += (it.tilt.tx - it.tilt.x) * 0.08;
           it.tilt.y += (it.tilt.ty - it.tilt.y) * 0.08;
-          it.object.rotation.set(0.25 + it.tilt.x + Math.sin(t * 0.5 + it.phase) * 0.12, t * 0.45 + it.phase + it.tilt.y, Math.sin(t * 0.3 + it.phase) * 0.08);
+          it.object.rotation.set(0.25 + it.tilt.x + Math.sin(t * 0.5 + it.phase) * 0.12, Math.sin(t * 0.5 + it.phase) * 0.6 + it.tilt.y, Math.sin(t * 0.3 + it.phase) * 0.08);
           it.object.position.y = Math.sin(t * 1.1 + it.phase) * 0.12;
           renderer.render(it.scene, it.camera);
         }
@@ -179,11 +179,8 @@ function build(THREE: Three, shape: ChromeShape, material: T.Material): T.Object
     hole.absarc(0, 0.02, 0.16, 0, Math.PI * 2, true);
     s.holes.push(hole);
     const nib = extrude(s, 0.22);
-    // The slit from the tip to the breather hole, the detail that makes it read as a nib.
-    const slit = new THREE.Mesh(new THREE.BoxGeometry(0.035, 1.1, 0.5), new THREE.MeshStandardMaterial({ color: 0x1a1a1c, metalness: 0.6, roughness: 0.4 }));
-    slit.position.y = 0.72;
     const group = new THREE.Group();
-    group.add(nib, slit);
+    group.add(nib);
     group.scale.setScalar(0.92);
     return group;
   }

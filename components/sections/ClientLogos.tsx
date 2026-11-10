@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-
 const LOGOS: { id: number; name: string }[] = [
   { id: 1, name: "ESSI" },
   { id: 2, name: "Red Fox Branding" },
@@ -23,11 +19,9 @@ const src = (id: number) => `/images/clients/${String(id).padStart(2, "0")}.${id
 
 /**
  * Collaborations: one light band of slanted cells, logos as dark silhouettes,
- * drifting left. It pauses on hover, on keyboard focus and with the button.
+ * drifting left continuously (a static grid under reduced motion).
  */
 export function ClientLogos() {
-  const [paused, setPaused] = useState(false);
-
   return (
     <section className="collabs paper" aria-labelledby="collabs-heading">
       <div className="section-grid" aria-hidden="true" />
@@ -35,12 +29,9 @@ export function ClientLogos() {
         <h2 id="collabs-heading" className="section-heading">
           Brands and teams I&rsquo;ve designed for
         </h2>
-        <button type="button" className="collabs-toggle" onClick={() => setPaused((p) => !p)} aria-pressed={paused}>
-          {paused ? "Play" : "Pause"}
-        </button>
       </div>
 
-      <div className={`collabs-band ${paused ? "is-paused" : ""}`}>
+      <div className="collabs-band">
         <ul className="collabs-track">
           {[...LOGOS, ...LOGOS].map((logo, i) => {
             const copy = i >= LOGOS.length;

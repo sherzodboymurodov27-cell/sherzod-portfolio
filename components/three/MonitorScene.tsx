@@ -37,7 +37,7 @@ export function MonitorScene({ posts, progress }: Props) {
 
       const { THREE, scene, camera } = stage;
       const { RoundedBoxGeometry } = await import("three/examples/jsm/geometries/RoundedBoxGeometry.js");
-      const bodyFont = getComputedStyle(document.documentElement).getPropertyValue("--font-manrope").trim() || "sans-serif";
+      const bodyFont = getComputedStyle(document.documentElement).getPropertyValue("--font-archivo").trim() || "sans-serif";
       await document.fonts.load(`500 26px ${bodyFont}`).catch(() => undefined);
       const images = await Promise.all(posts.map(loadImage));
       if (cancelled) return;

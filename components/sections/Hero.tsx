@@ -14,8 +14,8 @@ const POSTS = [1, 2, 3, 4, 5].map((n) => `/images/hero/post-${String(n).padStart
 const COLUMNS = 6;
 
 /**
- * Hero: SHERZOD in heavy metallic caps with "Designer" written across it in
- * script, and a monitor standing in front playing a feed of the work.
+ * Hero: SHERZOD over DESIGNER in heavy metal caps (the second line italic),
+ * and a monitor standing in front of the second line playing a feed of the work.
  * The hero pins while the camera moves into the screen, then the grid
  * columns rise one after another and close over it.
  */
@@ -29,8 +29,7 @@ export function Hero() {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap
           .timeline({ defaults: { ease: "expo.out" } })
-          .from(".hero-word-inner", { yPercent: 110, duration: 1.4 })
-          .from(".hero-script", { opacity: 0, x: -40, duration: 1.6 }, 0.35)
+          .from(".hero-word-inner", { yPercent: 110, duration: 1.4, stagger: 0.12 })
           .from(".monitor-scene", { opacity: 0, y: 120, duration: 1.8 }, 0.25)
           .from(".hero-meta > *", { opacity: 0, y: 12, duration: 1, stagger: 0.08 }, 0.9);
 
@@ -68,8 +67,8 @@ export function Hero() {
         <span className="hero-word" aria-hidden="true">
           <span className="hero-word-inner display metal">Sherzod</span>
         </span>
-        <span className="hero-script script" aria-hidden="true">
-          Designer
+        <span className="hero-word hero-word-2" aria-hidden="true">
+          <span className="hero-word-inner display display-italic metal metal-deep">Designer</span>
         </span>
         <span className="sr-only">{site.name}, graphic designer</span>
       </h1>
@@ -110,6 +109,7 @@ function LocalTime() {
 
   return (
     <span>
+      <i className="hero-live" aria-hidden="true" />
       UZ <span className="hero-time">{time ?? "--:--"}</span> GMT+5
     </span>
   );
