@@ -13,8 +13,10 @@ import { WorkIndex } from "@/components/sections/WorkIndex";
 export function Hero() {
   const [firstName, ...rest] = site.name.split(" ");
   const lastName = rest.join(" ");
-  const disciplines = site.tagline.map((t, i) => (i === 0 ? t : t.toLowerCase()));
-  const disciplineLine = `${disciplines.slice(0, -1).join(", ")} and ${disciplines.at(-1)}.`;
+  const disciplines = site.tagline.map((t) => t.toLowerCase());
+  const list = `${disciplines.slice(0, -1).join(", ")} and ${disciplines.at(-1)}.`;
+  const disciplineLine = list.charAt(0).toUpperCase() + list.slice(1);
+  const role = site.role.charAt(0) + site.role.slice(1).toLowerCase();
 
   return (
     <section className="hero px-3 md:px-6 pt-20 md:pt-28">
@@ -23,7 +25,7 @@ export function Hero() {
 
         <div className="hero-slug">
           <p>
-            {site.role} in {site.location}, working since {site.about.since}.
+            {role} in {site.location}, working since {site.about.since}.
           </p>
           <ProcessBar />
         </div>
