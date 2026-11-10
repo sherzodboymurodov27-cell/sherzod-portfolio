@@ -22,7 +22,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "project-01",
+    slug: "zamin-maktabi",
     title: "Zamin Maktabi — Social Media",
     category: "Social Media",
     year: "2026",

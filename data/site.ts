@@ -21,7 +21,7 @@ export const site = {
   about: {
     heading: "About",
     intro:
-      "I'm a graphic designer from Tashkent, working since 2022 across social media, brand identity and print. I've designed for schools, food brands, cargo companies and agencies, turning briefs into visuals people stop scrolling for.",
+      "I’m a graphic designer from Tashkent, working since 2022 across social media, brand identity and print. I’ve designed for schools, food brands, cargo companies and agencies, turning briefs into visuals people stop scrolling for.",
     since: "2022",
     body: [
       "Designing since 2022, I work across digital design, branding, packaging, social media and print — creating clear and purposeful visual solutions for different brands and communication needs.",
@@ -41,6 +41,16 @@ export const site = {
       title: "Print",
       description: "Brochures, flyers, packaging and outdoor, prepared for production.",
     },
+  ],
+
+  // Teams and clients, from the owner's own work history.
+  experience: [
+    { name: "PDP EcoSystem", what: "Visual communication, branding and advertising for PDP Academy, PDP University, PDP School and PDP Junior" },
+    { name: "Red Fox Branding", what: "Brand identity and visual projects as part of the studio team" },
+    { name: "Silk Road Express", what: "Branding, campaign visuals and social media for a cargo and delivery brand" },
+    { name: "ESSI", what: "Packaging mockups and social media for a dairy brand" },
+    { name: "Zikrilla Marinade", what: "Packaging, product visuals and food content" },
+    { name: "Zamin Maktabi", what: "Social media campaigns for a private school" },
   ],
 
   tools: [

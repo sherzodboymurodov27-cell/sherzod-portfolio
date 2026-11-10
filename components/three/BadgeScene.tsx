@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { createStage } from "@/lib/three-stage";
+import { createStage, whenNear } from "@/lib/three-stage";
 
 /**
  * A printed ID card on a lanyard that hangs in the footer. It swings as a
@@ -17,15 +17,21 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
     (async () => {
       const el = host.current;
       if (!el) return;
+      await whenNear(el);
+      if (cancelled) return;
       const stage = await createStage(el, 30);
-      if (!stage || cancelled) return stage?.dispose();
+      if (!stage) return;
+      if (cancelled) return stage.dispose();
+      dispose = () => stage.dispose();
       const { THREE, scene, camera } = stage;
       const { RoundedBoxGeometry } = await import("three/examples/jsm/geometries/RoundedBoxGeometry.js");
+      if (cancelled) return;
 
       camera.position.set(0, 0, 9);
       scene.add(new THREE.DirectionalLight(0xffffff, 1.2), new THREE.AmbientLight(0xffffff, 0.35));
 
       const ANCHOR = new THREE.Vector3(0, 3.6, 0);
+      const MAX_SWING = 0.55;
       const LENGTH = 3.2;
 
       // Card face, drawn like a print proof, in the site's own fonts.
@@ -39,7 +45,7 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         document.fonts.load(`400 100px ${script}`),
         document.fonts.load(`600 30px ${body}`),
       ]).catch(() => undefined);
-      if (cancelled) return stage.dispose();
+      if (cancelled) return;
       const face = document.createElement("canvas");
       face.width = 640;
       face.height = 900;
@@ -109,7 +115,7 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
       scene.add(strap);
 
       // Pendulum state.
-      const s = { angle: 0.35, velocity: 0, twist: 0, twistVelocity: 0, dragging: false, target: 0 };
+      const s = { angle: 0.3, velocity: 0, twist: 0, twistVelocity: 0, dragging: false, target: 0 };
       const ndc = new THREE.Vector2();
       const raycaster = new THREE.Raycaster();
       const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
@@ -141,7 +147,7 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
           return;
         }
         const p = toWorld(e);
-        s.target = Math.max(-1.1, Math.min(1.1, Math.atan2(p.x - ANCHOR.x, ANCHOR.y - p.y)));
+        s.target = Math.max(-MAX_SWING, Math.min(MAX_SWING, Math.atan2(p.x - ANCHOR.x, ANCHOR.y - p.y)));
       };
       const onUp = () => {
         if (!s.dragging) return;
@@ -163,6 +169,11 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         } else {
           s.velocity += (-9.0 * Math.sin(s.angle) - 0.9 * s.velocity) * step;
           s.angle += s.velocity * step;
+          // Keep the card inside the canvas: bounce softly off the swing limit.
+          if (Math.abs(s.angle) > MAX_SWING) {
+            s.angle = Math.sign(s.angle) * MAX_SWING;
+            s.velocity *= -0.4;
+          }
         }
         s.twistVelocity += (-6 * s.twist - 1.2 * s.twistVelocity) * step;
         s.twist += s.twistVelocity * step;

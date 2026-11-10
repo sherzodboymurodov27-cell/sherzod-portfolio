@@ -6,6 +6,7 @@ import { useIsoLayoutEffect } from "@/lib/use-isomorphic-layout-effect";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Project } from "@/data/projects";
+import { imgProps } from "@/lib/img";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,22 +79,27 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
       </h2>
 
       <div className="work-tiles">
-        {tiles.map((tile, i) => (
+        {tiles.map((tile, i) => {
+          // Only the first tile of each project is a tab stop; the rest repeat the same link.
+          const repeat = tiles.findIndex((t) => t.slug === tile.slug) !== i;
+          return (
           <Link
             key={`${tile.src}-${i}`}
             href={`/work/${tile.slug}`}
             className={`work-tile work-tile-${i + 1}`}
             data-speed={[1, -1, 1.5, -0.5, 1][i]}
+            tabIndex={repeat ? -1 : undefined}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={tile.src} alt={tile.alt} loading="lazy" />
+            <img {...imgProps(tile.src, "(min-width: 768px) 50vw, 86vw")} alt={tile.alt} loading="lazy" decoding="async" />
             <span className="tag meta">
               <i aria-hidden="true" />
               {tile.title}
               <span>{tile.category}</span>
             </span>
           </Link>
-        ))}
+          );
+        })}
       </div>
 
       <span ref={bubble} className="view-bubble" aria-hidden="true">
@@ -101,7 +107,8 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
       </span>
 
       <Link href="/work" className="display show-all">
-        All work<sup>{projects.length}</sup>
+        All work<sup aria-hidden="true">{projects.length}</sup>
+        <span className="sr-only">, {projects.length === 1 ? "1 project" : `${projects.length} projects`}</span>
       </Link>
     </section>
   );

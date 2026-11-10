@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/data/site";
-import { ChromeIcon, type ChromeShape } from "@/components/three/ChromeIcon";
+import { ChromeIcons, ChromeFallback, type ChromeShape } from "@/components/three/ChromeIcons";
 
 const SHAPES: ChromeShape[] = ["heart", "nib", "registration"];
 
@@ -8,10 +8,17 @@ export function ServicesCards({ showLink = true }: { showLink?: boolean }) {
   return (
     <section className="services paper" aria-labelledby="services-heading">
       <div className="section-grid" aria-hidden="true" />
-      <h2 id="services-heading" className="display services-word">
+      <p className="display services-word" aria-hidden="true">
         Services
-      </h2>
+      </p>
 
+      <div className="services-head">
+        <h2 id="services-heading" className="section-heading">
+          What I do
+        </h2>
+      </div>
+
+      <div className="services-stage">
       <ul className="services-list">
         {site.services.map((service, i) => (
           <li key={service.title} className="service-card">
@@ -20,13 +27,15 @@ export function ServicesCards({ showLink = true }: { showLink?: boolean }) {
             <span className="corner corner-bl" aria-hidden="true" />
             <span className="corner corner-br" aria-hidden="true" />
             <div className="service-media">
-              <ChromeIcon shape={SHAPES[i % SHAPES.length]} />
+              <ChromeFallback shape={SHAPES[i % SHAPES.length]} />
             </div>
             <h3>{service.title}</h3>
             <p>{service.description}</p>
           </li>
         ))}
       </ul>
+      <ChromeIcons shapes={SHAPES} />
+      </div>
 
       {showLink && (
         <Link href="/about" className="btn btn-signal services-more">

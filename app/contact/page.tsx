@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
+import { pageMeta } from "@/lib/meta";
 import { PageHeader } from "@/components/ui/PageHeader";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Sherzod Boymurodov on Instagram, Telegram, Behance or by phone.",
-};
+export const metadata: Metadata = pageMeta(
+  "Contact",
+  "Get in touch with Sherzod Boymurodov on Instagram, Telegram, Behance or by phone.",
+  "/contact",
+);
 
 export default function ContactPage() {
   return (
@@ -32,7 +34,8 @@ export default function ContactPage() {
                   <span className="display contact-label">{s.label}</span>
                   <span className="contact-value">{s.value}</span>
                   <svg className="contact-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 17 17 7M9 7h8v8" />
+                    {/* Outbound links point out of the page; the phone row points across. */}
+                    <path d={external ? "M7 17 17 7M9 7h8v8" : "M4 12h16M14 6l6 6-6 6"} />
                   </svg>
                 </a>
               </li>

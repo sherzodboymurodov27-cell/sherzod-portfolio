@@ -4,7 +4,7 @@ import { BadgeScene } from "@/components/three/BadgeScene";
 import { FooterCta } from "@/components/layout/FooterCta";
 
 const PAGES = [
-  { href: "/#work", label: "Work" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

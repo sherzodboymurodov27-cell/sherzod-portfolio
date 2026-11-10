@@ -1,9 +1,10 @@
 # DESIGN.md — Sherzod Boymurodov portfolio
 
 Direction: a dark, graphite-to-grey stage for a graphic designer whose work lives on phone screens and in print.
-Structure and rhythm follow the reference the owner chose (dylanbrouwer.design): huge two-line headline, one
-object in front of it, columns visible as grid lines, light sections for the work. Brand, copy, imagery and the
-phone object are his own; nothing is copied from the reference.
+Structure, rhythm and signature objects follow the reference the owner chose (dylanbrouwer.design) on purpose:
+huge headline with a 3D monitor in front, grid columns as lines, light paper sections for work and services,
+chrome objects, a lanyard badge and a giant wordmark in the footer. Name, copy, imagery and the print details
+(crop marks, CMYK strip, registration mark) are his own.
 
 ## Color
 
@@ -58,32 +59,38 @@ numbers in meta are tabular; superscript counts sit at 0.24em of the display siz
 - 8px scale: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 160.
 - Content width 1440px; side padding `clamp(16px, 2.6vw, 40px)`.
 - Section padding 160px top/bottom desktop, 96px mobile.
-- Grid: 6 columns desktop, 4 mobile, drawn as 1px vertical lines on hero and paper sections.
+- Grid: 6 columns desktop, 4 under 768px, drawn as 1px vertical lines on every section.
 - Text left-aligned everywhere except the hero headline.
 
 ## Shape and depth
 
-- Radius: 0 on work images and sections; 4px on buttons, tags and the contact button; the phone keeps its own.
-- One shadow, for objects only (the phone): `0 50px 60px rgba(0,0,0,.55)`. No shadows on cards or text.
+- Radius: 0 on work images and sections; 4px on buttons, tags and the contact button; the monitor and badge keep their own.
+- One shadow, for objects only (monitor, badge): `0 50px 60px rgba(0,0,0,.55)`. No shadows on cards or text.
 - No glassmorphism except the navbar after scroll (`rgba(7,7,8,.72)` + 16px blur).
 
 ## Components
 
-- **Nav**: "SB" mark left; dotted text links center (dot turns `signal` on hover); dark contact button right with a signal dot. Mobile: Menu toggle, full-height list, Escape closes.
-- **Button**: dark (`graphite-1`, 1px `line` border, 4px radius, 12px uppercase); hover one step lighter; focus ring 2px `text` with 3px offset.
-- **Work tile**: image with no radius at varied sizes in a staggered grid; a dark tag pinned bottom-left: `• Project name  Category`.
-- **All work link**: big Archivo word with a superscript count.
-- **Service card**: paper-2 panel, a crop of real work on top, title below; three across.
-- **Footer**: giant metallic wordmark, links in two columns, contact button, signal glow at the bottom edge.
+- **Nav**: "SB" mark left; dotted text links center (dot turns `signal` when hovered or current); dark contact button right with a signal dot. Mobile: Menu toggle opens a full-height list in display type; page behind is inert and does not scroll; Escape closes and returns focus.
+- **Button** (`.btn`): dark, 1px border, 4px radius, 12px uppercase 600, min height 40px, never wraps. `.btn-signal` adds the orange dot.
+- **Hero**: SHERZOD in metal display type, "Designer" in script, three.js monitor playing a feed of posts. A flat HTML monitor with the same posts shows until the 3D is ready and when WebGL is missing.
+- **Work tile**: image with no radius at varied sizes in a staggered grid; dark tag pinned bottom-left on desktop, caption under the image on mobile. Only the first tile per project is a tab stop.
+- **All work link**: display word with a superscript count (hidden from screen readers, count read as text).
+- **Collaborations**: light band of slanted cells, logos as dark silhouettes with names as alt text; drifting, paused on hover, focus or the Pause button.
+- **Service card**: paper-2 panel with crop marks, a chrome object on a dark gradient (one shared WebGL canvas for all cards; flat SVG fallback), title and one-line description. Ghost "SERVICES" word above is decorative; the real heading is "What I do".
+- **Footer**: giant two-line CTA (hidden on /contact), draggable lanyard badge (hidden on /contact), links, full-width metal wordmark, signal glow at the bottom edge.
+- **Page header** (inner pages): giant metal display word(s) with a script word, optional lead and facts.
 
 ## Imagery
 
 - Only real project work: posts, covers, print. No stock photos, no AI people.
-- Hero phone shows a feed of chosen posts (4:5).
-- Icons: simple 1.8px stroke line icons, drawn inline; no emoji, no icon font.
+- Every image under /public/images has a 640px variant; `lib/img.ts` adds width, height and srcset from `data/image-sizes.json` (regenerate with `python3 scripts/prepare_images.py`).
+- Icons: simple 1.6–1.8px stroke line icons drawn inline; no emoji, no icon font.
+- Social preview: `public/og.png` (1200×630).
 
 ## Motion
 
-GSAP + ScrollTrigger and Lenis smooth scroll. One load sequence (headline lines rise, phone settles), one
-pinned scroll scene in the hero, blur-to-sharp reveal on the about statement, parallax offsets on work tiles.
-Everything off under `prefers-reduced-motion`.
+GSAP + ScrollTrigger, Lenis smooth scroll, three.js. One load sequence (headline rises, monitor settles), one
+sticky scroll scene in the hero (camera moves into the screen, grid columns close over it), a soft
+blur-to-sharp reveal on the about statement, parallax on work tiles, a trailing "View" cursor, the footer CTA
+rising in. 3D scenes are created when near the viewport, render only while on screen and draw still frames
+under `prefers-reduced-motion`, where all other motion is off.

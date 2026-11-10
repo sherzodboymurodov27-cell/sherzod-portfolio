@@ -20,13 +20,13 @@ export function AboutIntro({ showLink = true }: { showLink?: boolean }) {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
           ".about-word",
-          { opacity: 0.14, filter: "blur(6px)" },
+          { opacity: 0.18, filter: "blur(3px)" },
           {
             opacity: 1,
             filter: "blur(0px)",
             stagger: 0.04,
             ease: "none",
-            scrollTrigger: { trigger: ".about-statement", start: "top 80%", end: "bottom 50%", scrub: true },
+            scrollTrigger: { trigger: ".about-statement", start: "top 85%", end: "top 30%", scrub: true },
           },
         );
       });

@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "Page not found", robots: { index: false } };
 import { PageHeader } from "@/components/ui/PageHeader";
 
 export default function NotFound() {

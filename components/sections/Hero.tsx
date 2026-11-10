@@ -49,7 +49,8 @@ export function Hero() {
           .to(".hero-meta", { opacity: 0, ease: "none", duration: 0.3 }, 0)
           .fromTo(
             ".hero-shutter i",
-            { yPercent: 100 },
+            // y: 0 overrides the CSS translateY(100%) so only yPercent moves the columns.
+            { y: 0, yPercent: 100 },
             { yPercent: 0, ease: "power2.inOut", duration: 0.3, stagger: { each: 0.035, from: "random" } },
             0.68,
           );
@@ -64,10 +65,12 @@ export function Hero() {
       <div className="hero-grid" aria-hidden="true" />
 
       <h1 className="hero-title">
-        <span className="hero-word">
+        <span className="hero-word" aria-hidden="true">
           <span className="hero-word-inner display metal">Sherzod</span>
         </span>
-        <span className="hero-script script">Designer</span>
+        <span className="hero-script script" aria-hidden="true">
+          Designer
+        </span>
         <span className="sr-only">{site.name}, graphic designer</span>
       </h1>
 
@@ -79,8 +82,8 @@ export function Hero() {
           <LocalTime />
         </div>
         <p className="hero-meta-right">
-          Graphic designer from Tashkent. I design social media, brand identities and print for brands that want
-          to be noticed.
+          Graphic designer in Tashkent. Social media, brand identity and print for brands that need to be seen and
+          remembered.
         </p>
       </div>
 

@@ -23,11 +23,12 @@ export function PageHeader({ lines, script, count, label, children }: Props) {
   useIsoLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
-        gsap
+        const tl = gsap
           .timeline({ defaults: { ease: "expo.out" } })
-          .from(".page-line-inner", { yPercent: 110, duration: 1.3, stagger: 0.1 })
-          .from(".page-head .script", { opacity: 0, x: -30, duration: 1.4 }, 0.3)
-          .from(".page-head-body > *", { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 0.5);
+          .from(".page-line-inner", { yPercent: 110, duration: 1.3, stagger: 0.1 });
+        // Only animate parts this header actually has (avoids GSAP "target not found").
+        if (script) tl.from(".page-script", { opacity: 0, x: -30, duration: 1.4 }, 0.3);
+        if (children) tl.from(".page-head-body > *", { opacity: 0, y: 16, duration: 1, stagger: 0.08 }, 0.5);
       });
     }, root);
     return () => ctx.revert();
@@ -39,10 +40,10 @@ export function PageHeader({ lines, script, count, label, children }: Props) {
       <div className="container">
         <h1 className="page-title" aria-label={label}>
           {lines.map((line, i) => (
-            <span key={line} className="page-line" aria-hidden={label ? true : undefined}>
+            <span key={`${i}-${line}`} className="page-line" aria-hidden={label ? true : undefined}>
               <span className="page-line-inner display">
                 {line}
-                {i === lines.length - 1 && count !== undefined && <sup>{count}</sup>}
+                {i === lines.length - 1 && count !== undefined && <sup aria-hidden="true">{count}</sup>}
               </span>
             </span>
           ))}

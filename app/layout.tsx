@@ -4,12 +4,13 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { site } from "@/data/site";
+import { pageMeta } from "@/lib/meta";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
 // Self-hosted variable font (Latin + Cyrillic support) — avoids a Google
 // Fonts network fetch at build time, which some CI/deploy environments block.
 const manrope = localFont({
-  src: "../public/fonts/Manrope-Variable.ttf",
+  src: "../public/fonts/Manrope-Variable.woff2",
   variable: "--font-manrope",
   display: "swap",
   weight: "200 800",
@@ -18,10 +19,7 @@ const manrope = localFont({
 // Display face for the name: Archivo's width axis (62–125%) lets both name
 // lines be set to one measure. Latin subset only; OFL-1.1.
 const archivo = localFont({
-  src: [
-    { path: "../public/fonts/Archivo-Variable.woff2", style: "normal" },
-    { path: "../public/fonts/Archivo-Variable-Italic.woff2", style: "italic" },
-  ],
+  src: "../public/fonts/Archivo-Variable.woff2",
   variable: "--font-archivo",
   display: "swap",
   weight: "100 900",
@@ -38,20 +36,9 @@ const parisienne = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: site.seo.title,
-    template: `%s — ${site.name}`,
-  },
-  description: site.seo.description,
-  openGraph: {
-    title: site.seo.title,
-    description: site.seo.description,
-    type: "website",
-    siteName: site.name,
-  },
-  icons: {
-    icon: "/favicon.svg",
-  },
+  ...pageMeta(null, site.seo.description, "/"),
+  title: { default: site.seo.title, template: `%s — ${site.name}` },
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

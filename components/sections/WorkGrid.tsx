@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { clientOf } from "@/data/projects";
+import { imgProps } from "@/lib/img";
 
 /** All published projects on paper, two columns, the right column dropped half a tile. */
 export function WorkGrid({ projects }: { projects: Project[] }) {
@@ -13,7 +14,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
             <Link href={`/work/${project.slug}`} className="work-card">
               <span className="work-card-media">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={project.cover} alt={project.coverAlt} loading={i < 2 ? "eager" : "lazy"} />
+                <img {...imgProps(project.cover, "(min-width: 768px) 50vw, 100vw")} alt={project.coverAlt} loading={i < 2 ? "eager" : "lazy"} decoding="async" />
               </span>
               <span className="work-card-text">
                 <span className="work-card-title">{clientOf(project)}</span>

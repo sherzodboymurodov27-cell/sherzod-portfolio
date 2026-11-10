@@ -9,19 +9,41 @@ export type Stage = {
   camera: THREE_NS.PerspectiveCamera;
   width: () => number;
   height: () => number;
-  /** Starts the loop; `tick` runs each frame while the canvas is on screen. */
-  start: (tick: (t: number, dt: number) => void) => void;
+  /** Starts the loop. `tick` runs each frame while on screen; return false to skip the default render (custom render in tick). */
+  start: (tick: (t: number, dt: number) => void | false) => void;
+  /** Called once after the first frame has been drawn. */
+  onFirstFrame: (cb: () => void) => void;
   dispose: () => void;
 };
 
+/** Resolves when `el` comes within `margin` of the viewport (or immediately if already there). */
+export function whenNear(el: Element, margin = "400px"): Promise<void> {
+  return new Promise((resolve) => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          resolve();
+        }
+      },
+      { rootMargin: margin },
+    );
+    io.observe(el);
+  });
+}
+
 /**
  * One transparent WebGL canvas inside `host`, lit by a soft studio environment
- * so metal and chrome materials have something to reflect. Renders only while
- * visible on screen; under reduced motion it renders a single still frame.
+ * so metal and chrome have something to reflect. Renders only while on screen;
+ * under reduced motion it renders still frames. Returns null when WebGL is
+ * unavailable so callers can show their fallback.
  */
 export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | null> {
   const THREE = await import("three");
   const { RoomEnvironment } = await import("three/examples/jsm/environments/RoomEnvironment.js");
+
+  const probe = document.createElement("canvas");
+  if (!(probe.getContext("webgl2") || probe.getContext("webgl"))) return null;
 
   let renderer: THREE_NS.WebGLRenderer;
   try {
@@ -29,7 +51,7 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
   } catch {
     return null;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -38,7 +60,9 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  const envTexture = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  const room = new RoomEnvironment();
+  const envTexture = pmrem.fromScene(room, 0.04).texture;
+  room.dispose();
   scene.environment = envTexture;
 
   const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 100);
@@ -51,8 +75,6 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
     camera.aspect = size.w / size.h;
     camera.updateProjectionMatrix();
   };
-  const ro = new ResizeObserver(resize);
-  ro.observe(host);
   resize();
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -63,6 +85,23 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
   let raf = 0;
   let last = performance.now();
   let elapsed = 0;
+  let tickFn: (t: number, dt: number) => void | false = () => {};
+  let firstFrameCb: (() => void) | null = null;
+  let drawn = false;
+
+  const draw = (t: number, dt: number) => {
+    if (tickFn(t, dt) !== false) renderer.render(scene, camera);
+    if (!drawn) {
+      drawn = true;
+      firstFrameCb?.();
+    }
+  };
+
+  const ro = new ResizeObserver(() => {
+    resize();
+    if (reduced) draw(0, 0);
+  });
+  ro.observe(host);
 
   return {
     THREE,
@@ -71,27 +110,23 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
     camera,
     width: () => size.w,
     height: () => size.h,
+    onFirstFrame(cb) {
+      if (drawn) cb();
+      else firstFrameCb = cb;
+    },
     start(tick) {
+      tickFn = tick;
       if (reduced) {
-        tick(0, 0);
-        renderer.render(scene, camera);
-        // Re-render a still frame when the layout changes size.
-        ro.disconnect();
-        new ResizeObserver(() => {
-          resize();
-          tick(0, 0);
-          renderer.render(scene, camera);
-        }).observe(host);
+        draw(0, 0);
         return;
       }
       const loop = (now: number) => {
         raf = requestAnimationFrame(loop);
         const dt = Math.min(0.05, (now - last) / 1000);
         last = now;
-        if (!visible || document.hidden) return;
+        if ((!visible || document.hidden) && drawn) return;
         elapsed += dt;
-        tick(elapsed, dt);
-        renderer.render(scene, camera);
+        draw(elapsed, dt);
       };
       raf = requestAnimationFrame(loop);
     },
@@ -111,6 +146,7 @@ export async function createStage(host: HTMLElement, fov = 30): Promise<Stage | 
       envTexture.dispose();
       pmrem.dispose();
       renderer.dispose();
+      renderer.forceContextLoss();
       renderer.domElement.remove();
     },
   };

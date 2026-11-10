@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project, ProjectBlock } from "@/data/projects";
 import { clientOf } from "@/data/projects";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { imgProps } from "@/lib/img";
 
 /** A project page: header with facts, the cover, the work on paper, then the next project. */
 export function CaseStudy({ project, next }: { project: Project; next: Project | null }) {
@@ -52,7 +53,7 @@ export function CaseStudy({ project, next }: { project: Project; next: Project |
             <span className="display next-project-title">{clientOf(next)}</span>
             <span className="next-project-media" aria-hidden="true">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={next.cover} alt="" loading="lazy" />
+              <img {...imgProps(next.cover, "280px")} alt="" loading="lazy" decoding="async" />
             </span>
           </span>
         </Link>
@@ -61,9 +62,9 @@ export function CaseStudy({ project, next }: { project: Project; next: Project |
   );
 }
 
-function Img({ src, alt }: { src: string; alt: string }) {
+function Img({ src, alt, sizes = "(min-width: 768px) 50vw, 100vw" }: { src: string; alt: string; sizes?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} loading="lazy" />;
+  return <img {...imgProps(src, sizes)} alt={alt} loading="lazy" decoding="async" />;
 }
 
 function Block({ block }: { block: ProjectBlock }) {
@@ -71,7 +72,7 @@ function Block({ block }: { block: ProjectBlock }) {
     case "full":
       return (
         <figure className="case-full">
-          <Img src={block.image} alt={block.alt} />
+          <Img src={block.image} alt={block.alt} sizes="100vw" />
         </figure>
       );
     case "single":
