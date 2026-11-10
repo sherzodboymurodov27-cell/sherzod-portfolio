@@ -1,21 +1,18 @@
 import { Hero } from "@/components/sections/Hero";
+import { AboutIntro } from "@/components/sections/AboutIntro";
+import { WorkShowcase } from "@/components/sections/WorkShowcase";
 import { ClientLogos } from "@/components/sections/ClientLogos";
-import { SelectedWork } from "@/components/sections/SelectedWork";
-import { AboutBlock } from "@/components/sections/AboutBlock";
-import { SkillsSection } from "@/components/sections/SkillsSection";
-import { Services } from "@/components/sections/Services";
-import { ContactSection } from "@/components/sections/ContactSection";
+import { ServicesCards } from "@/components/sections/ServicesCards";
+import { publishedProjects } from "@/data/projects";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
+      <AboutIntro />
+      <WorkShowcase projects={publishedProjects} />
       <ClientLogos />
-      <SelectedWork />
-      <AboutBlock />
-      <SkillsSection />
-      <Services />
-      <ContactSection />
+      <ServicesCards />
     </>
   );
 }

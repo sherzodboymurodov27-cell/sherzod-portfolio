@@ -1,33 +1,55 @@
+import Link from "next/link";
 import { site } from "@/data/site";
+
+const PAGES = [
+  { href: "/#work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const [first] = site.name.split(" ");
 
   return (
-    <footer className="border-t border-line">
-      <div className="max-w-grid mx-auto px-5 md:px-10 py-10 md:py-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
-        <div>
-          <p className="text-sm font-medium tracking-tight">{site.name}</p>
-          <p className="text-sm text-muted mt-1">{site.role}</p>
-        </div>
+    <footer className="footer">
+      <div className="footer-top">
+        <p className="footer-ask">Have a project in mind?</p>
+        <Link href="/contact" className="btn btn-signal">
+          <i aria-hidden="true" />
+          Get in touch
+        </Link>
+      </div>
 
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          {site.socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target={s.label === "Phone" ? undefined : "_blank"}
-              rel={s.label === "Phone" ? undefined : "noopener noreferrer"}
-              className="text-muted hover:text-accent transition-colors duration-200"
-            >
-              {s.label}
-            </a>
+      <div className="footer-links">
+        <nav aria-label="Pages">
+          {PAGES.map((p) => (
+            <Link key={p.href} href={p.href}>
+              {p.label}
+            </Link>
           ))}
         </nav>
+        <nav aria-label="Social">
+          {site.socials
+            .filter((s) => s.label !== "Phone")
+            .map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            ))}
+        </nav>
+      </div>
 
-        <p className="text-xs text-muted">
-          &copy; {year} {site.name}. All rights reserved.
-        </p>
+      <p className="footer-word" aria-hidden="true">
+        <span>©</span>
+        {first}
+      </p>
+
+      <div className="footer-base">
+        <span>
+          © {year} {site.name}
+        </span>
+        <span>{site.location}</span>
       </div>
     </footer>
   );

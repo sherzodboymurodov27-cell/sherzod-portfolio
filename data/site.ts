@@ -21,6 +21,8 @@ export const site = {
 
   about: {
     heading: "About",
+    intro:
+      "I'm a graphic designer from Tashkent, working since 2022 across social media, brand identity and print. I've designed for schools, food brands, cargo companies and agencies, turning briefs into visuals people stop scrolling for.",
     since: "2022",
     body: [
       "Designing since 2022, I work across digital design, branding, packaging, social media and print — creating clear and purposeful visual solutions for different brands and communication needs.",
@@ -38,20 +40,19 @@ export const site = {
 
   services: [
     {
-      title: "Brand Identity",
-      description: "Visual identities, logo systems and brand assets.",
+      title: "Social media",
+      description: "Posts, carousels, covers and campaign visuals that hold attention in a feed.",
+      image: "/images/projects/project-01/02.webp",
     },
     {
-      title: "Art Direction",
-      description: "Visual concepts, campaigns and creative direction.",
+      title: "Brand identity",
+      description: "Logos, brand systems and the guidelines that keep every touchpoint consistent.",
+      image: "/images/projects/project-01/04.webp",
     },
     {
-      title: "Advertising",
-      description: "Campaign visuals, outdoor and digital advertising.",
-    },
-    {
-      title: "Digital Design",
-      description: "Social media, digital campaigns and visual systems.",
+      title: "Print",
+      description: "Brochures, flyers, packaging and outdoor, prepared for production.",
+      image: "/images/projects/project-01/05.webp",
     },
   ],
 
