@@ -52,78 +52,143 @@ export const projects: Project[] = [
   },
   {
     slug: "project-02",
-    title: "Project 02",
-    category: "Art Direction",
+    title: "Silk Road Express — Seasonal Campaign",
+    category: "Social Media",
     year: "2026",
     role: "Graphic Designer",
     gridSpan: 1,
-    description: "Additional portfolio project — to be replaced with a selected body of work.",
+    description:
+      "Seasonal campaign visuals for Silk Road Express, a cargo and delivery brand: a teaser, 11.11 Sale, Black Friday and Cyber Monday posts built on a red and white identity with bold italic typography and three-dimensional product scenes.",
     cover: "/images/projects/project-02/cover.webp",
-    coverAlt: "Project 02 cover",
+    coverAlt: "Silk Road Express Black Friday campaign post",
     blocks: [
-      { type: "full", image: "/images/projects/project-02/01.webp", alt: "Project 02 visual" },
-      { type: "single", image: "/images/projects/project-02/02.webp", alt: "Project 02 detail" },
+      {
+        type: "gallery",
+        images: [
+          "/images/projects/project-02/01.webp",
+          "/images/projects/project-02/02.webp",
+          "/images/projects/project-02/03.webp",
+          "/images/projects/project-02/04.webp",
+          "/images/projects/project-02/05.webp",
+          "/images/projects/project-02/06.webp"
+        ],
+        alt: [
+          "Silk Road Express teaser post, coming soon",
+          "Silk Road Express November discount days post",
+          "Silk Road Express 11.11 Sale post",
+          "Silk Road Express Black Friday post",
+          "Silk Road Express Cyber Monday post",
+          "Silk Road Express US online shopping delivery post"
+        ],
+      },
     ],
   },
   {
     slug: "project-03",
-    title: "Project 03",
-    category: "Advertising",
-    year: "2025",
+    title: "ESSI — Social Media Series",
+    category: "Social Media",
+    year: "2026",
     role: "Graphic Designer",
     gridSpan: 1,
-    description: "Selected visual design work — to be replaced with a final project narrative.",
+    description:
+      "A social media series for ESSI dairy products built on one idea: a magnifying glass that reveals the products, from yogurt and qaymoq to tvorog. Warm wood tones keep the packaging as the focus, with a separate frozen curd snack post.",
     cover: "/images/projects/project-03/cover.webp",
-    coverAlt: "Project 03 cover",
+    coverAlt: "ESSI products seen through a magnifying glass",
     blocks: [
-      { type: "full", image: "/images/projects/project-03/01.webp", alt: "Project 03 visual" },
-      { type: "split", images: ["/images/projects/project-03/02.webp", "/images/projects/project-03/03.webp"], alt: ["Project 03 detail one", "Project 03 detail two"] },
+      {
+        type: "gallery",
+        images: [
+          "/images/projects/project-03/01.webp",
+          "/images/projects/project-03/02.webp",
+          "/images/projects/project-03/03.webp",
+          "/images/projects/project-03/04.webp"
+        ],
+        alt: [
+          "ESSI teaser post, tiny products on a wooden table",
+          "ESSI products under a magnifying glass",
+          "ESSI qaymoq post",
+          "ESSI tvorog post"
+        ],
+      },
+      { type: "single", image: "/images/projects/project-03/05.webp", alt: "ESSI curd snacks in a freezer, social media post" },
     ],
   },
   {
     slug: "project-04",
-    title: "Project 04",
-    category: "Digital Design",
-    year: "2025",
+    title: "Sirdarya Metal Construction — Social Media",
+    category: "Social Media",
+    year: "2026",
     role: "Graphic Designer",
-    gridSpan: 2,
-    description: "Selected digital design work — to be replaced with a final project narrative.",
+    gridSpan: 1,
+    description:
+      "Informational social posts for Sirdarya Metal Construction explaining steel structure topics such as standard versus custom design, fasteners, connections and special structures, using one yellow and navy caption system over architectural photography.",
     cover: "/images/projects/project-04/cover.webp",
-    coverAlt: "Project 04 cover",
+    coverAlt: "Sirdarya Metal Construction post with steel frame photography",
     blocks: [
-      { type: "full", image: "/images/projects/project-04/01.webp", alt: "Project 04 visual" },
-      { type: "text", heading: "Details", body: "Project details and deliverables to be added." },
-      { type: "single", image: "/images/projects/project-04/02.webp", alt: "Project 04 detail" },
+      {
+        type: "gallery",
+        images: [
+          "/images/projects/project-04/01.webp",
+          "/images/projects/project-04/02.webp",
+          "/images/projects/project-04/03.webp",
+          "/images/projects/project-04/04.webp"
+        ],
+        alt: [
+          "Sirdarya Metal Construction post on bolts and fasteners",
+          "Sirdarya Metal Construction post on fastening elements",
+          "Sirdarya Metal Construction post on individual connections",
+          "Sirdarya Metal Construction post on special structures"
+        ],
+      },
     ],
   },
   {
     slug: "project-05",
-    title: "Project 05",
-    category: "Brand Identity",
-    year: "2025",
+    title: "Abu Sahiy Cargo — Print & Social",
+    category: "Print & Social",
+    year: "2026",
     role: "Graphic Designer",
     gridSpan: 1,
-    description: "Selected branding work — to be replaced with a final project narrative.",
+    description:
+      "Print and social materials for Abu Sahiy Cargo, a cargo service on the Belarus to Uzbekistan route: a trifold brochure in two versions and a promotional post for NVIDIA AI hardware orders.",
     cover: "/images/projects/project-05/cover.webp",
-    coverAlt: "Project 05 cover",
+    coverAlt: "Abu Sahiy Cargo trifold brochure",
     blocks: [
-      { type: "full", image: "/images/projects/project-05/01.webp", alt: "Project 05 visual" },
-      { type: "split", images: ["/images/projects/project-05/02.webp", "/images/projects/project-05/03.webp"], alt: ["Project 05 detail one", "Project 05 detail two"] },
+      {
+        type: "split",
+        images: ["/images/projects/project-05/01.webp", "/images/projects/project-05/02.webp"],
+        alt: ["Abu Sahiy Cargo NVIDIA AI hardware promotional post", "Abu Sahiy Cargo trifold brochure, front and back"],
+      },
+      { type: "single", image: "/images/projects/project-05/03.webp", alt: "Abu Sahiy Cargo trifold brochure, second version" },
     ],
   },
   {
     slug: "project-06",
-    title: "Project 06",
-    category: "Art Direction",
-    year: "2024",
-    role: "Art Director",
+    title: "Zikrilla Marinade — Food Content",
+    category: "Social Media",
+    year: "2026",
+    role: "Graphic Designer",
     gridSpan: 1,
-    description: "Selected art direction work — to be replaced with a final project narrative.",
+    description:
+      "Recipe-idea posts for Zikrilla Marinade built on a red monogram pattern: one dish per post, from minced meat basics to kotlet, golubtsi and manti, with a repeatable white card layout.",
     cover: "/images/projects/project-06/cover.webp",
-    coverAlt: "Project 06 cover",
+    coverAlt: "Zikrilla Marinade minced meat recipe post",
     blocks: [
-      { type: "full", image: "/images/projects/project-06/01.webp", alt: "Project 06 visual" },
-      { type: "single", image: "/images/projects/project-06/02.webp", alt: "Project 06 detail" },
+      {
+        type: "gallery",
+        images: [
+          "/images/projects/project-06/01.webp",
+          "/images/projects/project-06/02.webp",
+          "/images/projects/project-06/03.webp",
+          "/images/projects/project-06/04.webp"
+        ],
+        alt: [
+          "Zikrilla Marinade post on dishes made with minced meat",
+          "Zikrilla Marinade kotlet post",
+          "Zikrilla Marinade golubtsi post",
+          "Zikrilla Marinade manti post"
+        ],
+      },
     ],
   },
 ];
