@@ -14,6 +14,16 @@ const manrope = localFont({
   weight: "200 800",
 });
 
+// Display face for the name: Archivo's width axis (62–125%) lets both name
+// lines be set to one measure. Latin subset only; OFL-1.1.
+const archivo = localFont({
+  src: "../public/fonts/Archivo-Variable.woff2",
+  variable: "--font-archivo",
+  display: "swap",
+  weight: "100 900",
+  declarations: [{ prop: "font-stretch", value: "62% 125%" }],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
@@ -34,7 +44,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={`${manrope.variable} ${archivo.variable}`}>
       <body className="font-sans bg-paper text-ink antialiased">
         <a
           href="#main"

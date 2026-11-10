@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projects, getProject, getAdjacentProject } from "@/data/projects";
+import { publishedProjects, getProject, getAdjacentProject } from "@/data/projects";
 import { ProjectHero } from "@/components/project/ProjectHero";
 import { ProjectVisuals } from "@/components/project/ProjectVisuals";
 import { NextProject } from "@/components/project/NextProject";
 
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return publishedProjects.map((p) => ({ slug: p.slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
@@ -32,7 +32,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         <ProjectVisuals blocks={project.blocks} />
       </div>
 
-      <NextProject project={next} />
+      {next && <NextProject project={next} />}
     </article>
   );
 }

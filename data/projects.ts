@@ -12,6 +12,8 @@ export interface Project {
   year: string;
   role: string;
   gridSpan?: 1 | 2;
+  /** Placeholder entries stay in the file but are not listed or built. */
+  draft?: boolean;
   description: string;
   cover: string;
   coverAlt: string;
@@ -52,6 +54,7 @@ export const projects: Project[] = [
   },
   {
     slug: "project-02",
+    draft: true,
     title: "Project 02",
     category: "Art Direction",
     year: "2026",
@@ -67,6 +70,7 @@ export const projects: Project[] = [
   },
   {
     slug: "project-03",
+    draft: true,
     title: "Project 03",
     category: "Advertising",
     year: "2025",
@@ -82,6 +86,7 @@ export const projects: Project[] = [
   },
   {
     slug: "project-04",
+    draft: true,
     title: "Project 04",
     category: "Digital Design",
     year: "2025",
@@ -98,6 +103,7 @@ export const projects: Project[] = [
   },
   {
     slug: "project-05",
+    draft: true,
     title: "Project 05",
     category: "Brand Identity",
     year: "2025",
@@ -113,6 +119,7 @@ export const projects: Project[] = [
   },
   {
     slug: "project-06",
+    draft: true,
     title: "Project 06",
     category: "Art Direction",
     year: "2024",
@@ -128,11 +135,15 @@ export const projects: Project[] = [
   },
 ];
 
+export const publishedProjects = projects.filter((p) => !p.draft);
+
 export function getProject(slug: string): Project | undefined {
-  return projects.find((p) => p.slug === slug);
+  return publishedProjects.find((p) => p.slug === slug);
 }
 
-export function getAdjacentProject(slug: string): Project {
-  const index = projects.findIndex((p) => p.slug === slug);
-  return projects[(index + 1) % projects.length];
+/** The next published project, or null when there is no other one to show. */
+export function getAdjacentProject(slug: string): Project | null {
+  if (publishedProjects.length < 2) return null;
+  const index = publishedProjects.findIndex((p) => p.slug === slug);
+  return publishedProjects[(index + 1) % publishedProjects.length];
 }
