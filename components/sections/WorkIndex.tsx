@@ -26,7 +26,7 @@ export function WorkIndex({ projects }: { projects: IndexItem[] }) {
   const onMove = (event: React.PointerEvent) => {
     const el = previewRef.current;
     if (!el) return;
-    el.style.transform = `translate3d(${event.clientX + 24}px, ${event.clientY - 90}px, 0)`;
+    el.style.transform = `translate3d(${event.clientX + 28}px, ${event.clientY - 204}px, 0)`;
   };
 
   if (projects.length === 0) return null;
