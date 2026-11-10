@@ -125,7 +125,7 @@ export function MonitorScene({ posts, progress }: Props) {
           ctx.fill();
         });
         ctx.fillStyle = "rgba(241,241,240,0.55)";
-        ctx.font = "500 26px Manrope, sans-serif";
+        ctx.font = `500 26px ${getComputedStyle(document.documentElement).getPropertyValue("--font-manrope").trim() || "sans-serif"}`;
         ctx.fillText("Sherzod Boymurodov — selected posts", 160, 44);
 
         if (!feed.length) return;
@@ -168,8 +168,8 @@ export function MonitorScene({ posts, progress }: Props) {
 
         const p = progress.current;
         const narrow = isNarrow();
-        const startZ = narrow ? 13 : 8.6;
-        const endZ = narrow ? 5.2 : 3.3;
+        const startZ = narrow ? 9.6 : 8.6;
+        const endZ = narrow ? 4.2 : 3.3;
         camera.position.set(0, 0.25 - p * 0.2, startZ + (endZ - startZ) * p);
         camera.lookAt(0, 0.05 - p * 0.05, 0);
 

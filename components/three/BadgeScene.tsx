@@ -28,7 +28,18 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
       const ANCHOR = new THREE.Vector3(0, 3.6, 0);
       const LENGTH = 3.2;
 
-      // Card face, drawn like a print proof.
+      // Card face, drawn like a print proof, in the site's own fonts.
+      const css = getComputedStyle(document.documentElement);
+      const fam = (v: string, fallback: string) => `${css.getPropertyValue(v).trim() || fallback}`;
+      const display = fam("--font-archivo", "sans-serif");
+      const script = fam("--font-script", "cursive");
+      const body = fam("--font-manrope", "sans-serif");
+      await Promise.all([
+        document.fonts.load(`800 100px ${display}`),
+        document.fonts.load(`400 100px ${script}`),
+        document.fonts.load(`600 30px ${body}`),
+      ]).catch(() => undefined);
+      if (cancelled) return stage.dispose();
       const face = document.createElement("canvas");
       face.width = 640;
       face.height = 900;
@@ -50,13 +61,13 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
         c.stroke();
       });
       c.fillStyle = "#0C0C0D";
-      c.font = "800 210px Archivo, sans-serif";
+      c.font = `800 210px ${display}`;
       c.fillText("SB", 66, 330);
-      c.font = "400 74px Parisienne, cursive";
+      c.font = `400 96px ${script}`;
       c.fillText(role, 70, 470);
-      c.font = "600 34px Manrope, sans-serif";
+      c.font = `600 34px ${body}`;
       c.fillText(name.toUpperCase(), 70, 700);
-      c.font = "400 26px Manrope, sans-serif";
+      c.font = `400 26px ${body}`;
       c.fillStyle = "#55555A";
       c.fillText(place, 70, 745);
       ["#00A0E3", "#E5007D", "#FFED00", "#0C0C0D"].forEach((col, i) => {
@@ -78,7 +89,7 @@ export function BadgeScene({ name, role, place }: { name: string; role: string; 
       );
       const front = new THREE.Mesh(
         new THREE.PlaneGeometry(1.52, 2.17),
-        new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.4 }),
+        new THREE.MeshBasicMaterial({ map: faceTex, toneMapped: false }),
       );
       front.position.z = 0.021;
       const clip = new THREE.Mesh(

@@ -173,7 +173,7 @@ html.lenis, html.lenis body { height: auto; }
   .hero-title { padding-top: 104px; }
   .hero-word-inner { font-size: 19.5vw; }
   .hero-script { font-size: 15vw; }
-  .monitor-scene { inset: 30vh 0 18vh; }
+  .monitor-scene { inset: 22vh 0 22vh; }
   .hero-shutter { grid-template-columns: repeat(4, 1fr); }
   .hero-shutter i:nth-child(n+5) { display: none; }
   .hero-meta { flex-direction: column; align-items: flex-start; gap: 14px; }
