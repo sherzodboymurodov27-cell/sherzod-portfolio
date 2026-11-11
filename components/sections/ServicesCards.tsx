@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { site } from "@/data/site";
 import { ChromeIcons, ChromeFallback, type ChromeShape } from "@/components/three/ChromeIcons";
 
@@ -36,11 +35,6 @@ export function ServicesCards() {
       </ul>
       <ChromeIcons shapes={SHAPES} />
       </div>
-
-      <Link href="/contact" className="btn btn-signal services-more">
-        <i aria-hidden="true" />
-        Start a project
-      </Link>
     </section>
   );
 }

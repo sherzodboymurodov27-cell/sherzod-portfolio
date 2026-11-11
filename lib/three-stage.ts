@@ -198,8 +198,8 @@ function stripStudio(THREE: Three): THREE_NS.Scene {
   topPanel.position.set(0, 6, 0);
   topPanel.lookAt(0, 0, 0);
   studio.add(topPanel);
-  const front = light(8, 2.5, 1.4);
-  front.position.set(0, -2, 6);
+  const front = light(10, 6, 2.2);
+  front.position.set(0, 0.5, 6);
   front.lookAt(0, 0, 0);
   studio.add(front);
   return studio;

@@ -8,7 +8,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
   return (
     <section className="work-grid paper" aria-label="All projects">
       <div className="section-grid" aria-hidden="true" />
-      <ul className="container work-grid-list">
+      <ul className={`container work-grid-list${projects.length < 3 ? " is-few" : ""}`}>
         {projects.map((project, i) => (
           <li key={project.slug}>
             <Link href={`/work/${project.slug}`} className="work-card">
@@ -22,6 +22,12 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
                   <span>{project.category}</span>
                   <span>{project.year}</span>
                 </span>
+                {projects.length < 3 && (
+                  <span className="btn btn-signal work-card-cta" aria-hidden="true">
+                    <i />
+                    View case
+                  </span>
+                )}
               </span>
             </Link>
           </li>

@@ -51,7 +51,7 @@ export function Hero() {
             // y: 0 overrides the CSS translateY(100%) so only yPercent moves the columns.
             { y: 0, yPercent: 100 },
             { yPercent: 0, ease: "power3.inOut", duration: 0.22, stagger: { each: 0.03, from: "start" } },
-            0.78,
+            0.55,
           );
       });
     }, root);

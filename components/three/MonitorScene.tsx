@@ -157,7 +157,7 @@ export function MonitorScene({ posts, progress }: Props) {
       const distances = () => {
         const aspect = stage.width() / stage.height();
         // Start: the monitor takes ~46% of the width (80% on portrait screens).
-        const share = aspect < 1 ? 0.8 : 0.42;
+        const share = window.innerWidth < 1100 ? 0.8 : 0.42;
         const start = W / (share * 2 * tanHalf * aspect);
         // End: the screen covers the whole view.
         const end = Math.min(SH / 2 / tanHalf, SW / 2 / (tanHalf * aspect)) * 0.97;
@@ -183,7 +183,7 @@ export function MonitorScene({ posts, progress }: Props) {
         const idle = Math.sin(t * 0.6) * 0.02 * (1 - p);
         monitor.rotation.y += ((-0.32 + pointer.x * 0.12) * (1 - p) - monitor.rotation.y) * 0.06;
         monitor.rotation.x += ((0.1 + pointer.y * 0.05) * (1 - p) + idle - monitor.rotation.x) * 0.06;
-        monitor.position.y = -0.62 * (1 - p);
+        monitor.position.y = -0.4 * (1 - p);
       });
     })();
 

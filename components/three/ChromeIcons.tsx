@@ -35,7 +35,7 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
 
       const { THREE, renderer, scene: baseScene } = stage;
       const medias = Array.from(list.querySelectorAll<HTMLElement>(".service-media"));
-      const chrome = new THREE.MeshStandardMaterial({ color: 0xc4c8ce, metalness: 1, roughness: 0.1, envMapIntensity: 1.5 });
+      const chrome = new THREE.MeshStandardMaterial({ color: 0xc4c8ce, metalness: 1, roughness: 0.22, envMapIntensity: 1.6 });
 
       const items = medias.map((media, i) => {
         const scene = new THREE.Scene();
@@ -89,7 +89,7 @@ export function ChromeIcons({ shapes }: { shapes: ChromeShape[] }) {
           it.camera.updateProjectionMatrix();
           it.tilt.x += (it.tilt.tx - it.tilt.x) * 0.08;
           it.tilt.y += (it.tilt.ty - it.tilt.y) * 0.08;
-          it.object.rotation.set(0.25 + it.tilt.x + Math.sin(t * 0.5 + it.phase) * 0.12, Math.sin(t * 0.5 + it.phase) * 0.6 + it.tilt.y, Math.sin(t * 0.3 + it.phase) * 0.08);
+          it.object.rotation.set(Math.min(0.35, Math.max(-0.1, 0.18 + it.tilt.x + Math.sin(t * 0.5 + it.phase) * 0.08)), Math.sin(t * 0.5 + it.phase) * 0.6 + it.tilt.y, Math.sin(t * 0.3 + it.phase) * 0.08);
           it.object.position.y = Math.sin(t * 1.1 + it.phase) * 0.12;
           renderer.render(it.scene, it.camera);
         }

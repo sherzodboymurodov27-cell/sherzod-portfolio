@@ -6,7 +6,8 @@ import { PageHeader } from "@/components/ui/PageHeader";
 
 export default function NotFound() {
   return (
-    <PageHeader lines={["404"]} italic="lost?" label="Page not found">
+    <PageHeader lines={["404"]} italic="lost?" label="Page not found" wide>
+      <span className="not-found-head" hidden />
       <p className="lead">This page doesn&rsquo;t exist or was moved.</p>
       <Link href="/" className="btn btn-signal">
         <i aria-hidden="true" />
